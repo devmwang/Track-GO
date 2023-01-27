@@ -27,5 +27,6 @@ depending on who is playing.
 - As a user, I want to be able to create new rosters.
 - As a user, I want to be able to add new players.
 - As a user, I want to be able to add a player to a roster.
+- As a user, I want to be able to add data from a match to a roster.
 - As a user, I want to be able to select a roster and view overall stats for that roster.
 
