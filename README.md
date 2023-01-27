@@ -1,6 +1,6 @@
 # CPSC 210 Term Project (CS:Track)
 
-## CS:GO Player Statistics Tracker and Visualizer
+## CS:GO Player/Roster Statistics Tracker and Visualizer
 
 ### What will this project (CS:Track) do?
 
