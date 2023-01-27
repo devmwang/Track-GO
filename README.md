@@ -1,10 +1,10 @@
-# CPSC 210 Term Project (CS:Track)
+# CPSC 210 Term Project (Track:GO)
 
 ## CS:GO Player/Roster Statistics Tracker and Visualizer
 
-### What will this project (CS:Track) do?
+### What will this project (Track:GO) do?
 
-CS:Track will allow users to enter CS:GO match data in order to analyze and track specifics
+Track:GO will allow users to enter CS:GO match data in order to analyze and track specifics
 with greater ease. The user will be able to enter data from matches they play. Then, they
 can view data from each prior match, view overall data (like overall win rate or average 
 damage per round), or perform trend analysis with the program to see how their performance
