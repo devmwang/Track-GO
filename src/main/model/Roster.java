@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 // Represents a roster of players to be tracked by the application
 public class Roster {
-    private String name;
+    private String id;
     private ArrayList<Player> players;
     private int gamesPlayed;
     private int roundsPlayed;
     private int wins;
     private int ties;
 
-    public Roster(String name) {
-        this.name = name;
+    public Roster(String id) {
+        this.id = id;
         this.players = new ArrayList<Player>();
         this.gamesPlayed = 0;
         this.roundsPlayed = 0;
@@ -27,10 +27,12 @@ public class Roster {
         players.remove(player);
     }
 
+    public String getId() {
+        return id;
+    }
 
-
-    public String getName() {
-        return name;
+    public ArrayList<Player> getPlayers() {
+        return players;
     }
 
     public int getGamesPlayed() {
