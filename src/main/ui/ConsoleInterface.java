@@ -23,6 +23,10 @@ public class ConsoleInterface {
 
         System.out.println();
 
+        handleMenu(select);
+    }
+
+    private void handleMenu(String select) {
         switch (select) {
             case "1":
                 displayMatchesMenu();
@@ -60,9 +64,5 @@ public class ConsoleInterface {
 
     private void displayRosterMenu() {
 
-    }
-
-    public static void main(String[] args) {
-        new ConsoleInterface();
     }
 }
