@@ -100,4 +100,18 @@ public class ConsoleInterface {
         System.out.println("Goodbye!");
         System.exit(0);
     }
+
+    private boolean userSelectsYes() {
+        Scanner scanner = new Scanner(System.in);
+        String select = scanner.nextLine();
+        System.out.println();
+        return select.equals("y");
+    }
+
+    private boolean userSelectsNo() {
+        Scanner scanner = new Scanner(System.in);
+        String select = scanner.nextLine();
+        System.out.println();
+        return select.equals("n");
+    }
 }
