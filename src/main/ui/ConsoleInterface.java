@@ -64,16 +64,14 @@ public class ConsoleInterface {
         currentMenu = "view_matches";
         if (matches.isEmpty()) {
             System.out.println("No matches have been added yet. \n");
-            System.out.println("[1] Add new match");
-            System.out.println("[2] Back to main menu");
         } else {
             for (Match match : matches) {
                 System.out.println(match.getOverview());
             }
-
-            System.out.println("[1] Add new match");
-            System.out.println("[2] Back to main menu");
         }
+
+        System.out.println("[1] Add new match");
+        System.out.println("[2] Back to main menu");
 
         Map<String, Runnable> commands = new HashMap<>();
 
