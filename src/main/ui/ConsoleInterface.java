@@ -16,7 +16,7 @@ public class ConsoleInterface {
     // EFFECTS: Initializes app, displays welcome message and displays application main menu
     public ConsoleInterface() {
         currentMenu = "";
-        Scanner scanner = new Scanner(System.in);
+        scanner = new Scanner(System.in);
         players = new ArrayList<>();
         rosters = new ArrayList<>();
         matches = new ArrayList<>();
@@ -84,6 +84,51 @@ public class ConsoleInterface {
 
     private void displayAddMatchMenu() {
         currentMenu = "add_matches";
+
+        System.out.println("Note that to complete this action, you must have the associated roster id.");
+        System.out.println("Do you want to proceed? [y/n] \n");
+        if (userSelectsNo()) {
+            System.out.println("Action cancelled by user. Returning to main menu. \n");
+            displayMainMenu();
+            return;
+        }
+        handleAddMatch();
+    }
+
+    private void handleAddMatch() {
+        System.out.println("Please enter the roster id: (Type \"cancel\" to return to main menu) \n");
+        String rosterId = scanner.nextLine();
+        Roster roster = null;
+
+        if (rosterId.equals("cancel")) {
+            System.out.println("Action cancelled by user. Returning to main menu. \n");
+            displayMainMenu();
+            return;
+        }
+
+        for (Roster r : rosters) {
+            if (r.getId().equals(rosterId)) {
+                roster = r;
+                break;
+            }
+        }
+
+        if (roster == null) {
+            System.out.println("\nNo roster with that id exists. Please try again. \n");
+            handleAddMatch();
+            return;
+        }
+
+        System.out.println("\nPlease enter the number of rounds won: \n");
+        int wonRounds = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("\nPlease enter the number of rounds lost: \n");
+        int lostRounds = Integer.parseInt(scanner.nextLine());
+
+        matches.add(new Match(roster, wonRounds, lostRounds));
+
+        System.out.println("Match added successfully. Returning to main menu. \n");
+        displayMainMenu();
     }
 
     private void displayPlayersMenu() {
