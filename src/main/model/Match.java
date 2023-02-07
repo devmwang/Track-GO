@@ -11,6 +11,10 @@ public class Match {
         this.roundsLost = roundsLost;
     }
 
+    public String getOverview() {
+        return "";
+    }
+
     public int getTotalRounds() {
         return roundsWon + roundsLost;
     }
