@@ -8,6 +8,7 @@ import model.Match;
 
 public class ConsoleInterface {
     private String currentMenu;
+    private Scanner scanner;
     private ArrayList<Player> players;
     private ArrayList<Roster> rosters;
     private ArrayList<Match> matches;
@@ -15,6 +16,7 @@ public class ConsoleInterface {
     // EFFECTS: Initializes app, displays welcome message and displays application main menu
     public ConsoleInterface() {
         currentMenu = "";
+        Scanner scanner = new Scanner(System.in);
         players = new ArrayList<>();
         rosters = new ArrayList<>();
         matches = new ArrayList<>();
@@ -26,7 +28,6 @@ public class ConsoleInterface {
     // EFFECTS: Generalized menu handler, handles user selection and displays appropriate menu
     private void handleMenu(Map<String, Runnable> commands) {
         System.out.println();
-        Scanner scanner = new Scanner(System.in);
         String select = scanner.nextLine();
         System.out.println();
 
@@ -100,14 +101,12 @@ public class ConsoleInterface {
     }
 
     private boolean userSelectsYes() {
-        Scanner scanner = new Scanner(System.in);
         String select = scanner.nextLine();
         System.out.println();
         return select.equals("y");
     }
 
     private boolean userSelectsNo() {
-        Scanner scanner = new Scanner(System.in);
         String select = scanner.nextLine();
         System.out.println();
         return select.equals("n");
