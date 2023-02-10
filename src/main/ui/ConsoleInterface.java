@@ -2,10 +2,7 @@ package ui;
 
 import java.util.*;
 
-import model.AppData;
-import model.Player;
-import model.Roster;
-import model.Match;
+import model.*;
 
 public class ConsoleInterface {
     private String currentMenu;
@@ -105,25 +102,25 @@ public class ConsoleInterface {
             return;
         }
 
-        Roster roster = appData.getRosterById(rosterId);
+        try {
+            Roster roster = appData.getRosterById(rosterId);
 
-        if (roster == null) {
+            System.out.println("\nPlease enter the number of rounds won: \n");
+            int wonRounds = Integer.parseInt(scanner.nextLine());
+
+            System.out.println("\nPlease enter the number of rounds lost: \n");
+            int lostRounds = Integer.parseInt(scanner.nextLine());
+
+            appData.addMatch(roster, wonRounds, lostRounds);
+
+            System.out.println("Match added successfully. To add player stats, please go to the \"Edit Match\" menu.");
+            System.out.println("Returning to main menu. \n");
+            displayMainMenu();
+        } catch (RosterNotFoundException e) {
             System.out.println("\nNo roster with that id exists. Please try again. \n");
             handleAddMatch();
             return;
         }
-
-        System.out.println("\nPlease enter the number of rounds won: \n");
-        int wonRounds = Integer.parseInt(scanner.nextLine());
-
-        System.out.println("\nPlease enter the number of rounds lost: \n");
-        int lostRounds = Integer.parseInt(scanner.nextLine());
-
-        appData.addMatch(new Match(roster, wonRounds, lostRounds));
-
-        System.out.println("Match added successfully. To add player stats, please go to the \"Edit Match\" menu.");
-        System.out.println("Returning to main menu. \n");
-        displayMainMenu();
     }
 
     private void displayPlayersMenu() {
@@ -167,7 +164,7 @@ public class ConsoleInterface {
 
         ArrayList<Player> playersArrayList = new ArrayList<>();
 
-        appData.addRoster(new Roster(id, playersArrayList));
+        appData.addRoster(id, playersArrayList);
 
         System.out.println("Roster created successfully. To edit this roster, please go to the \"Edit Roster\" menu.");
         System.out.println("Returning to main menu. \n");

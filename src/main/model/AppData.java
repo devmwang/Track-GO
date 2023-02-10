@@ -13,18 +13,51 @@ public class AppData {
         this.matches = new ArrayList<>();
     }
 
-    // EFFECTS: Returns list of players
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
-    // EFFECTS: Returns list of rosters
     public ArrayList<Roster> getRosters() {
         return rosters;
     }
 
-    // EFFECTS: Returns list of matches
     public ArrayList<Match> getMatches() {
         return matches;
+    }
+
+    // REQUIRES: Player in players has username
+    // EFFECTS: Returns player with username
+    public Player getPlayerByUsername(String username) throws UserNotFoundException {
+        for (Player player : players) {
+            if (player.getUsername().equals(username)) {
+                return player;
+            }
+        }
+
+        throw new UserNotFoundException();
+    }
+
+    // REQUIRES: Roster in rosters has id
+    // EFFECTS: Returns roster with id
+    public Roster getRosterById(String id) throws RosterNotFoundException {
+        for (Roster roster : rosters) {
+            if (roster.getId().equals(id)) {
+                return roster;
+            }
+        }
+
+        throw new RosterNotFoundException();
+    }
+
+    // REQUIRES: id, playersArrayList
+    // EFFECTS: Creates roster with provided data and adds created roster to rosters
+    public void addRoster(String id, ArrayList<Player> playersArrayList) {
+        rosters.add(new Roster(id, playersArrayList));
+    }
+
+    // REQUIRES: roster is in rosters, wonRounds >= 0, lostRounds >= 0
+    // EFFECTS: Adds provided match to matches
+    public void addMatch(Roster roster, int wonRounds, int lostRounds) {
+        matches.add(new Match(roster, wonRounds, lostRounds));
     }
 }
