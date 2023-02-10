@@ -5,13 +5,11 @@ import java.util.*;
 import model.*;
 
 public class ConsoleInterface {
-    private String currentMenu;
     private Scanner scanner;
     private AppData appData;
 
     // EFFECTS: Initializes app, displays welcome message and displays application main menu
     public ConsoleInterface() {
-        currentMenu = "";
         scanner = new Scanner(System.in);
         appData = new AppData();
 
@@ -35,7 +33,6 @@ public class ConsoleInterface {
 
     // EFFECTS: Displays menu options and passes user selection to handleMenu
     private void displayMainMenu() {
-        currentMenu = "main";
         System.out.println("Please select an option:");
 
         System.out.println("[1] View matches");
@@ -57,8 +54,6 @@ public class ConsoleInterface {
 
     // EFFECTS: Displays matches overview
     private void displayMatchesMenu() {
-        currentMenu = "view_matches";
-
         ArrayList<Match> matches = appData.getMatches();
 
         if (matches.isEmpty()) {
@@ -82,8 +77,6 @@ public class ConsoleInterface {
 
     // EFFECTS: Displays add match interface
     private void displayAddMatchMenu() {
-        currentMenu = "add_matches";
-
         System.out.println("Note that to complete this action, you must have the associated roster id.");
         System.out.println("Do you want to proceed? [y/n] \n");
         if (userSelects("n")) {
@@ -127,8 +120,6 @@ public class ConsoleInterface {
 
     // EFFECTS: Displays players overview
     private void displayPlayersMenu() {
-        currentMenu = "view_players";
-
         ArrayList<Player> players = appData.getPlayers();
 
         if (players.isEmpty()) {
@@ -151,8 +142,6 @@ public class ConsoleInterface {
     }
 
     private void displayAddPlayerMenu() {
-        currentMenu = "add_player";
-
         System.out.println("\nPlease enter the player's username: \n");
         String username = scanner.nextLine();
 
@@ -164,13 +153,10 @@ public class ConsoleInterface {
     }
 
     private void displayEditPlayersMenu() {
-
     }
 
     // EFFECTS: Displays rosters overview
     private void displayRosterMenu() {
-        currentMenu = "view_rosters";
-
         ArrayList<Roster> rosters = appData.getRosters();
 
         if (rosters.isEmpty()) {
@@ -196,8 +182,6 @@ public class ConsoleInterface {
 
     // EFFECTS: Displays add roster interface
     private void displayAddRosterMenu() {
-        currentMenu = "add_roster";
-
         System.out.println("\nPlease enter a roster identifier (id): \n");
         String id = scanner.nextLine();
 
@@ -228,8 +212,6 @@ public class ConsoleInterface {
 
     // EFFECTS: Displays roster edit interface
     private void displayEditRostersMenu() {
-        currentMenu = "edit_rosters";
-
         System.out.println("Note that to complete this action, you must have the associated roster id.");
         System.out.println("Do you want to proceed? [y/n] \n");
         if (userSelects("n")) {
@@ -342,7 +324,6 @@ public class ConsoleInterface {
 
     // EFFECTS: Displays exit message and exits program
     private void exit() {
-        currentMenu = "exit";
         System.out.println("Goodbye!");
         System.exit(0);
     }
