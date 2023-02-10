@@ -133,11 +133,11 @@ public class ConsoleInterface {
         if (players.isEmpty()) {
             System.out.println("No players have been added yet. \n");
         } else {
-            System.out.println("------------------------------------------------------------");
             for (Player player : players) {
-                System.out.println(player.getOverview());
                 System.out.println("------------------------------------------------------------");
+                System.out.println(player.getOverview());
             }
+            System.out.println("------------------------------------------------------------ \n");
         }
 
         ArrayList<String> optionsText = new ArrayList<>();
@@ -156,12 +156,12 @@ public class ConsoleInterface {
     }
 
     private void displayAddPlayerMenu() {
-        System.out.println("\nPlease enter the player's username: \n");
+        System.out.println("Please enter the player's username: \n");
         String username = scanner.nextLine();
 
         appData.addPlayer(username);
 
-        System.out.println("Player created successfully. To edit this player, please go to the \"Edit players\" menu.");
+        System.out.println("\nPlayer created successfully. To edit this player, please go to the \"Edit players\" menu.");
         System.out.println("Returning to main menu. \n");
         displayMainMenu();
     }
@@ -183,7 +183,7 @@ public class ConsoleInterface {
         String username = scanner.nextLine();
 
         if (username.equals("cancel")) {
-            System.out.println("Action cancelled by user. Returning to main menu. \n");
+            System.out.println("\nAction cancelled by user. Returning to main menu. \n");
             displayMainMenu();
             return;
         }
@@ -191,12 +191,12 @@ public class ConsoleInterface {
         try {
             Player player = appData.getPlayerByUsername(username);
 
-            System.out.println("Enter the new username: (Type \"cancel\" to return to main menu) \n");
+            System.out.println("\nEnter the new username: (Type \"cancel\" to return to main menu) \n");
 
             String newUsername = scanner.nextLine();
 
             if (newUsername.equals("cancel")) {
-                System.out.println("Action cancelled by user. Returning to main menu. \n");
+                System.out.println("\nAction cancelled by user. Returning to main menu. \n");
                 displayMainMenu();
                 return;
             }
@@ -237,7 +237,7 @@ public class ConsoleInterface {
 
     // EFFECTS: Displays add roster interface
     private void displayAddRosterMenu() {
-        System.out.println("\nPlease enter a roster identifier (id): \n");
+        System.out.println("Please enter a roster identifier (id): \n");
         String id = scanner.nextLine();
 
         System.out.println("\nPlease enter the usernames of the players in this roster, separated by commas: \n");
@@ -284,7 +284,7 @@ public class ConsoleInterface {
         String rosterId = scanner.nextLine();
 
         if (rosterId.equals("cancel")) {
-            System.out.println("Action cancelled by user. Returning to main menu. \n");
+            System.out.println("\nAction cancelled by user. Returning to main menu. \n");
             displayMainMenu();
             return;
         }
@@ -302,7 +302,7 @@ public class ConsoleInterface {
     // REQUIRES: roster in appData
     // EFFECTS: Handles second step of editing roster (Selecting edit mode)
     private void handleEditRosterSelect(Roster roster) {
-        System.out.println("\nPlease select an edit mode. \n");
+        System.out.println("\nPlease select an edit mode.");
         System.out.println("[add] Add player to roster");
         System.out.println("[remove] Remove player from roster");
         System.out.println("[delete] Delete roster");
@@ -318,10 +318,10 @@ public class ConsoleInterface {
             case "delete":
                 handleEditRosterDelete(roster);
             case "cancel":
-                System.out.println("Action cancelled by user. Returning to main menu. \n");
+                System.out.println("\nAction cancelled by user. Returning to main menu. \n");
                 displayMainMenu();
             default:
-                System.out.println("Invalid input. Please try again. \n");
+                System.out.println("\nInvalid input. Please try again. \n");
                 handleEditRosterSelect(roster);
         }
     }
