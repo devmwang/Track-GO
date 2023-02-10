@@ -139,11 +139,16 @@ public class ConsoleInterface {
         if (players.isEmpty()) {
             System.out.println("No players have been added yet. \n");
         } else {
+            String overviewFormat = "| %-15s | %-12s | %-13s | %-4s |%n";
+
+            System.out.format("+-----------------+--------------+---------------+------+%n");
+            System.out.format("| Player          | Games Played | Rounds Played | MVPs |%n");
+            System.out.format("+-----------------+--------------+---------------+------+%n");
             for (Player player : players) {
-                System.out.println("------------------------------------------------------------");
-                System.out.println(player.getOverview());
+                System.out.format(overviewFormat, player.getUsername(), player.getGamesPlayed(),
+                        player.getRoundsPlayed(), player.getMostValuablePlayerAwards());
             }
-            System.out.println("------------------------------------------------------------ \n");
+            System.out.format("+-----------------+--------------+---------------+------+%n");
         }
 
         ArrayList<String> optionsText = new ArrayList<>();
@@ -229,11 +234,18 @@ public class ConsoleInterface {
         if (rosters.isEmpty()) {
             System.out.println("No rosters have been added yet. \n");
         } else {
-            for (Roster roster : rosters) {
-                System.out.println("------------------------------------------------------------");
-                System.out.println(roster.getOverview());
-            }
-            System.out.println("------------------------------------------------------------ \n");
+//            String overviewFormat = "| %-15s | %-12d | %-13d | %-4d |%n";
+//
+//            System.out.format("+-----------------+--------------+---------------+------+%n");
+//            System.out.format("| Player          | Games Played | Rounds Played | MVPs |%n");
+//            System.out.format("+-----------------+--------------+---------------+------+%n");
+//            for (Roster roster : rosters) {
+//                HashMap<String, String> data = player.getOverview();
+//
+//                System.out.format(overviewFormat, data.get("username", ""),
+//                        data.get("gamePlayed"), data.get("roundsPlayed"), data.get("MVPs"));
+//            }
+//            System.out.format("+-----------------+--------------+---------------+------+%n");
         }
 
         ArrayList<String> optionsText = new ArrayList<>();
@@ -402,7 +414,7 @@ public class ConsoleInterface {
 
     // EFFECTS: Displays exit message and exits program
     private void exit() {
-        System.out.println("\nGoodbye!");
+        System.out.println("Goodbye!");
         System.exit(0);
     }
 }

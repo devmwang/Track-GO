@@ -1,13 +1,15 @@
 package model;
 
+import java.util.HashMap;
+
 // Represents an individual player to be tracked by the application
 public class Player {
-    private String username;
+    private String username = "";
     private int gamesPlayed;
     private int roundsPlayed;
     private int totalDamageDealt;
     private int totalPoints;
-    private int totalMostValuablePlayerAwards;
+    private int mostValuablePlayerAwards;
     private int totalEnemiesFlashed;
 
     // REQUIRES: username is not null
@@ -18,20 +20,12 @@ public class Player {
         this.roundsPlayed = 0;
         this.totalDamageDealt = 0;
         this.totalPoints = 0;
-        this.totalMostValuablePlayerAwards = 0;
+        this.mostValuablePlayerAwards = 0;
         this.totalEnemiesFlashed = 0;
     }
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getOverview() {
-        return username
-                + " | "
-                + gamesPlayed + (gamesPlayed == 1 ? " Game Played | " : " Games Played | ")
-                + roundsPlayed + (roundsPlayed == 1 ? " Round Played | " : " Rounds Played | ")
-                + totalMostValuablePlayerAwards + (totalMostValuablePlayerAwards == 1 ? " MVP" : " MVPs");
     }
 
     public String getUsername() {
@@ -54,8 +48,8 @@ public class Player {
         return totalPoints;
     }
 
-    public int getTotalMostValuablePlayerAwards() {
-        return totalMostValuablePlayerAwards;
+    public int getMostValuablePlayerAwards() {
+        return mostValuablePlayerAwards;
     }
 
     public int getTotalEnemiesFlashed() {
