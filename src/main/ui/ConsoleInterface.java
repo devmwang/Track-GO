@@ -18,7 +18,11 @@ public class ConsoleInterface {
     }
 
     // EFFECTS: Generalized menu handler, handles user selection and displays appropriate menu
-    private void handleMenu(Map<String, Runnable> commands) {
+    private void handleMenu(ArrayList<String> optionsText, Map<String, Runnable> commands) {
+        for (String option : optionsText) {
+            System.out.println(option);
+        }
+
         System.out.println();
         String select = scanner.nextLine();
         System.out.println();
@@ -27,7 +31,7 @@ public class ConsoleInterface {
             commands.get(select).run();
         } else {
             System.out.println("Invalid selection, please try again. \n");
-            handleMenu(commands);
+            handleMenu(optionsText, commands);
         }
     }
 
@@ -35,11 +39,13 @@ public class ConsoleInterface {
     private void displayMainMenu() {
         System.out.println("Please select an option:");
 
-        System.out.println("[1] View matches");
-        System.out.println("[2] Add new match");
-        System.out.println("[3] View players");
-        System.out.println("[4] View rosters");
-        System.out.println("[5] Exit");
+        ArrayList<String> optionsText = new ArrayList<>();
+
+        optionsText.add("[1] View matches");
+        optionsText.add("[2] Add new match");
+        optionsText.add("[3] View players");
+        optionsText.add("[4] View rosters");
+        optionsText.add("[5] Exit");
 
         Map<String, Runnable> commands = new HashMap<>();
 
@@ -49,7 +55,7 @@ public class ConsoleInterface {
         commands.put("4", this::displayRosterMenu);
         commands.put("5", this::exit);
 
-        handleMenu(commands);
+        handleMenu(optionsText, commands);
     }
 
     // EFFECTS: Displays matches overview
@@ -64,15 +70,17 @@ public class ConsoleInterface {
             }
         }
 
-        System.out.println("[1] Add new match");
-        System.out.println("[2] Back to main menu");
+        ArrayList<String> optionsText = new ArrayList<>();
+
+        optionsText.add("[1] Add new match");
+        optionsText.add("[2] Back to main menu");
 
         Map<String, Runnable> commands = new HashMap<>();
 
         commands.put("1", this::displayAddMatchMenu);
         commands.put("2", this::displayMainMenu);
 
-        handleMenu(commands);
+        handleMenu(optionsText, commands);
     }
 
     // EFFECTS: Displays add match interface
@@ -132,9 +140,11 @@ public class ConsoleInterface {
             }
         }
 
-        System.out.println("[1] Add new player");
-        System.out.println("[2] Edit players");
-        System.out.println("[3] Back to main menu");
+        ArrayList<String> optionsText = new ArrayList<>();
+
+        optionsText.add("[1] Add new player");
+        optionsText.add("[2] Edit players");
+        optionsText.add("[3] Back to main menu");
 
         Map<String, Runnable> commands = new HashMap<>();
 
@@ -142,7 +152,7 @@ public class ConsoleInterface {
         commands.put("2", this::displayEditPlayersMenu);
         commands.put("3", this::displayMainMenu);
 
-        handleMenu(commands);
+        handleMenu(optionsText, commands);
     }
 
     private void displayAddPlayerMenu() {
@@ -210,9 +220,11 @@ public class ConsoleInterface {
             }
         }
 
-        System.out.println("[1] Add new roster");
-        System.out.println("[2] Edit rosters");
-        System.out.println("[3] Back to main menu");
+        ArrayList<String> optionsText = new ArrayList<>();
+
+        optionsText.add("[1] Add new roster");
+        optionsText.add("[2] Edit rosters");
+        optionsText.add("[3] Back to main menu");
 
         Map<String, Runnable> commands = new HashMap<>();
 
@@ -220,7 +232,7 @@ public class ConsoleInterface {
         commands.put("2", this::displayEditRostersMenu);
         commands.put("3", this::displayMainMenu);
 
-        handleMenu(commands);
+        handleMenu(optionsText, commands);
     }
 
     // EFFECTS: Displays add roster interface
