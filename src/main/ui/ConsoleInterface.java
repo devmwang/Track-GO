@@ -55,6 +55,7 @@ public class ConsoleInterface {
         handleMenu(commands);
     }
 
+    // EFFECTS: Displays matches overview
     private void displayMatchesMenu() {
         currentMenu = "view_matches";
 
@@ -79,6 +80,7 @@ public class ConsoleInterface {
         handleMenu(commands);
     }
 
+    // EFFECTS: Displays add match interface
     private void displayAddMatchMenu() {
         currentMenu = "add_matches";
 
@@ -92,6 +94,7 @@ public class ConsoleInterface {
         handleAddMatch();
     }
 
+    // EFFECTS: Handles adding match to appData
     private void handleAddMatch() {
         System.out.println("Please enter the roster id: (Type \"cancel\" to return to main menu) \n");
         String rosterId = scanner.nextLine();
@@ -122,10 +125,49 @@ public class ConsoleInterface {
         }
     }
 
+    // EFFECTS: Displays players overview
     private void displayPlayersMenu() {
         currentMenu = "view_players";
+
+        ArrayList<Player> players = appData.getPlayers();
+
+        if (players.isEmpty()) {
+            System.out.println("No players have been added yet. \n");
+        } else {
+            for (Player player : players) {
+                System.out.println(player.getOverview());
+            }
+        }
+
+        System.out.println("[1] Add new player");
+        System.out.println("[2] Edit players");
+        System.out.println("[3] Back to main menu");
+
+        Map<String, Runnable> commands = new HashMap<>();
+
+        commands.put("1", this::displayAddPlayerMenu);
+        commands.put("2", this::displayEditPlayersMenu);
+        commands.put("3", this::displayMainMenu);
     }
 
+    private void displayAddPlayerMenu() {
+        currentMenu = "add_player";
+
+        System.out.println("\nPlease enter the player's username: \n");
+        String username = scanner.nextLine();
+
+        appData.addPlayer(username);
+
+        System.out.println("Player created successfully. To edit this player, please go to the \"Edit players\" menu.");
+        System.out.println("Returning to main menu. \n");
+        displayMainMenu();
+    }
+
+    private void displayEditPlayersMenu() {
+
+    }
+
+    // EFFECTS: Displays rosters overview
     private void displayRosterMenu() {
         currentMenu = "view_rosters";
 
@@ -152,6 +194,7 @@ public class ConsoleInterface {
         handleMenu(commands);
     }
 
+    // EFFECTS: Displays add roster interface
     private void displayAddRosterMenu() {
         currentMenu = "add_roster";
 
@@ -183,6 +226,7 @@ public class ConsoleInterface {
         displayMainMenu();
     }
 
+    // EFFECTS: Displays roster edit interface
     private void displayEditRostersMenu() {
         currentMenu = "edit_rosters";
 
@@ -197,6 +241,7 @@ public class ConsoleInterface {
         handleEditRoster();
     }
 
+    // EFFECTS: Handles first step of editing roster
     private void handleEditRoster() {
         System.out.println("Please enter the roster id: (Type \"cancel\" to return to main menu) \n");
         String rosterId = scanner.nextLine();
@@ -211,16 +256,14 @@ public class ConsoleInterface {
             Roster roster = appData.getRosterById(rosterId);
 
             handleEditRosterSelect(roster);
-
-//            System.out.println("Match added successfully.");
-//            System.out.println("Returning to main menu. \n");
-//            displayMainMenu();
         } catch (RosterNotFoundException e) {
             System.out.println("\nNo roster with that id exists. Please try again. \n");
             handleEditRoster();
         }
     }
 
+    // REQUIRES: roster in appData
+    // EFFECTS: Handles second step of editing roster (Selecting edit mode)
     private void handleEditRosterSelect(Roster roster) {
         System.out.println("\nDo you want to add or remove a player? [add/remove] \n");
 
@@ -234,6 +277,8 @@ public class ConsoleInterface {
         }
     }
 
+    // REQUIRES: roster in appData
+    // EFFECTS: Handles adding player to provided roster
     private void handleEditRosterAdd(Roster roster) {
         System.out.println("\nPlease enter the username of the player you want to add: \n");
         String username = scanner.nextLine();
@@ -249,6 +294,8 @@ public class ConsoleInterface {
         }
     }
 
+    // REQUIRES: roster in appData
+    // EFFECTS: Handles removing player from provided roster
     private void handleEditRosterRemove(Roster roster) {
         System.out.println("\nPlease enter the username of the player you want to remove: \n");
         String username = scanner.nextLine();
@@ -264,12 +311,15 @@ public class ConsoleInterface {
         }
     }
 
+    // EFFECTS: Displays exit message and exits program
     private void exit() {
         currentMenu = "exit";
         System.out.println("Goodbye!");
         System.exit(0);
     }
 
+    // REQUIRES: string
+    // EFFECTS: Checks if user input matches provided string and return result
     private boolean userSelects(String string) {
         String select = scanner.nextLine();
         System.out.println();

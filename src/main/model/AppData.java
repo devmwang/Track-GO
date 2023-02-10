@@ -49,6 +49,12 @@ public class AppData {
         throw new RosterNotFoundException();
     }
 
+    // REQUIRES: username
+    // EFFECTS: Creates player with provided username adds created player to players
+    public void addPlayer(String username) {
+        players.add(new Player(username));
+    }
+
     // REQUIRES: id, playersArrayList
     // EFFECTS: Creates roster with provided data and adds created roster to rosters
     public void addRoster(String id, ArrayList<Player> playersArrayList) {
