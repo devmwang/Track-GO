@@ -265,15 +265,27 @@ public class ConsoleInterface {
     // REQUIRES: roster in appData
     // EFFECTS: Handles second step of editing roster (Selecting edit mode)
     private void handleEditRosterSelect(Roster roster) {
-        System.out.println("\nDo you want to add or remove a player? [add/remove] \n");
+        System.out.println("\nPlease select an edit mode. \n");
+        System.out.println("[add] Add player to roster");
+        System.out.println("[remove] Remove player from roster");
+        System.out.println("[delete] Delete roster");
+        System.out.println("[cancel] Back to main menu");
 
-        if (userSelects("add")) {
-            handleEditRosterAdd(roster);
-        } else if (userSelects("remove")) {
-            handleEditRosterRemove(roster);
-        } else {
-            System.out.println("Invalid input. Please try again. \n");
-            handleEditRosterSelect(roster);
+        String select = scanner.nextLine();
+
+        switch (select) {
+            case "add":
+                handleEditRosterAdd(roster);
+            case "remove":
+                handleEditRosterRemove(roster);
+            case "delete":
+                handleEditRosterDelete(roster);
+            case "cancel":
+                System.out.println("Action cancelled by user. Returning to main menu. \n");
+                displayMainMenu();
+            default:
+                System.out.println("Invalid input. Please try again. \n");
+                handleEditRosterSelect(roster);
         }
     }
 
@@ -297,6 +309,23 @@ public class ConsoleInterface {
     // REQUIRES: roster in appData
     // EFFECTS: Handles removing player from provided roster
     private void handleEditRosterRemove(Roster roster) {
+        System.out.println("\nPlease enter the username of the player you want to remove: \n");
+        String username = scanner.nextLine();
+
+        try {
+            Player player = appData.getPlayerByUsername(username);
+            roster.removePlayer(player);
+            System.out.println("Player removed successfully. Returning to main menu. \n");
+            displayMainMenu();
+        } catch (PlayerNotFoundException e) {
+            System.out.println("\nNo player with the username " + username + " exists. Please try again. \n");
+            handleEditRosterRemove(roster);
+        }
+    }
+
+    // REQUIRES: roster in appData
+    // EFFECTS: Handles deleting roster
+    private void handleEditRosterDelete(Roster roster) {
         System.out.println("\nPlease enter the username of the player you want to remove: \n");
         String username = scanner.nextLine();
 
