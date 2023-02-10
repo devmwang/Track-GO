@@ -52,7 +52,7 @@ public class ConsoleInterface {
         commands.put("1", this::displayMatchesMenu);
         commands.put("2", this::displayAddMatchMenu);
         commands.put("3", this::displayPlayersMenu);
-        commands.put("4", this::displayRosterMenu);
+        commands.put("4", this::displayRostersMenu);
         commands.put("5", this::exit);
 
         handleMenu(optionsText, commands);
@@ -87,17 +87,23 @@ public class ConsoleInterface {
     private void displayAddMatchMenu() {
         System.out.println("Note that to complete this action, you must have the associated roster id.");
         System.out.println("Do you want to proceed? [y/n] \n");
-        if (userSelects("n")) {
-            System.out.println("Action cancelled by user. Returning to main menu. \n");
+
+        String input = scanner.nextLine();
+
+        if (input.equals("n")) {
+            System.out.println("\nAction cancelled by user. Returning to main menu. \n");
             displayMainMenu();
-            return;
+        } else if (input.equals("y")) {
+            handleAddMatch();
+        } else {
+            System.out.println("\nInvalid selection, please try again. \n");
+            displayAddMatchMenu();
         }
-        handleAddMatch();
     }
 
     // EFFECTS: Handles adding match to appData
     private void handleAddMatch() {
-        System.out.println("Please enter the roster id: (Type \"cancel\" to return to main menu) \n");
+        System.out.println("\nPlease enter the roster id: (Type \"cancel\" to return to main menu) \n");
         String rosterId = scanner.nextLine();
 
         if (rosterId.equals("cancel")) {
@@ -169,17 +175,22 @@ public class ConsoleInterface {
     private void displayEditPlayersMenu() {
         System.out.println("Note that to complete this action, you must have the player's username.");
         System.out.println("Do you want to proceed? [y/n] \n");
-        if (userSelects("n")) {
-            System.out.println("Action cancelled by user. Returning to main menu. \n");
-            displayMainMenu();
-            return;
-        }
 
-        handleEditPlayer();
+        String input = scanner.nextLine();
+
+        if (input.equals("n")) {
+            System.out.println("\nAction cancelled by user. Returning to main menu. \n");
+            displayMainMenu();
+        } else if (input.equals("y")) {
+            handleEditPlayer();
+        } else {
+            System.out.println("\nInvalid input. Please try again. \n");
+            displayEditPlayersMenu();
+        }
     }
 
     private void handleEditPlayer() {
-        System.out.println("Please enter the player's username: (Type \"cancel\" to return to main menu) \n");
+        System.out.println("\nPlease enter the player's username: (Type \"cancel\" to return to main menu) \n");
         String username = scanner.nextLine();
 
         if (username.equals("cancel")) {
@@ -212,15 +223,17 @@ public class ConsoleInterface {
     }
 
     // EFFECTS: Displays rosters overview
-    private void displayRosterMenu() {
+    private void displayRostersMenu() {
         ArrayList<Roster> rosters = appData.getRosters();
 
         if (rosters.isEmpty()) {
             System.out.println("No rosters have been added yet. \n");
         } else {
             for (Roster roster : rosters) {
+                System.out.println("------------------------------------------------------------");
                 System.out.println(roster.getOverview());
             }
+            System.out.println("------------------------------------------------------------ \n");
         }
 
         ArrayList<String> optionsText = new ArrayList<>();
@@ -263,7 +276,7 @@ public class ConsoleInterface {
 
         appData.addRoster(id, playersArrayList);
 
-        System.out.println("Roster created successfully. To edit this roster, please go to the \"Edit rosters\" menu.");
+        System.out.println("\nRoster created successfully. To edit this roster, please go to the \"Edit rosters\" menu.");
         System.out.println("Returning to main menu. \n");
         displayMainMenu();
     }
@@ -272,18 +285,23 @@ public class ConsoleInterface {
     private void displayEditRostersMenu() {
         System.out.println("Note that to complete this action, you must have the associated roster id.");
         System.out.println("Do you want to proceed? [y/n] \n");
-        if (userSelects("n")) {
-            System.out.println("Action cancelled by user. Returning to main menu. \n");
-            displayMainMenu();
-            return;
-        }
 
-        handleEditRoster();
+        String input = scanner.nextLine();
+
+        if (input.equals("n")) {
+            System.out.println("\nAction cancelled by user. Returning to main menu. \n");
+            displayMainMenu();
+        } else if (input.equals("y")) {
+            handleEditRoster();
+        } else {
+            System.out.println("\nInvalid input. Please try again. \n");
+            displayEditRostersMenu();
+        }
     }
 
     // EFFECTS: Handles first step of editing roster
     private void handleEditRoster() {
-        System.out.println("Please enter the roster id: (Type \"cancel\" to return to main menu) \n");
+        System.out.println("\nPlease enter the roster id: (Type \"cancel\" to return to main menu) \n");
         String rosterId = scanner.nextLine();
 
         if (rosterId.equals("cancel")) {
@@ -386,13 +404,5 @@ public class ConsoleInterface {
     private void exit() {
         System.out.println("\nGoodbye!");
         System.exit(0);
-    }
-
-    // REQUIRES: string
-    // EFFECTS: Checks if user input matches provided string and return result
-    private boolean userSelects(String string) {
-        String select = scanner.nextLine();
-        System.out.println();
-        return select.equals(string);
     }
 }
