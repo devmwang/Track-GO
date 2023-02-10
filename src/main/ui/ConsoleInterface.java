@@ -84,7 +84,7 @@ public class ConsoleInterface {
 
         System.out.println("Note that to complete this action, you must have the associated roster id.");
         System.out.println("Do you want to proceed? [y/n] \n");
-        if (userSelectsNo()) {
+        if (userSelects("n")) {
             System.out.println("Action cancelled by user. Returning to main menu. \n");
             displayMainMenu();
             return;
@@ -186,6 +186,82 @@ public class ConsoleInterface {
     private void displayEditRostersMenu() {
         currentMenu = "edit_rosters";
 
+        System.out.println("Note that to complete this action, you must have the associated roster id.");
+        System.out.println("Do you want to proceed? [y/n] \n");
+        if (userSelects("n")) {
+            System.out.println("Action cancelled by user. Returning to main menu. \n");
+            displayMainMenu();
+            return;
+        }
+
+        handleEditRoster();
+    }
+
+    private void handleEditRoster() {
+        System.out.println("Please enter the roster id: (Type \"cancel\" to return to main menu) \n");
+        String rosterId = scanner.nextLine();
+
+        if (rosterId.equals("cancel")) {
+            System.out.println("Action cancelled by user. Returning to main menu. \n");
+            displayMainMenu();
+            return;
+        }
+
+        try {
+            Roster roster = appData.getRosterById(rosterId);
+
+            handleEditRosterSelect(roster);
+
+//            System.out.println("Match added successfully.");
+//            System.out.println("Returning to main menu. \n");
+//            displayMainMenu();
+        } catch (RosterNotFoundException e) {
+            System.out.println("\nNo roster with that id exists. Please try again. \n");
+            handleEditRoster();
+        }
+    }
+
+    private void handleEditRosterSelect(Roster roster) {
+        System.out.println("\nDo you want to add or remove a player? [add/remove] \n");
+
+        if (userSelects("add")) {
+            handleEditRosterAdd(roster);
+        } else if (userSelects("remove")) {
+            handleEditRosterRemove(roster);
+        } else {
+            System.out.println("Invalid input. Please try again. \n");
+            handleEditRosterSelect(roster);
+        }
+    }
+
+    private void handleEditRosterAdd(Roster roster) {
+        System.out.println("\nPlease enter the username of the player you want to add: \n");
+        String username = scanner.nextLine();
+
+        try {
+            Player player = appData.getPlayerByUsername(username);
+            roster.addPlayer(player);
+            System.out.println("Player added successfully. Returning to main menu. \n");
+            displayMainMenu();
+        } catch (PlayerNotFoundException e) {
+            System.out.println("\nNo player with the username " + username + " exists. Please try again. \n");
+            handleEditRosterAdd(roster);
+        }
+    }
+
+    private void handleEditRosterRemove(Roster roster) {
+        System.out.println("\nPlease enter the username of the player you want to remove: \n");
+        String username = scanner.nextLine();
+
+        try {
+            Player player = appData.getPlayerByUsername(username);
+            roster.removePlayer(player);
+            System.out.println("Player removed successfully. Returning to main menu. \n");
+            displayMainMenu();
+        } catch (PlayerNotFoundException e) {
+            System.out.println("\nNo player with the username " + username + " exists. Please try again. \n");
+            handleEditRosterRemove(roster);
+        }
     }
 
     private void exit() {
@@ -194,15 +270,9 @@ public class ConsoleInterface {
         System.exit(0);
     }
 
-    private boolean userSelectsYes() {
+    private boolean userSelects(String string) {
         String select = scanner.nextLine();
         System.out.println();
-        return select.equals("y");
-    }
-
-    private boolean userSelectsNo() {
-        String select = scanner.nextLine();
-        System.out.println();
-        return select.equals("n");
+        return select.equals(string);
     }
 }
