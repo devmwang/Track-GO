@@ -148,7 +148,7 @@ public class ConsoleInterface {
                 System.out.format(overviewFormat, player.getUsername(), player.getGamesPlayed(),
                         player.getRoundsPlayed(), player.getMostValuablePlayerAwards());
             }
-            System.out.format("+-----------------+--------------+---------------+------+%n");
+            System.out.format("+-----------------+--------------+---------------+------+%n%n");
         }
 
         ArrayList<String> optionsText = new ArrayList<>();
@@ -234,18 +234,15 @@ public class ConsoleInterface {
         if (rosters.isEmpty()) {
             System.out.println("No rosters have been added yet. \n");
         } else {
-//            String overviewFormat = "| %-15s | %-12d | %-13d | %-4d |%n";
-//
-//            System.out.format("+-----------------+--------------+---------------+------+%n");
-//            System.out.format("| Player          | Games Played | Rounds Played | MVPs |%n");
-//            System.out.format("+-----------------+--------------+---------------+------+%n");
-//            for (Roster roster : rosters) {
-//                HashMap<String, String> data = player.getOverview();
-//
-//                System.out.format(overviewFormat, data.get("username", ""),
-//                        data.get("gamePlayed"), data.get("roundsPlayed"), data.get("MVPs"));
-//            }
-//            System.out.format("+-----------------+--------------+---------------+------+%n");
+            String overviewFormat = "| %-15s | %-13s |%n";
+
+            System.out.format("+-----------------+---------------+%n");
+            System.out.format("| Roster          | Avg. Win Rate |%n");
+            System.out.format("+-----------------+---------------+%n");
+            for (Roster roster : rosters) {
+                System.out.format(overviewFormat, roster.getId(), roster.getWinRate());
+            }
+            System.out.format("+-----------------+---------------+%n%n");
         }
 
         ArrayList<String> optionsText = new ArrayList<>();

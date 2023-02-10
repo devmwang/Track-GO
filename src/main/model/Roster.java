@@ -41,6 +41,10 @@ public class Roster {
         return players;
     }
 
+    public double getWinRate() {
+        return 0.0;
+    }
+
     public int getGamesPlayed() {
         return gamesPlayed;
     }
