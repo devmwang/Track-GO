@@ -125,8 +125,10 @@ public class ConsoleInterface {
         if (players.isEmpty()) {
             System.out.println("No players have been added yet. \n");
         } else {
+            System.out.println("------------------------------------------------------------");
             for (Player player : players) {
                 System.out.println(player.getOverview());
+                System.out.println("------------------------------------------------------------");
             }
         }
 

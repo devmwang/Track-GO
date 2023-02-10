@@ -27,7 +27,11 @@ public class Player {
     }
 
     public String getOverview() {
-        return "";
+        return username
+                + " | "
+                + gamesPlayed + (gamesPlayed == 1 ? " Game Played | " : " Games Played | ")
+                + roundsPlayed + (roundsPlayed == 1 ? " Round Played | " : " Rounds Played | ")
+                + totalMostValuablePlayerAwards + (totalMostValuablePlayerAwards == 1 ? " MVP" : " MVPs");
     }
 
     public String getUsername() {
