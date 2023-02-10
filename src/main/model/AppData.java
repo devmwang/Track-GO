@@ -66,4 +66,10 @@ public class AppData {
     public void addMatch(Roster roster, int wonRounds, int lostRounds) {
         matches.add(new Match(roster, wonRounds, lostRounds));
     }
+
+    // REQUIRES: roster is in rosters
+    // EFFECTS: Deletes roster from rosters
+    public void deleteRoster(Roster roster) {
+        rosters.remove(roster);
+    }
 }

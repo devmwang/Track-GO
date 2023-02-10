@@ -347,23 +347,25 @@ public class ConsoleInterface {
     // REQUIRES: roster in appData
     // EFFECTS: Handles deleting roster
     private void handleEditRosterDelete(Roster roster) {
-        System.out.println("\nPlease enter the username of the player you want to remove: \n");
-        String username = scanner.nextLine();
+        System.out.println("\nConfirm deletion by typing in roster id: (Type \"cancel\" to return to main menu) \n");
+        String confirmation = scanner.nextLine();
 
-        try {
-            Player player = appData.getPlayerByUsername(username);
-            roster.removePlayer(player);
-            System.out.println("Player removed successfully. Returning to main menu. \n");
+        if (confirmation.equals("cancel")) {
+            System.out.println("\nAction cancelled by user. Returning to main menu. \n");
             displayMainMenu();
-        } catch (PlayerNotFoundException e) {
-            System.out.println("\nNo player with the username " + username + " exists. Please try again. \n");
-            handleEditRosterRemove(roster);
+        } else if (confirmation.equals(roster.getId())) {
+            appData.deleteRoster(roster);
+            System.out.println("\nRoster deleted successfully. Returning to main menu. \n");
+            displayMainMenu();
+        } else {
+            System.out.println("\nInvalid input. Please try again. \n");
+            handleEditRosterDelete(roster);
         }
     }
 
     // EFFECTS: Displays exit message and exits program
     private void exit() {
-        System.out.println("Goodbye!");
+        System.out.println("\nGoodbye!");
         System.exit(0);
     }
 
