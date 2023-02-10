@@ -153,6 +153,45 @@ public class ConsoleInterface {
     }
 
     private void displayEditPlayersMenu() {
+        System.out.println("Note that to complete this action, you must have the player's username.");
+        System.out.println("Do you want to proceed? [y/n] \n");
+        if (userSelects("n")) {
+            System.out.println("Action cancelled by user. Returning to main menu. \n");
+            displayMainMenu();
+            return;
+        }
+
+        handleEditPlayer();
+    }
+
+    private void handleEditPlayer() {
+        System.out.println("Please enter the player's username: (Type \"cancel\" to return to main menu) \n");
+        String username = scanner.nextLine();
+
+        if (username.equals("cancel")) {
+            System.out.println("Action cancelled by user. Returning to main menu. \n");
+            displayMainMenu();
+            return;
+        }
+
+        try {
+            Player player = appData.getPlayerByUsername(username);
+
+            System.out.println("Enter the new username: (Type \"cancel\" to return to main menu) \n");
+
+            String newUsername = scanner.nextLine();
+
+            if (newUsername.equals("cancel")) {
+                System.out.println("Action cancelled by user. Returning to main menu. \n");
+                displayMainMenu();
+                return;
+            }
+
+            player.setUsername(newUsername);
+        } catch (PlayerNotFoundException e) {
+            System.out.println("\nNo player with that username exists. Please try again. \n");
+            handleEditPlayer();
+        }
     }
 
     // EFFECTS: Displays rosters overview

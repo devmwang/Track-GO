@@ -22,6 +22,10 @@ public class Player {
         this.totalEnemiesFlashed = 0;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getOverview() {
         return "";
     }
