@@ -161,7 +161,7 @@ public class ConsoleInterface {
 
         appData.addPlayer(username);
 
-        System.out.println("\nPlayer created successfully. To edit this player, please go to the \"Edit players\" menu.");
+        System.out.println("\nPlayer created successfully. To edit this player, go to the \"Edit players\" menu.");
         System.out.println("Returning to main menu. \n");
         displayMainMenu();
     }
@@ -202,6 +202,9 @@ public class ConsoleInterface {
             }
 
             player.setUsername(newUsername);
+
+            System.out.println("\nPlayer edited successfully. Returning to main menu. \n");
+            displayMainMenu();
         } catch (PlayerNotFoundException e) {
             System.out.println("\nNo player with that username exists. Please try again. \n");
             handleEditPlayer();
