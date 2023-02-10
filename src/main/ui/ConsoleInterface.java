@@ -5,8 +5,8 @@ import java.util.*;
 import model.*;
 
 public class ConsoleInterface {
-    private Scanner scanner;
-    private AppData appData;
+    private final Scanner scanner;
+    private final AppData appData;
 
     // EFFECTS: Initializes app, displays welcome message and displays application main menu
     public ConsoleInterface() {
@@ -139,6 +139,8 @@ public class ConsoleInterface {
         commands.put("1", this::displayAddPlayerMenu);
         commands.put("2", this::displayEditPlayersMenu);
         commands.put("3", this::displayMainMenu);
+
+        handleMenu(commands);
     }
 
     private void displayAddPlayerMenu() {
