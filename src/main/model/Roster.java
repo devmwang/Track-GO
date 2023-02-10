@@ -27,6 +27,10 @@ public class Roster {
         players.remove(player);
     }
 
+    public String getOverview() {
+        return "";
+    }
+
     public String getId() {
         return id;
     }
