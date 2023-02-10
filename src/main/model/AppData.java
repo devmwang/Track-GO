@@ -27,14 +27,14 @@ public class AppData {
 
     // REQUIRES: Player in players has username
     // EFFECTS: Returns player with username
-    public Player getPlayerByUsername(String username) throws UserNotFoundException {
+    public Player getPlayerByUsername(String username) throws PlayerNotFoundException {
         for (Player player : players) {
             if (player.getUsername().equals(username)) {
                 return player;
             }
         }
 
-        throw new UserNotFoundException();
+        throw new PlayerNotFoundException();
     }
 
     // REQUIRES: Roster in rosters has id

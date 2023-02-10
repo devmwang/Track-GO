@@ -41,7 +41,7 @@ public class ConsoleInterface {
         System.out.println("[1] View matches");
         System.out.println("[2] Add new match");
         System.out.println("[3] View players");
-        System.out.println("[4] View roster");
+        System.out.println("[4] View rosters");
         System.out.println("[5] Exit");
 
         Map<String, Runnable> commands = new HashMap<>();
@@ -119,7 +119,6 @@ public class ConsoleInterface {
         } catch (RosterNotFoundException e) {
             System.out.println("\nNo roster with that id exists. Please try again. \n");
             handleAddMatch();
-            return;
         }
     }
 
@@ -141,12 +140,14 @@ public class ConsoleInterface {
         }
 
         System.out.println("[1] Add new roster");
-        System.out.println("[2] Back to main menu");
+        System.out.println("[2] Edit rosters");
+        System.out.println("[3] Back to main menu");
 
         Map<String, Runnable> commands = new HashMap<>();
 
         commands.put("1", this::displayAddRosterMenu);
-        commands.put("2", this::displayMainMenu);
+        commands.put("2", this::displayEditRostersMenu);
+        commands.put("3", this::displayMainMenu);
 
         handleMenu(commands);
     }
@@ -160,15 +161,31 @@ public class ConsoleInterface {
         System.out.println("\nPlease enter the usernames of the players in this roster, separated by commas: \n");
         String players = scanner.nextLine();
 
-        List<String> playerUsernames = Arrays.asList(players.split(","));
+        String[] playerUsernames = players.split(",");
 
         ArrayList<Player> playersArrayList = new ArrayList<>();
 
+        for (String username : playerUsernames) {
+            try {
+                Player player = appData.getPlayerByUsername(username);
+                playersArrayList.add(player);
+            } catch (PlayerNotFoundException e) {
+                System.out.println("\nNo player with the username " + username + " exists. Please try again. \n");
+                displayAddRosterMenu();
+                return;
+            }
+        }
+
         appData.addRoster(id, playersArrayList);
 
-        System.out.println("Roster created successfully. To edit this roster, please go to the \"Edit Roster\" menu.");
+        System.out.println("Roster created successfully. To edit this roster, please go to the \"Edit rosters\" menu.");
         System.out.println("Returning to main menu. \n");
         displayMainMenu();
+    }
+
+    private void displayEditRostersMenu() {
+        currentMenu = "edit_rosters";
+
     }
 
     private void exit() {
