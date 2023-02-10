@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.ArrayList;
 
 // Represents a roster of players to be tracked by the application
@@ -11,9 +13,9 @@ public class Roster {
     private int wins;
     private int ties;
 
-    public Roster(String id) {
+    public Roster(String id, ArrayList<Player> players) {
         this.id = id;
-        this.players = new ArrayList<Player>();
+        this.players = players;
         this.gamesPlayed = 0;
         this.roundsPlayed = 0;
         this.wins = 0;

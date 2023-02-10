@@ -2,6 +2,7 @@ package ui;
 
 import java.util.*;
 
+import model.AppData;
 import model.Player;
 import model.Roster;
 import model.Match;
@@ -9,17 +10,13 @@ import model.Match;
 public class ConsoleInterface {
     private String currentMenu;
     private Scanner scanner;
-    private ArrayList<Player> players;
-    private ArrayList<Roster> rosters;
-    private ArrayList<Match> matches;
+    private AppData appData;
 
     // EFFECTS: Initializes app, displays welcome message and displays application main menu
     public ConsoleInterface() {
         currentMenu = "";
         scanner = new Scanner(System.in);
-        players = new ArrayList<>();
-        rosters = new ArrayList<>();
-        matches = new ArrayList<>();
+        appData = new AppData();
 
         System.out.println("Welcome to Track:GO!\n");
         displayMainMenu();
@@ -63,6 +60,9 @@ public class ConsoleInterface {
 
     private void displayMatchesMenu() {
         currentMenu = "view_matches";
+
+        ArrayList<Match> matches = appData.getMatches();
+
         if (matches.isEmpty()) {
             System.out.println("No matches have been added yet. \n");
         } else {
@@ -98,7 +98,6 @@ public class ConsoleInterface {
     private void handleAddMatch() {
         System.out.println("Please enter the roster id: (Type \"cancel\" to return to main menu) \n");
         String rosterId = scanner.nextLine();
-        Roster roster = null;
 
         if (rosterId.equals("cancel")) {
             System.out.println("Action cancelled by user. Returning to main menu. \n");
@@ -106,12 +105,7 @@ public class ConsoleInterface {
             return;
         }
 
-        for (Roster r : rosters) {
-            if (r.getId().equals(rosterId)) {
-                roster = r;
-                break;
-            }
-        }
+        Roster roster = appData.getRosterById(rosterId);
 
         if (roster == null) {
             System.out.println("\nNo roster with that id exists. Please try again. \n");
@@ -125,9 +119,10 @@ public class ConsoleInterface {
         System.out.println("\nPlease enter the number of rounds lost: \n");
         int lostRounds = Integer.parseInt(scanner.nextLine());
 
-        matches.add(new Match(roster, wonRounds, lostRounds));
+        appData.addMatch(new Match(roster, wonRounds, lostRounds));
 
-        System.out.println("Match added successfully. Returning to main menu. \n");
+        System.out.println("Match added successfully. To add player stats, please go to the \"Edit Match\" menu.");
+        System.out.println("Returning to main menu. \n");
         displayMainMenu();
     }
 
@@ -137,6 +132,46 @@ public class ConsoleInterface {
 
     private void displayRosterMenu() {
         currentMenu = "view_rosters";
+
+        ArrayList<Roster> rosters = appData.getRosters();
+
+        if (rosters.isEmpty()) {
+            System.out.println("No rosters have been added yet. \n");
+        } else {
+            for (Roster roster : rosters) {
+                System.out.println(roster.getOverview());
+            }
+        }
+
+        System.out.println("[1] Add new roster");
+        System.out.println("[2] Back to main menu");
+
+        Map<String, Runnable> commands = new HashMap<>();
+
+        commands.put("1", this::displayAddRosterMenu);
+        commands.put("2", this::displayMainMenu);
+
+        handleMenu(commands);
+    }
+
+    private void displayAddRosterMenu() {
+        currentMenu = "add_roster";
+
+        System.out.println("\nPlease enter a roster identifier (id): \n");
+        String id = scanner.nextLine();
+
+        System.out.println("\nPlease enter the usernames of the players in this roster, separated by commas: \n");
+        String players = scanner.nextLine();
+
+        List<String> playerUsernames = Arrays.asList(players.split(","));
+
+        ArrayList<Player> playersArrayList = new ArrayList<>();
+
+        appData.addRoster(new Roster(id, playersArrayList));
+
+        System.out.println("Roster created successfully. To edit this roster, please go to the \"Edit Roster\" menu.");
+        System.out.println("Returning to main menu. \n");
+        displayMainMenu();
     }
 
     private void exit() {
