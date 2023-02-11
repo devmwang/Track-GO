@@ -234,15 +234,7 @@ public class ConsoleInterface {
         if (rosters.isEmpty()) {
             System.out.println("No rosters have been added yet. \n");
         } else {
-            String overviewFormat = "| %-15s | %-13s |%n";
-
-            System.out.format("+-----------------+---------------+%n");
-            System.out.format("| Roster          | Avg. Win Rate |%n");
-            System.out.format("+-----------------+---------------+%n");
-            for (Roster roster : rosters) {
-                System.out.format(overviewFormat, roster.getId(), roster.getWinRate());
-            }
-            System.out.format("+-----------------+---------------+%n%n");
+            displayRostersOverviewTable(rosters);
         }
 
         ArrayList<String> optionsText = new ArrayList<>();
@@ -258,6 +250,29 @@ public class ConsoleInterface {
         commands.put("3", this::displayMainMenu);
 
         handleMenu(optionsText, commands);
+    }
+
+    // EFFECTS: Displays table of rosters with overview stats
+    private void displayRostersOverviewTable(ArrayList<Roster> rosters) {
+        String overviewFormat = "| %-15s | %-13s | %-20s |%n";
+
+        System.out.format("+-----------------+---------------+----------------------+%n");
+        System.out.format("| Roster          | Avg. Win Rate | Players on Roster    |%n");
+        System.out.format("+-----------------+---------------+----------------------+%n");
+        for (Roster roster : rosters) {
+            ArrayList<Player> players = roster.getPlayers();
+
+            System.out.format(overviewFormat, roster.getId(), roster.getWinRate(), players.get(0).getUsername());
+
+            for (int i = 1; i < players.size() - 1; i++) {
+                System.out.format(overviewFormat, "", "", players.get(i).getUsername());
+            }
+
+            if (players.size() > 1) {
+                System.out.format(overviewFormat, "", "", players.get(players.size() - 1).getUsername());
+            }
+        }
+        System.out.format("+-----------------+---------------+----------------------+%n%n");
     }
 
     // EFFECTS: Displays add roster interface
