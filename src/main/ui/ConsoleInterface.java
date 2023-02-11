@@ -391,18 +391,14 @@ public class ConsoleInterface {
         System.out.format("+-----------------+---------------+----------------------+%n");
         for (Roster roster : rosters) {
             ArrayList<Player> players = roster.getPlayers();
-
-            System.out.format(overviewFormat, roster.getId(), roster.getWinRate(), players.get(0).getUsername());
-
-            for (int i = 1; i < players.size() - 1; i++) {
-                System.out.format(overviewFormat, "", "", players.get(i).getUsername());
+            for (int i = 0; i < players.size(); i++) {
+                System.out.format(overviewFormat,
+                        i == 0 ? roster.getId() : "",
+                        i == 0 ? roster.getWinRate() : "",
+                        players.get(i).getUsername());
             }
-
-            if (players.size() > 1) {
-                System.out.format(overviewFormat, "", "", players.get(players.size() - 1).getUsername());
-            }
+            System.out.format("+-----------------+---------------+----------------------+%n");
         }
-        System.out.format("+-----------------+---------------+----------------------+%n%n");
     }
 
     // EFFECTS: Displays add roster interface
