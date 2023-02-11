@@ -1,11 +1,11 @@
 package model;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 // Represents a match to be tracked by the application
 public class Match {
     private int matchId;
-    private HashMap<Player, IndividualMatchPerformance> playerDetails;
+    private LinkedHashMap<Player, IndividualMatchPerformance> playerDetails;
     private int roundsWon;
     private int roundsLost;
     private String map;
@@ -13,7 +13,7 @@ public class Match {
     // EFFECTS: Constructs a match with the provided roster and data values
     public Match(int matchId, Roster roster, int roundsWon, int roundsLost, String map) {
         this.matchId = matchId;
-        playerDetails = new HashMap<>();
+        playerDetails = new LinkedHashMap<>();
         for (Player player : roster.getPlayers()) {
             playerDetails.put(player, null);
         }
@@ -33,7 +33,7 @@ public class Match {
         return matchId;
     }
 
-    public HashMap<Player, IndividualMatchPerformance> getPlayerDetails() {
+    public LinkedHashMap<Player, IndividualMatchPerformance> getPlayerDetails() {
         return playerDetails;
     }
 

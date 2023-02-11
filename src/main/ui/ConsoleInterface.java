@@ -101,42 +101,44 @@ public class ConsoleInterface {
         String matchId = scanner.nextLine();
 
         if (matchId.equals("cancel")) {
-            System.out.println("Action cancelled by user. Returning to matches overview. \n");
+            System.out.println("\nAction cancelled by user. Returning to matches overview. \n");
             displayMatchesOverviewMenu();
             return;
         }
 
         try {
+            System.out.println();
+
             Match match = appData.getMatchById(Integer.parseInt(matchId));
 
             handleMatchDetailsMenu(match);
         } catch (MatchNotFoundException e) {
-            System.out.println("Invalid match id. \n");
+            System.out.println("\nInvalid match id. \n");
             displayMatchDetailsMenu();
         }
     }
 
     private void handleMatchDetailsMenu(Match match) {
-        String overviewFormat = "| %-8s | %-15s | %-9s | %-20s |%n";
+        String overviewFormat = "| %-15s | %-9s | %-20s | %-5s | %-3s | %-4s |%n";
+        LinkedHashMap<Player, IndividualMatchPerformance> playerDetails = match.getPlayerDetails();
+        ArrayList<Player> players = new ArrayList<>(playerDetails.keySet());
 
-        ArrayList<Player> players = new ArrayList<>(match.getPlayerDetails().keySet());
-
-        System.out.format("+----------+-----------------+-----------+----------------------+%n");
-        System.out.format("| Match ID | Map             | Score     | Players on Roster    |%n");
-        System.out.format("+----------+-----------------+-----------+----------------------+%n");
-        System.out.format(overviewFormat,
-                match.getMatchId(),
-                match.getMap(),
-                match.getRoundsWon() + " - " + match.getRoundsLost(),
-                players.get(0).getUsername());
-        for (int i = 1; i < players.size() - 1; i++) {
-            System.out.format(overviewFormat, "", "", "", players.get(i).getUsername());
+        System.out.format("+-----------------+-----------+----------------------+-------+-----+------+%n");
+        System.out.format("| Map             | Score     | Players on Roster    | K/D   | ADR | MVPs |%n");
+        System.out.format("+-----------------+-----------+----------------------+-------+-----+------+%n");
+        for (int i = 0; i < playerDetails.size(); i++) {
+            System.out.format(overviewFormat,
+                    i == 0 ? match.getMap() : "",
+                    i == 0 ? match.getRoundsWon() + " - " + match.getRoundsLost() : "",
+                    players.get(i).getUsername(),
+                    playerDetails.get(players.get(i)) != null ? playerDetails.get(players.get(i)).getKD() : "N/A",
+                    playerDetails.get(players.get(i)) != null
+                            ? (playerDetails.get(players.get(i)).getTotalDamageDealt() / match.getTotalRounds())
+                            : "N/A",
+                    playerDetails.get(players.get(i)) != null
+                            ? playerDetails.get(players.get(i)).getMostValuablePlayerAwards() : "N/A");
         }
-
-        if (players.size() > 1) {
-            System.out.format(overviewFormat, "", "", "", players.get(players.size() - 1).getUsername());
-        }
-        System.out.format("+----------+-----------------+-----------+----------------------+%n%n");
+        System.out.format("+-----------------+-----------+----------------------+-------+-----+------+%n%n");
 
         ArrayList<String> optionsText = new ArrayList<>();
 

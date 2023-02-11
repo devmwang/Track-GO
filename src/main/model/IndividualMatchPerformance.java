@@ -35,8 +35,11 @@ public class IndividualMatchPerformance {
     public int getTotalDeaths() {
         return totalDeaths;
     }
-
     public int getMostValuablePlayerAwards() {
         return mostValuablePlayerAwards;
+    }
+
+    public String getKD() {
+        return totalKills + "/" + totalDeaths;
     }
 }
