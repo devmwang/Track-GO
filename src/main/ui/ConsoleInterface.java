@@ -65,9 +65,17 @@ public class ConsoleInterface {
         if (matches.isEmpty()) {
             System.out.println("No matches have been added yet. \n");
         } else {
+            String overviewFormat = "| %-9s | %-12s |%n";
+
+            System.out.format("+-----------+-----------------+%n");
+            System.out.format("|   Score   |       Map       |%n");
+            System.out.format("+-----------+-----------------+%n");
             for (Match match : matches) {
-                System.out.println(match.getOverview());
+                System.out.format(overviewFormat,
+                        match.getRoundsWon() + " - " + match.getRoundsLost(),
+                        match.getMap());
             }
+            System.out.format("+-----------+-----------------+%n%n");
         }
 
         ArrayList<String> optionsText = new ArrayList<>();
@@ -103,7 +111,10 @@ public class ConsoleInterface {
             System.out.println("\nEnter the number of rounds lost: \n");
             int lostRounds = Integer.parseInt(scanner.nextLine());
 
-            appData.addMatch(roster, wonRounds, lostRounds);
+            System.out.println("\nEnter the map: \n");
+            String map = scanner.nextLine();
+
+            appData.addMatch(roster, wonRounds, lostRounds, map);
 
             System.out.println("Match added successfully. To add player stats, go to the \"Edit Match\" menu.");
             System.out.println("Returning to main menu. \n");

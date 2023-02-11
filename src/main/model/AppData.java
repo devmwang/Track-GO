@@ -63,8 +63,8 @@ public class AppData {
 
     // REQUIRES: roster is in rosters, wonRounds >= 0, lostRounds >= 0
     // EFFECTS: Adds provided match to matches
-    public void addMatch(Roster roster, int wonRounds, int lostRounds) {
-        matches.add(new Match(roster, wonRounds, lostRounds));
+    public void addMatch(Roster roster, int wonRounds, int lostRounds, String map) {
+        matches.add(new Match(roster, wonRounds, lostRounds, map));
     }
 
     // REQUIRES: roster is in rosters
