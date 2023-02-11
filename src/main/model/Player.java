@@ -10,6 +10,9 @@ public class Player {
     private int roundsPlayed;
     private int totalDamageDealt;
     private int totalPoints;
+    private int totalKills;
+    private int totalAssists;
+    private int totalDeaths;
     private int mostValuablePlayerAwards;
     private int totalEnemiesFlashed;
 
@@ -22,6 +25,9 @@ public class Player {
         this.roundsPlayed = 0;
         this.totalDamageDealt = 0;
         this.totalPoints = 0;
+        this.totalKills = 0;
+        this.totalAssists = 0;
+        this.totalDeaths = 0;
         this.mostValuablePlayerAwards = 0;
         this.totalEnemiesFlashed = 0;
     }
@@ -35,10 +41,17 @@ public class Player {
 
     // REQUIRES: matchId, damage, points, kills, assists, deaths, mostValuablePlayerAwards are all not null
     // MODIFIES: this
-    // EFFECTS: Sets the match stats of the player for the matchId to the provided values
+    // EFFECTS: Sets the match stats of the player for the matchId to the provided values and updates total stats
     public void setMatchStats(int matchId, int damage, int points, int kills, int assists, int deaths,
                               int mostValuablePlayerAwards) {
         matchStats.put(matchId, new MatchPerformance(damage, points, kills, assists, deaths, mostValuablePlayerAwards));
+
+        this.totalDamageDealt += damage;
+        this.totalPoints += points;
+        this.totalKills += kills;
+        this.totalAssists += assists;
+        this.totalDeaths += deaths;
+        this.mostValuablePlayerAwards += mostValuablePlayerAwards;
     }
 
     public String getUsername() {
