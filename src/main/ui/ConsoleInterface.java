@@ -65,17 +65,17 @@ public class ConsoleInterface {
         if (matches.isEmpty()) {
             System.out.println("No matches have been added yet. \n");
         } else {
-            String overviewFormat = "| %-9s | %-15s |%n";
+            String overviewFormat = "| %-8d | %-9s | %-15s |%n";
 
-            System.out.format("+-----------+-----------------+%n");
-            System.out.format("|   Score   |       Map       |%n");
-            System.out.format("+-----------+-----------------+%n");
+            System.out.format("+----------+-----------+-----------------+%n");
+            System.out.format("| Match ID | Score     | Map             |%n");
+            System.out.format("+----------+-----------+-----------------%n");
             for (Match match : matches) {
                 System.out.format(overviewFormat,
                         match.getRoundsWon() + " - " + match.getRoundsLost(),
                         match.getMap());
             }
-            System.out.format("+-----------+-----------------+%n%n");
+            System.out.format("+----------+-----------+-----------------%n%n");
         }
 
         ArrayList<String> optionsText = new ArrayList<>();
