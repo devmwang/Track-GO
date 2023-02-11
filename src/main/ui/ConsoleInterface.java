@@ -69,14 +69,14 @@ public class ConsoleInterface {
 
             System.out.format("+----------+-----------+-----------------+%n");
             System.out.format("| Match ID | Score     | Map             |%n");
-            System.out.format("+----------+-----------+-----------------%n");
+            System.out.format("+----------+-----------+-----------------+%n");
             for (Match match : matches) {
                 System.out.format(overviewFormat,
                         match.getMatchId(),
                         match.getRoundsWon() + " - " + match.getRoundsLost(),
                         match.getMap());
             }
-            System.out.format("+----------+-----------+-----------------%n%n");
+            System.out.format("+----------+-----------+-----------------+%n%n");
         }
 
         ArrayList<String> optionsText = new ArrayList<>();
