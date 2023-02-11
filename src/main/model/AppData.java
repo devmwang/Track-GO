@@ -6,11 +6,13 @@ public class AppData {
     private ArrayList<Player> players;
     private ArrayList<Roster> rosters;
     private ArrayList<Match> matches;
+    private int nextMatchId;
 
     public AppData() {
         this.players = new ArrayList<>();
         this.rosters = new ArrayList<>();
         this.matches = new ArrayList<>();
+        nextMatchId = 0;
     }
 
     public ArrayList<Player> getPlayers() {
@@ -50,24 +52,29 @@ public class AppData {
     }
 
     // REQUIRES: username
+    // MODIFIES: this
     // EFFECTS: Creates player with provided username adds created player to players
     public void addPlayer(String username) {
         players.add(new Player(username));
     }
 
     // REQUIRES: id, playersArrayList
+    // MODIFIES: this
     // EFFECTS: Creates roster with provided data and adds created roster to rosters
     public void addRoster(String id, ArrayList<Player> playersArrayList) {
         rosters.add(new Roster(id, playersArrayList));
     }
 
     // REQUIRES: roster is in rosters, wonRounds >= 0, lostRounds >= 0
+    // MODIFIES: this
     // EFFECTS: Adds provided match to matches
     public void addMatch(Roster roster, int wonRounds, int lostRounds, String map) {
-        matches.add(new Match(roster, wonRounds, lostRounds, map));
+        matches.add(new Match(nextMatchId, roster, wonRounds, lostRounds, map));
+        nextMatchId++;
     }
 
     // REQUIRES: roster is in rosters
+    // MODIFIES: this
     // EFFECTS: Deletes roster from rosters
     public void deleteRoster(Roster roster) {
         rosters.remove(roster);

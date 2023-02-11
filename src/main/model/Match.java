@@ -4,13 +4,15 @@ import java.util.HashMap;
 
 // Represents a match to be tracked by the application
 public class Match {
+    private int matchId;
     private HashMap<Player, IndividualMatchPerformance> playerDetails;
     private int roundsWon;
     private int roundsLost;
     private String map;
 
     // EFFECTS: Constructs a match with the provided roster and data values
-    public Match(Roster roster, int roundsWon, int roundsLost, String map) {
+    public Match(int matchId, Roster roster, int roundsWon, int roundsLost, String map) {
+        this.matchId = matchId;
         playerDetails = new HashMap<>();
         for (Player player : roster.getPlayers()) {
             playerDetails.put(player, null);
