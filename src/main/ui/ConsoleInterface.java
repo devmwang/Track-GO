@@ -65,29 +65,86 @@ public class ConsoleInterface {
         if (matches.isEmpty()) {
             System.out.println("No matches have been added yet. \n");
         } else {
-            String overviewFormat = "| %-8d | %-9s | %-15s |%n";
+            String overviewFormat = "| %-8d | %-15s | %-9s |%n";
 
-            System.out.format("+----------+-----------+-----------------+%n");
-            System.out.format("| Match ID | Score     | Map             |%n");
-            System.out.format("+----------+-----------+-----------------+%n");
+            System.out.format("+----------+-----------------+-----------+%n");
+            System.out.format("| Match ID | Map             | Score     |%n");
+            System.out.format("+----------+-----------------+-----------+%n");
             for (Match match : matches) {
                 System.out.format(overviewFormat,
                         match.getMatchId(),
-                        match.getRoundsWon() + " - " + match.getRoundsLost(),
-                        match.getMap());
+                        match.getMap(),
+                        match.getRoundsWon() + " - " + match.getRoundsLost());
             }
-            System.out.format("+----------+-----------+-----------------+%n%n");
+            System.out.format("+----------+-----------------+-----------+%n%n");
         }
 
         ArrayList<String> optionsText = new ArrayList<>();
 
-        optionsText.add("[1] Add new match");
-        optionsText.add("[2] Back to main menu");
+        optionsText.add("[1] View match details");
+        optionsText.add("[2] Add new match");
+        optionsText.add("[3] Edit match details");
+        optionsText.add("[4] Back to main menu");
 
         Map<String, Runnable> commands = new HashMap<>();
 
-        commands.put("1", this::displayMatchAddMenu);
-        commands.put("2", this::displayMainMenu);
+        commands.put("1", this::displayMatchDetailsMenu);
+        commands.put("2", this::displayMatchAddMenu);
+        commands.put("3", this::displayMatchEditMenu);
+        commands.put("4", this::displayMainMenu);
+
+        handleMenu(optionsText, commands);
+    }
+
+    private void displayMatchDetailsMenu() {
+        System.out.println("Enter the match id: (Type \"cancel\" to return to matches overview) \n");
+        String matchId = scanner.nextLine();
+
+        if (matchId.equals("cancel")) {
+            System.out.println("Action cancelled by user. Returning to matches overview. \n");
+            displayMatchesOverviewMenu();
+            return;
+        }
+
+        try {
+            Match match = appData.getMatchById(Integer.parseInt(matchId));
+
+            handleMatchDetailsMenu(match);
+        } catch (MatchNotFoundException e) {
+            System.out.println("Invalid match id. \n");
+            displayMatchDetailsMenu();
+        }
+    }
+
+    private void handleMatchDetailsMenu(Match match) {
+        String overviewFormat = "| %-8s | %-15s | %-9s | %-20s |%n";
+
+        ArrayList<Player> players = new ArrayList<>(match.getPlayerDetails().keySet());
+
+        System.out.format("+----------+-----------------+-----------+----------------------+%n");
+        System.out.format("| Match ID | Map             | Score     | Players on Roster    |%n");
+        System.out.format("+----------+-----------------+-----------+----------------------+%n");
+        System.out.format(overviewFormat,
+                match.getMatchId(),
+                match.getMap(),
+                match.getRoundsWon() + " - " + match.getRoundsLost(),
+                players.get(0).getUsername());
+        for (int i = 1; i < players.size() - 1; i++) {
+            System.out.format(overviewFormat, "", "", "", players.get(i).getUsername());
+        }
+
+        if (players.size() > 1) {
+            System.out.format(overviewFormat, "", "", "", players.get(players.size() - 1).getUsername());
+        }
+        System.out.format("+----------+-----------------+-----------+----------------------+%n%n");
+
+        ArrayList<String> optionsText = new ArrayList<>();
+
+        optionsText.add("[1] Back to matches overview");
+
+        Map<String, Runnable> commands = new HashMap<>();
+
+        commands.put("1", this::displayMatchesOverviewMenu);
 
         handleMenu(optionsText, commands);
     }
@@ -124,6 +181,91 @@ public class ConsoleInterface {
             System.out.println("\nNo roster with that id exists. Try again. \n");
             displayMatchAddMenu();
         }
+    }
+
+    // EFFECTS: Displays match edit menu
+    private void displayMatchEditMenu() {
+        System.out.println("Enter the match ID: (Type \"cancel\" to return to matches overview) \n");
+        String matchId = scanner.nextLine();
+
+        if (matchId.equals("cancel")) {
+            System.out.println("\nAction cancelled by user. Returning to matches overview. \n");
+            displayMatchesOverviewMenu();
+            return;
+        }
+        try {
+            Match match = appData.getMatchById(Integer.parseInt(matchId));
+
+            handleMatchEdit(match);
+        } catch (MatchNotFoundException e) {
+            System.out.println("\nNo match with that id exists. Try again. \n");
+            displayMatchEditMenu();
+        }
+    }
+
+    // EFFECTS: Handles match edit mode selection
+    private void handleMatchEdit(Match match) {
+        System.out.println("\nSelect an edit mode:");
+        System.out.println("[1] Set player performance");
+        System.out.println("[2] Back to matches overview");
+
+        String mode = scanner.nextLine();
+
+        if (mode.equals("1")) {
+            handleMatchEditPlayerSelect(match);
+        } else if (mode.equals("2")) {
+            displayMatchesOverviewMenu();
+        } else {
+            System.out.println("\nInvalid selection, try again. \n");
+            handleMatchEdit(match);
+        }
+    }
+
+    // EFFECTS: Handles editing player performance for the consumed match
+    private void handleMatchEditPlayerSelect(Match match) {
+        System.out.println("\nEnter the player username: (Type \"cancel\" to return to matches overview) \n");
+        String playerUsername = scanner.nextLine();
+
+        if (playerUsername.equals("cancel")) {
+            System.out.println("\nAction cancelled by user. Returning to matches overview. \n");
+            displayMatchesOverviewMenu();
+            return;
+        }
+
+        try {
+            Player player = appData.getPlayerByUsername(playerUsername);
+            handleMatchEditPlayerPerformance(match, player);
+        } catch (PlayerNotFoundException e) {
+            System.out.println("\nNo player with that id exists. Try again. \n");
+            handleMatchEditPlayerSelect(match);
+        }
+    }
+
+    // EFFECTS: Handles editing performance data for a player in a match
+    private void handleMatchEditPlayerPerformance(Match match, Player player) {
+        System.out.println("\nEnter the total damage dealt: \n");
+        int damage = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("\nEnter the number of game points gained: \n");
+        int points = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("\nEnter the number of kills: \n");
+        int kills = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("\nEnter the number of assists: \n");
+        int assists = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("\nEnter the number of deaths: \n");
+        int deaths = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("\nEnter the number of MVPs: \n");
+        int mostValuablePlayerAwards = Integer.parseInt(scanner.nextLine());
+
+        match.setIndividualPerformance(player, damage, points, kills, assists, deaths, mostValuablePlayerAwards);
+
+        System.out.println("\nMatch details modified successfully.");
+        System.out.println("Returning to matches overview. \n");
+        displayMatchesOverviewMenu();
     }
 
     // EFFECTS: Displays players overview

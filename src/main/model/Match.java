@@ -24,13 +24,17 @@ public class Match {
     }
 
     public void setIndividualPerformance(Player player, int totalDamageDealt, int totalPoints, int totalKills,
-                                         int totalDeaths, int mostValuablePlayerAwards) {
+                                         int totalAssists, int totalDeaths, int mostValuablePlayerAwards) {
         playerDetails.replace(player, new IndividualMatchPerformance(totalDamageDealt, totalPoints, totalKills,
-                totalDeaths, mostValuablePlayerAwards));
+                totalAssists, totalDeaths, mostValuablePlayerAwards));
     }
 
     public int getMatchId() {
         return matchId;
+    }
+
+    public HashMap<Player, IndividualMatchPerformance> getPlayerDetails() {
+        return playerDetails;
     }
 
     public int getTotalRounds() {
@@ -47,21 +51,5 @@ public class Match {
 
     public String getMap() {
         return map;
-    }
-
-    public int getMyMostValuablePlayerAwards(Player player) {
-        return playerDetails.get(player).getMostValuablePlayerAwards();
-    }
-
-    public int getMyKills(Player player) {
-        return playerDetails.get(player).getTotalKills();
-    }
-
-    public int getMyDeaths(Player player) {
-        return playerDetails.get(player).getTotalDeaths();
-    }
-
-    public int getMyAverageDamagePerRound(Player player) {
-        return playerDetails.get(player).getTotalDamageDealt() / getTotalRounds();
     }
 }

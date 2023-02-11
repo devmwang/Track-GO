@@ -51,6 +51,18 @@ public class AppData {
         throw new RosterNotFoundException();
     }
 
+    // REQUIRES: Match in matches has matchId
+    // EFFECTS: Returns match with matchId
+    public Match getMatchById(int matchId) throws MatchNotFoundException {
+        for (Match match : matches) {
+            if (match.getMatchId() == matchId) {
+                return match;
+            }
+        }
+
+        throw new MatchNotFoundException();
+    }
+
     // REQUIRES: username
     // MODIFIES: this
     // EFFECTS: Creates player with provided username adds created player to players
