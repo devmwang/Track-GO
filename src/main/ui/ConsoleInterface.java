@@ -286,8 +286,8 @@ public class ConsoleInterface {
         appData.addRoster(id, playersArrayList);
 
         System.out.println("\nRoster created successfully. To edit this roster, go to the \"Edit rosters\" menu.");
-        System.out.println("Returning to main menu. \n");
-        displayMainMenu();
+        System.out.println("Returning to rosters overview. \n");
+        displayRostersMenu();
     }
 
     // EFFECTS: Displays roster edit interface
