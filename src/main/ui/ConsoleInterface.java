@@ -30,14 +30,14 @@ public class ConsoleInterface {
         if (commands.containsKey(select)) {
             commands.get(select).run();
         } else {
-            System.out.println("Invalid selection, please try again. \n");
+            System.out.println("Invalid selection, try again. \n");
             handleMenu(optionsText, commands);
         }
     }
 
     // EFFECTS: Displays menu options and passes user selection to handleMenu
     private void displayMainMenu() {
-        System.out.println("Please select an option:");
+        System.out.println("Select an option:");
 
         ArrayList<String> optionsText = new ArrayList<>();
 
@@ -96,14 +96,14 @@ public class ConsoleInterface {
         } else if (input.equals("y")) {
             handleAddMatch();
         } else {
-            System.out.println("\nInvalid selection, please try again. \n");
+            System.out.println("\nInvalid selection, Try again. \n");
             displayAddMatchMenu();
         }
     }
 
     // EFFECTS: Handles adding match to appData
     private void handleAddMatch() {
-        System.out.println("\nPlease enter the roster id: (Type \"cancel\" to return to main menu) \n");
+        System.out.println("\nEnter the roster id: (Type \"cancel\" to return to main menu) \n");
         String rosterId = scanner.nextLine();
 
         if (rosterId.equals("cancel")) {
@@ -115,19 +115,19 @@ public class ConsoleInterface {
         try {
             Roster roster = appData.getRosterById(rosterId);
 
-            System.out.println("\nPlease enter the number of rounds won: \n");
+            System.out.println("\nEnter the number of rounds won: \n");
             int wonRounds = Integer.parseInt(scanner.nextLine());
 
-            System.out.println("\nPlease enter the number of rounds lost: \n");
+            System.out.println("\nEnter the number of rounds lost: \n");
             int lostRounds = Integer.parseInt(scanner.nextLine());
 
             appData.addMatch(roster, wonRounds, lostRounds);
 
-            System.out.println("Match added successfully. To add player stats, please go to the \"Edit Match\" menu.");
+            System.out.println("Match added successfully. To add player stats, go to the \"Edit Match\" menu.");
             System.out.println("Returning to main menu. \n");
             displayMainMenu();
         } catch (RosterNotFoundException e) {
-            System.out.println("\nNo roster with that id exists. Please try again. \n");
+            System.out.println("\nNo roster with that id exists. Try again. \n");
             handleAddMatch();
         }
     }
@@ -167,14 +167,14 @@ public class ConsoleInterface {
     }
 
     private void displayAddPlayerMenu() {
-        System.out.println("Please enter the player's username: \n");
+        System.out.println("Enter the player's username: \n");
         String username = scanner.nextLine();
 
         appData.addPlayer(username);
 
         System.out.println("\nPlayer created successfully. To edit this player, go to the \"Edit players\" menu.");
-        System.out.println("Returning to main menu. \n");
-        displayMainMenu();
+        System.out.println("Returning to players overview. \n");
+        displayPlayersMenu();
     }
 
     private void displayEditPlayersMenu() {
@@ -189,13 +189,13 @@ public class ConsoleInterface {
         } else if (input.equals("y")) {
             handleEditPlayer();
         } else {
-            System.out.println("\nInvalid input. Please try again. \n");
+            System.out.println("\nInvalid input. Try again. \n");
             displayEditPlayersMenu();
         }
     }
 
     private void handleEditPlayer() {
-        System.out.println("\nPlease enter the player's username: (Type \"cancel\" to return to main menu) \n");
+        System.out.println("\nEnter the player's username: (Type \"cancel\" to return to main menu) \n");
         String username = scanner.nextLine();
 
         if (username.equals("cancel")) {
@@ -222,7 +222,7 @@ public class ConsoleInterface {
             System.out.println("\nPlayer edited successfully. Returning to main menu. \n");
             displayMainMenu();
         } catch (PlayerNotFoundException e) {
-            System.out.println("\nNo player with that username exists. Please try again. \n");
+            System.out.println("\nNo player with that username exists. Try again. \n");
             handleEditPlayer();
         }
     }
@@ -262,10 +262,10 @@ public class ConsoleInterface {
 
     // EFFECTS: Displays add roster interface
     private void displayAddRosterMenu() {
-        System.out.println("Please enter a roster identifier (id): \n");
+        System.out.println("Enter a roster identifier (id): \n");
         String id = scanner.nextLine();
 
-        System.out.println("\nPlease enter the usernames of the players in this roster, separated by commas: \n");
+        System.out.println("\nThe usernames of the players in this roster, separated by commas: \n");
         String players = scanner.nextLine();
 
         String[] playerUsernames = players.split(",");
@@ -274,10 +274,10 @@ public class ConsoleInterface {
 
         for (String username : playerUsernames) {
             try {
-                Player player = appData.getPlayerByUsername(username);
+                Player player = appData.getPlayerByUsername(username.trim());
                 playersArrayList.add(player);
             } catch (PlayerNotFoundException e) {
-                System.out.println("\nNo player with the username " + username + " exists. Please try again. \n");
+                System.out.println("\nNo player with the username " + username + " exists. Try again. \n");
                 displayAddRosterMenu();
                 return;
             }
@@ -285,7 +285,7 @@ public class ConsoleInterface {
 
         appData.addRoster(id, playersArrayList);
 
-        System.out.println("\nRoster created successfully. To edit this roster, please go to the \"Edit rosters\" menu.");
+        System.out.println("\nRoster created successfully. To edit this roster, go to the \"Edit rosters\" menu.");
         System.out.println("Returning to main menu. \n");
         displayMainMenu();
     }
@@ -303,14 +303,14 @@ public class ConsoleInterface {
         } else if (input.equals("y")) {
             handleEditRoster();
         } else {
-            System.out.println("\nInvalid input. Please try again. \n");
+            System.out.println("\nInvalid input. Try again. \n");
             displayEditRostersMenu();
         }
     }
 
     // EFFECTS: Handles first step of editing roster
     private void handleEditRoster() {
-        System.out.println("\nPlease enter the roster id: (Type \"cancel\" to return to main menu) \n");
+        System.out.println("\nEnter the roster id: (Type \"cancel\" to return to main menu) \n");
         String rosterId = scanner.nextLine();
 
         if (rosterId.equals("cancel")) {
@@ -324,7 +324,7 @@ public class ConsoleInterface {
 
             handleEditRosterSelect(roster);
         } catch (RosterNotFoundException e) {
-            System.out.println("\nNo roster with that id exists. Please try again. \n");
+            System.out.println("\nNo roster with that id exists. Try again. \n");
             handleEditRoster();
         }
     }
@@ -332,7 +332,7 @@ public class ConsoleInterface {
     // REQUIRES: roster in appData
     // EFFECTS: Handles second step of editing roster (Selecting edit mode)
     private void handleEditRosterSelect(Roster roster) {
-        System.out.println("\nPlease select an edit mode.");
+        System.out.println("\nSelect an edit mode.");
         System.out.println("[add] Add player to roster");
         System.out.println("[remove] Remove player from roster");
         System.out.println("[delete] Delete roster");
@@ -351,7 +351,7 @@ public class ConsoleInterface {
                 System.out.println("\nAction cancelled by user. Returning to main menu. \n");
                 displayMainMenu();
             default:
-                System.out.println("\nInvalid input. Please try again. \n");
+                System.out.println("\nInvalid input. Try again. \n");
                 handleEditRosterSelect(roster);
         }
     }
@@ -359,7 +359,7 @@ public class ConsoleInterface {
     // REQUIRES: roster in appData
     // EFFECTS: Handles adding player to provided roster
     private void handleEditRosterAdd(Roster roster) {
-        System.out.println("\nPlease enter the username of the player you want to add: \n");
+        System.out.println("\nEnter the username of the player you want to add: \n");
         String username = scanner.nextLine();
 
         try {
@@ -368,7 +368,7 @@ public class ConsoleInterface {
             System.out.println("Player added successfully. Returning to main menu. \n");
             displayMainMenu();
         } catch (PlayerNotFoundException e) {
-            System.out.println("\nNo player with the username " + username + " exists. Please try again. \n");
+            System.out.println("\nNo player with the username " + username + " exists. Try again. \n");
             handleEditRosterAdd(roster);
         }
     }
@@ -376,7 +376,7 @@ public class ConsoleInterface {
     // REQUIRES: roster in appData
     // EFFECTS: Handles removing player from provided roster
     private void handleEditRosterRemove(Roster roster) {
-        System.out.println("\nPlease enter the username of the player you want to remove: \n");
+        System.out.println("\nEnter the username of the player you want to remove: \n");
         String username = scanner.nextLine();
 
         try {
@@ -385,7 +385,7 @@ public class ConsoleInterface {
             System.out.println("Player removed successfully. Returning to main menu. \n");
             displayMainMenu();
         } catch (PlayerNotFoundException e) {
-            System.out.println("\nNo player with the username " + username + " exists. Please try again. \n");
+            System.out.println("\nNo player with the username " + username + " exists. Try again. \n");
             handleEditRosterRemove(roster);
         }
     }
@@ -404,7 +404,7 @@ public class ConsoleInterface {
             System.out.println("\nRoster deleted successfully. Returning to main menu. \n");
             displayMainMenu();
         } else {
-            System.out.println("\nInvalid input. Please try again. \n");
+            System.out.println("\nInvalid input. Try again. \n");
             handleEditRosterDelete(roster);
         }
     }
