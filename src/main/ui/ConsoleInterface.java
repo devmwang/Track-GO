@@ -333,21 +333,21 @@ public class ConsoleInterface {
     // EFFECTS: Handles second step of editing roster (Selecting edit mode)
     private void handleEditRosterSelect(Roster roster) {
         System.out.println("\nSelect an edit mode.");
-        System.out.println("[add] Add player to roster");
-        System.out.println("[remove] Remove player from roster");
-        System.out.println("[delete] Delete roster");
-        System.out.println("[cancel] Back to main menu");
+        System.out.println("[1] Add player to roster");
+        System.out.println("[2] Remove player from roster");
+        System.out.println("[3] Delete roster");
+        System.out.println("[4] Back to main menu");
 
         String select = scanner.nextLine();
 
         switch (select) {
-            case "add":
+            case "1":
                 handleEditRosterAdd(roster);
-            case "remove":
+            case "2":
                 handleEditRosterRemove(roster);
-            case "delete":
+            case "3":
                 handleEditRosterDelete(roster);
-            case "cancel":
+            case "4":
                 System.out.println("\nAction cancelled by user. Returning to main menu. \n");
                 displayMainMenu();
             default:
@@ -365,8 +365,7 @@ public class ConsoleInterface {
         try {
             Player player = appData.getPlayerByUsername(username);
             roster.addPlayer(player);
-            System.out.println("Player added successfully. Returning to main menu. \n");
-            displayMainMenu();
+            handleRosterEditComplete("Player added successfully.");
         } catch (PlayerNotFoundException e) {
             System.out.println("\nNo player with the username " + username + " exists. Try again. \n");
             handleEditRosterAdd(roster);
@@ -382,8 +381,7 @@ public class ConsoleInterface {
         try {
             Player player = appData.getPlayerByUsername(username);
             roster.removePlayer(player);
-            System.out.println("Player removed successfully. Returning to main menu. \n");
-            displayMainMenu();
+            handleRosterEditComplete("Player removed successfully.");
         } catch (PlayerNotFoundException e) {
             System.out.println("\nNo player with the username " + username + " exists. Try again. \n");
             handleEditRosterRemove(roster);
@@ -401,12 +399,16 @@ public class ConsoleInterface {
             displayMainMenu();
         } else if (confirmation.equals(roster.getId())) {
             appData.deleteRoster(roster);
-            System.out.println("\nRoster deleted successfully. Returning to main menu. \n");
-            displayMainMenu();
+            handleRosterEditComplete("Roster deleted successfully.");
         } else {
             System.out.println("\nInvalid input. Try again. \n");
             handleEditRosterDelete(roster);
         }
+    }
+
+    private void handleRosterEditComplete(String prefix) {
+        System.out.println("\n" + prefix.trim() + " Returning to main menu. \n");
+        displayRostersMenu();
     }
 
     // EFFECTS: Displays exit message and exits program
