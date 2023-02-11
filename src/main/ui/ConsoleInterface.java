@@ -139,7 +139,7 @@ public class ConsoleInterface {
         if (players.isEmpty()) {
             System.out.println("No players have been added yet. \n");
         } else {
-            String overviewFormat = "| %-15s | %-12s | %-13s | %-4s |%n";
+            String overviewFormat = "| %-15s | %-12d | %-13d | %-4d |%n";
 
             System.out.format("+-----------------+--------------+---------------+------+%n");
             System.out.format("| Player          | Games Played | Rounds Played | MVPs |%n");
