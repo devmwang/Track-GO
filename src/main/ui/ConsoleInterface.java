@@ -164,8 +164,8 @@ public class ConsoleInterface {
         String username = scanner.nextLine();
 
         if (username.equals("cancel")) {
-            System.out.println("\nAction cancelled by user. Returning to main menu. \n");
-            displayMainMenu();
+            System.out.println("\nAction cancelled by user. Returning to players overview. \n");
+            displayPlayersOverviewMenu();
             return;
         }
 
@@ -177,15 +177,15 @@ public class ConsoleInterface {
             String newUsername = scanner.nextLine();
 
             if (newUsername.equals("cancel")) {
-                System.out.println("\nAction cancelled by user. Returning to main menu. \n");
-                displayMainMenu();
+                System.out.println("\nAction cancelled by user. Returning to players overview. \n");
+                displayPlayersOverviewMenu();
                 return;
             }
 
             player.setUsername(newUsername);
 
-            System.out.println("\nPlayer edited successfully. Returning to main menu. \n");
-            displayMainMenu();
+            System.out.println("\nPlayer edited successfully. Returning to players overview. \n");
+            displayPlayersOverviewMenu();
         } catch (PlayerNotFoundException e) {
             System.out.println("\nNo player with that username exists. Try again. \n");
             displayPlayerEditMenu();
@@ -276,8 +276,8 @@ public class ConsoleInterface {
         String rosterId = scanner.nextLine();
 
         if (rosterId.equals("cancel")) {
-            System.out.println("\nAction cancelled by user. Returning to main menu. \n");
-            displayMainMenu();
+            System.out.println("\nAction cancelled by user. Returning to rosters overview. \n");
+            displayRostersOverviewMenu();
             return;
         }
 
@@ -298,7 +298,7 @@ public class ConsoleInterface {
         System.out.println("[1] Add player to roster");
         System.out.println("[2] Remove player from roster");
         System.out.println("[3] Delete roster");
-        System.out.println("[4] Back to main menu");
+        System.out.println("[4] Back to rosters overview");
         System.out.println();
 
         String select = scanner.nextLine();
@@ -311,8 +311,8 @@ public class ConsoleInterface {
             case "3":
                 handleRosterEditDelete(roster);
             case "4":
-                System.out.println("\nAction cancelled by user. Returning to main menu. \n");
-                displayMainMenu();
+                System.out.println("\nAction cancelled by user. Returning to rosters overview. \n");
+                displayRostersOverviewMenu();
             default:
                 System.out.println("\nInvalid input. Try again. \n");
                 handleRosterEditSelect(roster);
@@ -358,8 +358,8 @@ public class ConsoleInterface {
         String confirmation = scanner.nextLine();
 
         if (confirmation.equals("cancel")) {
-            System.out.println("\nAction cancelled by user. Returning to main menu. \n");
-            displayMainMenu();
+            System.out.println("\nAction cancelled by user. Returning to rosters overview. \n");
+            displayRostersOverviewMenu();
         } else if (confirmation.equals(roster.getId())) {
             appData.deleteRoster(roster);
             handleRosterEditComplete("Roster deleted successfully.");
