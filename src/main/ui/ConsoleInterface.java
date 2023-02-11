@@ -51,7 +51,7 @@ public class ConsoleInterface {
 
         commands.put("1", this::displayMatchesMenu);
         commands.put("2", this::displayAddMatchMenu);
-        commands.put("3", this::displayPlayersMenu);
+        commands.put("3", this::displayPlayersOverviewMenu);
         commands.put("4", this::displayRostersOverviewMenu);
         commands.put("5", this::exit);
 
@@ -133,7 +133,7 @@ public class ConsoleInterface {
     }
 
     // EFFECTS: Displays players overview
-    private void displayPlayersMenu() {
+    private void displayPlayersOverviewMenu() {
         ArrayList<Player> players = appData.getPlayers();
 
         if (players.isEmpty()) {
@@ -159,14 +159,14 @@ public class ConsoleInterface {
 
         Map<String, Runnable> commands = new HashMap<>();
 
-        commands.put("1", this::displayAddPlayerMenu);
-        commands.put("2", this::displayEditPlayersMenu);
+        commands.put("1", this::displayPlayerAddMenu);
+        commands.put("2", this::displayPlayerEditMenu);
         commands.put("3", this::displayMainMenu);
 
         handleMenu(optionsText, commands);
     }
 
-    private void displayAddPlayerMenu() {
+    private void displayPlayerAddMenu() {
         System.out.println("Enter the player's username: \n");
         String username = scanner.nextLine();
 
@@ -174,10 +174,10 @@ public class ConsoleInterface {
 
         System.out.println("\nPlayer created successfully. To edit this player, go to the \"Edit players\" menu.");
         System.out.println("Returning to players overview. \n");
-        displayPlayersMenu();
+        displayPlayersOverviewMenu();
     }
 
-    private void displayEditPlayersMenu() {
+    private void displayPlayerEditMenu() {
         System.out.println("Note that to complete this action, you must have the player's username.");
         System.out.println("Do you want to proceed? [y/n] \n");
 
@@ -187,14 +187,14 @@ public class ConsoleInterface {
             System.out.println("\nAction cancelled by user. Returning to main menu. \n");
             displayMainMenu();
         } else if (input.equals("y")) {
-            handleEditPlayer();
+            handlePlayerEdit();
         } else {
             System.out.println("\nInvalid input. Try again. \n");
-            displayEditPlayersMenu();
+            displayPlayerEditMenu();
         }
     }
 
-    private void handleEditPlayer() {
+    private void handlePlayerEdit() {
         System.out.println("\nEnter the player's username: (Type \"cancel\" to return to main menu) \n");
         String username = scanner.nextLine();
 
@@ -223,7 +223,7 @@ public class ConsoleInterface {
             displayMainMenu();
         } catch (PlayerNotFoundException e) {
             System.out.println("\nNo player with that username exists. Try again. \n");
-            handleEditPlayer();
+            handlePlayerEdit();
         }
     }
 
