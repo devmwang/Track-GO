@@ -49,8 +49,8 @@ public class ConsoleInterface {
 
         Map<String, Runnable> commands = new HashMap<>();
 
-        commands.put("1", this::displayMatchesMenu);
-        commands.put("2", this::displayAddMatchMenu);
+        commands.put("1", this::displayMatchesOverviewMenu);
+        commands.put("2", this::displayMatchAddMenu);
         commands.put("3", this::displayPlayersOverviewMenu);
         commands.put("4", this::displayRostersOverviewMenu);
         commands.put("5", this::exit);
@@ -59,7 +59,7 @@ public class ConsoleInterface {
     }
 
     // EFFECTS: Displays matches overview
-    private void displayMatchesMenu() {
+    private void displayMatchesOverviewMenu() {
         ArrayList<Match> matches = appData.getMatches();
 
         if (matches.isEmpty()) {
@@ -77,14 +77,14 @@ public class ConsoleInterface {
 
         Map<String, Runnable> commands = new HashMap<>();
 
-        commands.put("1", this::displayAddMatchMenu);
+        commands.put("1", this::displayMatchAddMenu);
         commands.put("2", this::displayMainMenu);
 
         handleMenu(optionsText, commands);
     }
 
     // EFFECTS: Displays add match interface
-    private void displayAddMatchMenu() {
+    private void displayMatchAddMenu() {
         System.out.println("Note that to complete this action, you must have the associated roster id.");
         System.out.println("Do you want to proceed? [y/n] \n");
 
@@ -94,15 +94,15 @@ public class ConsoleInterface {
             System.out.println("\nAction cancelled by user. Returning to main menu. \n");
             displayMainMenu();
         } else if (input.equals("y")) {
-            handleAddMatch();
+            handleMatchAdd();
         } else {
             System.out.println("\nInvalid selection, Try again. \n");
-            displayAddMatchMenu();
+            displayMatchAddMenu();
         }
     }
 
     // EFFECTS: Handles adding match to appData
-    private void handleAddMatch() {
+    private void handleMatchAdd() {
         System.out.println("\nEnter the roster id: (Type \"cancel\" to return to main menu) \n");
         String rosterId = scanner.nextLine();
 
@@ -128,7 +128,7 @@ public class ConsoleInterface {
             displayMainMenu();
         } catch (RosterNotFoundException e) {
             System.out.println("\nNo roster with that id exists. Try again. \n");
-            handleAddMatch();
+            handleMatchAdd();
         }
     }
 
