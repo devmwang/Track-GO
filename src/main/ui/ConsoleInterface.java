@@ -119,26 +119,7 @@ public class ConsoleInterface {
     }
 
     private void handleMatchDetailsMenu(Match match) {
-        String overviewFormat = "| %-15s | %-9s | %-20s | %-5s | %-3s | %-4s |%n";
-        LinkedHashMap<Player, IndividualMatchPerformance> playerDetails = match.getPlayerDetails();
-        ArrayList<Player> players = new ArrayList<>(playerDetails.keySet());
-
-        System.out.format("+-----------------+-----------+----------------------+-------+-----+------+%n");
-        System.out.format("| Map             | Score     | Players on Roster    | K/D   | ADR | MVPs |%n");
-        System.out.format("+-----------------+-----------+----------------------+-------+-----+------+%n");
-        for (int i = 0; i < playerDetails.size(); i++) {
-            System.out.format(overviewFormat,
-                    i == 0 ? match.getMap() : "",
-                    i == 0 ? match.getRoundsWon() + " - " + match.getRoundsLost() : "",
-                    players.get(i).getUsername(),
-                    playerDetails.get(players.get(i)) != null ? playerDetails.get(players.get(i)).getKD() : "N/A",
-                    playerDetails.get(players.get(i)) != null
-                            ? (playerDetails.get(players.get(i)).getTotalDamageDealt() / match.getTotalRounds())
-                            : "N/A",
-                    playerDetails.get(players.get(i)) != null
-                            ? playerDetails.get(players.get(i)).getMostValuablePlayerAwards() : "N/A");
-        }
-        System.out.format("+-----------------+-----------+----------------------+-------+-----+------+%n%n");
+        handleMatchDetailsTable(match);
 
         ArrayList<String> optionsText = new ArrayList<>();
 
@@ -149,6 +130,34 @@ public class ConsoleInterface {
         commands.put("1", this::displayMatchesOverviewMenu);
 
         handleMenu(optionsText, commands);
+    }
+
+    private void handleMatchDetailsTable(Match match) {
+        String overviewFormat = "| %-15s | %-9s | %-20s | %-5s | %-3s | %-4s |%n";
+        ArrayList<Player> players = match.getPlayers();
+
+        System.out.format("+-----------------+-----------+----------------------+-------+-----+------+%n");
+        System.out.format("| Map             | Score     | Players              | K/D   | ADR | MVPs |%n");
+        System.out.format("+-----------------+-----------+----------------------+-------+-----+------+%n");
+        for (int i = 0; i < players.size(); i++) {
+            try {
+                MatchPerformance matchPerformance = players.get(i).getMatchStatsById(match.getMatchId());
+
+                System.out.format(overviewFormat,
+                        i == 0 ? match.getMap() : "",
+                        i == 0 ? match.getRoundsWon() + " - " + match.getRoundsLost() : "",
+                        players.get(i).getUsername(),
+                        matchPerformance.getKD(),
+                        matchPerformance.getTotalDamageDealt() / match.getTotalRounds(),
+                        matchPerformance.getMostValuablePlayerAwards());
+            } catch (MatchNotFoundException e) {
+                System.out.format(overviewFormat,
+                        i == 0 ? match.getMap() : "",
+                        i == 0 ? match.getRoundsWon() + " - " + match.getRoundsLost() : "",
+                        players.get(i).getUsername(), "N/A", "N/A", "N/A");
+            }
+        }
+        System.out.format("+-----------------+-----------+----------------------+-------+-----+------+%n%n");
     }
 
     // EFFECTS: Displays add match interface
@@ -263,7 +272,7 @@ public class ConsoleInterface {
         System.out.println("\nEnter the number of MVPs: \n");
         int mostValuablePlayerAwards = Integer.parseInt(scanner.nextLine());
 
-        match.setIndividualPerformance(player, damage, points, kills, assists, deaths, mostValuablePlayerAwards);
+        player.setMatchStats(match.getMatchId(), damage, points, kills, assists, deaths, mostValuablePlayerAwards);
 
         System.out.println("\nMatch details modified successfully.");
         System.out.println("Returning to matches overview. \n");

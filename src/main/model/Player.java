@@ -5,6 +5,7 @@ import java.util.HashMap;
 // Represents an individual player to be tracked by the application
 public class Player {
     private String username = "";
+    private HashMap<Integer, MatchPerformance> matchStats = new HashMap<>();
     private int gamesPlayed;
     private int roundsPlayed;
     private int totalDamageDealt;
@@ -16,6 +17,7 @@ public class Player {
     // EFFECTS: Constructs a player with the provided username and default (0) values for remaining fields
     public Player(String username) {
         this.username = username;
+        this.matchStats = new HashMap<>();
         this.gamesPlayed = 0;
         this.roundsPlayed = 0;
         this.totalDamageDealt = 0;
@@ -24,12 +26,30 @@ public class Player {
         this.totalEnemiesFlashed = 0;
     }
 
+    // REQUIRES: username is not null
+    // MODIFIES: this
+    // EFFECTS: Sets the username of the player to the provided value
     public void setUsername(String username) {
         this.username = username;
     }
 
+    // REQUIRES: matchId, damage, points, kills, assists, deaths, mostValuablePlayerAwards are all not null
+    // MODIFIES: this
+    // EFFECTS: Sets the match stats of the player for the matchId to the provided values
+    public void setMatchStats(int matchId, int damage, int points, int kills, int assists, int deaths,
+                              int mostValuablePlayerAwards) {
+        matchStats.put(matchId, new MatchPerformance(damage, points, kills, assists, deaths, mostValuablePlayerAwards));
+    }
+
     public String getUsername() {
         return username;
+    }
+
+    public MatchPerformance getMatchStatsById(int matchId) throws MatchNotFoundException {
+        if (!matchStats.containsKey(matchId)) {
+            throw new MatchNotFoundException();
+        }
+        return matchStats.get(matchId);
     }
 
     public int getGamesPlayed() {

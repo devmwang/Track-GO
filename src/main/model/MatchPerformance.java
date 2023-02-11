@@ -1,6 +1,6 @@
 package model;
 
-public class IndividualMatchPerformance {
+public class MatchPerformance {
     private int totalDamageDealt;
     private int totalPoints;
     private int totalKills;
@@ -8,8 +8,8 @@ public class IndividualMatchPerformance {
     private int totalDeaths;
     private int mostValuablePlayerAwards;
 
-    public IndividualMatchPerformance(int totalDamageDealt, int totalPoints, int totalKills, int totalAssists,
-                                      int totalDeaths, int mostValuablePlayerAwards) {
+    public MatchPerformance(int totalDamageDealt, int totalPoints, int totalKills, int totalAssists,
+                            int totalDeaths, int mostValuablePlayerAwards) {
         this.totalDamageDealt = totalDamageDealt;
         this.totalPoints = totalPoints;
         this.totalKills = totalKills;
