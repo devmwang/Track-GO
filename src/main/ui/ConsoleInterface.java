@@ -72,6 +72,7 @@ public class ConsoleInterface {
             System.out.format("+----------+-----------+-----------------%n");
             for (Match match : matches) {
                 System.out.format(overviewFormat,
+                        match.getMatchId(),
                         match.getRoundsWon() + " - " + match.getRoundsLost(),
                         match.getMap());
             }
@@ -171,7 +172,7 @@ public class ConsoleInterface {
     }
 
     private void displayPlayerEditMenu() {
-        System.out.println("Enter the player's username: (Type \"cancel\" to return to main menu) \n");
+        System.out.println("Enter the player's username: (Type \"cancel\" to return to players overview) \n");
         String username = scanner.nextLine();
 
         if (username.equals("cancel")) {
@@ -183,7 +184,7 @@ public class ConsoleInterface {
         try {
             Player player = appData.getPlayerByUsername(username);
 
-            System.out.println("\nEnter the new username: (Type \"cancel\" to return to main menu) \n");
+            System.out.println("\nEnter the new username: (Type \"cancel\" to return to players overview) \n");
 
             String newUsername = scanner.nextLine();
 
@@ -283,7 +284,7 @@ public class ConsoleInterface {
 
     // EFFECTS: Displays roster edit interface
     private void displayRosterEditMenu() {
-        System.out.println("Enter the roster id: (Type \"cancel\" to return to main menu) \n");
+        System.out.println("Enter the roster id: (Type \"cancel\" to return to rosters overview) \n");
         String rosterId = scanner.nextLine();
 
         if (rosterId.equals("cancel")) {
@@ -365,7 +366,7 @@ public class ConsoleInterface {
     // REQUIRES: roster in appData
     // EFFECTS: Handles deleting roster
     private void handleRosterEditDelete(Roster roster) {
-        System.out.println("\nConfirm deletion by typing in roster id: (Type \"cancel\" to return to main menu) \n");
+        System.out.println("\nConfirm deletion - enter roster id: (Type \"cancel\" to return to rosters overview) \n");
         String confirmation = scanner.nextLine();
 
         if (confirmation.equals("cancel")) {

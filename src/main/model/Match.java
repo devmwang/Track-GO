@@ -29,6 +29,10 @@ public class Match {
                 totalDeaths, mostValuablePlayerAwards));
     }
 
+    public int getMatchId() {
+        return matchId;
+    }
+
     public int getTotalRounds() {
         return roundsWon + roundsLost;
     }
