@@ -85,25 +85,7 @@ public class ConsoleInterface {
 
     // EFFECTS: Displays add match interface
     private void displayMatchAddMenu() {
-        System.out.println("Note that to complete this action, you must have the associated roster id.");
-        System.out.println("Do you want to proceed? [y/n] \n");
-
-        String input = scanner.nextLine();
-
-        if (input.equals("n")) {
-            System.out.println("\nAction cancelled by user. Returning to main menu. \n");
-            displayMainMenu();
-        } else if (input.equals("y")) {
-            handleMatchAdd();
-        } else {
-            System.out.println("\nInvalid selection, Try again. \n");
-            displayMatchAddMenu();
-        }
-    }
-
-    // EFFECTS: Handles adding match to appData
-    private void handleMatchAdd() {
-        System.out.println("\nEnter the roster id: (Type \"cancel\" to return to main menu) \n");
+        System.out.println("Enter the roster id: (Type \"cancel\" to return to main menu) \n");
         String rosterId = scanner.nextLine();
 
         if (rosterId.equals("cancel")) {
@@ -128,7 +110,7 @@ public class ConsoleInterface {
             displayMainMenu();
         } catch (RosterNotFoundException e) {
             System.out.println("\nNo roster with that id exists. Try again. \n");
-            handleMatchAdd();
+            displayMatchAddMenu();
         }
     }
 
@@ -178,24 +160,7 @@ public class ConsoleInterface {
     }
 
     private void displayPlayerEditMenu() {
-        System.out.println("Note that to complete this action, you must have the player's username.");
-        System.out.println("Do you want to proceed? [y/n] \n");
-
-        String input = scanner.nextLine();
-
-        if (input.equals("n")) {
-            System.out.println("\nAction cancelled by user. Returning to main menu. \n");
-            displayMainMenu();
-        } else if (input.equals("y")) {
-            handlePlayerEdit();
-        } else {
-            System.out.println("\nInvalid input. Try again. \n");
-            displayPlayerEditMenu();
-        }
-    }
-
-    private void handlePlayerEdit() {
-        System.out.println("\nEnter the player's username: (Type \"cancel\" to return to main menu) \n");
+        System.out.println("Enter the player's username: (Type \"cancel\" to return to main menu) \n");
         String username = scanner.nextLine();
 
         if (username.equals("cancel")) {
@@ -223,7 +188,7 @@ public class ConsoleInterface {
             displayMainMenu();
         } catch (PlayerNotFoundException e) {
             System.out.println("\nNo player with that username exists. Try again. \n");
-            handlePlayerEdit();
+            displayPlayerEditMenu();
         }
     }
 
@@ -307,25 +272,7 @@ public class ConsoleInterface {
 
     // EFFECTS: Displays roster edit interface
     private void displayRosterEditMenu() {
-        System.out.println("Note that to complete this action, you must have the associated roster id.");
-        System.out.println("Do you want to proceed? [y/n] \n");
-
-        String input = scanner.nextLine();
-
-        if (input.equals("n")) {
-            System.out.println("\nAction cancelled by user. Returning to main menu. \n");
-            displayMainMenu();
-        } else if (input.equals("y")) {
-            handleRosterEdit();
-        } else {
-            System.out.println("\nInvalid input. Try again. \n");
-            displayRosterEditMenu();
-        }
-    }
-
-    // EFFECTS: Handles first step of editing roster
-    private void handleRosterEdit() {
-        System.out.println("\nEnter the roster id: (Type \"cancel\" to return to main menu) \n");
+        System.out.println("Enter the roster id: (Type \"cancel\" to return to main menu) \n");
         String rosterId = scanner.nextLine();
 
         if (rosterId.equals("cancel")) {
@@ -340,7 +287,7 @@ public class ConsoleInterface {
             handleRosterEditSelect(roster);
         } catch (RosterNotFoundException e) {
             System.out.println("\nNo roster with that id exists. Try again. \n");
-            handleRosterEdit();
+            displayRosterEditMenu();
         }
     }
 
