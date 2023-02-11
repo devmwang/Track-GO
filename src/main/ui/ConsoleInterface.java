@@ -337,6 +337,7 @@ public class ConsoleInterface {
         System.out.println("[2] Remove player from roster");
         System.out.println("[3] Delete roster");
         System.out.println("[4] Back to main menu");
+        System.out.println();
 
         String select = scanner.nextLine();
 
