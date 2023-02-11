@@ -65,7 +65,7 @@ public class ConsoleInterface {
         if (matches.isEmpty()) {
             System.out.println("No matches have been added yet. \n");
         } else {
-            String overviewFormat = "| %-9s | %-12s |%n";
+            String overviewFormat = "| %-9s | %-15s |%n";
 
             System.out.format("+-----------+-----------------+%n");
             System.out.format("|   Score   |       Map       |%n");
@@ -116,7 +116,7 @@ public class ConsoleInterface {
 
             appData.addMatch(roster, wonRounds, lostRounds, map);
 
-            System.out.println("Match added successfully. To add player stats, go to the \"Edit Match\" menu.");
+            System.out.println("\nMatch added successfully. To add player stats, go to the \"Edit Match\" menu.");
             System.out.println("Returning to main menu. \n");
             displayMainMenu();
         } catch (RosterNotFoundException e) {
