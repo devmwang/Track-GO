@@ -65,18 +65,7 @@ public class ConsoleInterface {
         if (matches.isEmpty()) {
             System.out.println("No matches have been added yet. \n");
         } else {
-            String overviewFormat = "| %-8d | %-15s | %-9s |%n";
-
-            System.out.format("+----------+-----------------+-----------+%n");
-            System.out.format("| Match ID | Map             | Score     |%n");
-            System.out.format("+----------+-----------------+-----------+%n");
-            for (Match match : matches) {
-                System.out.format(overviewFormat,
-                        match.getMatchId(),
-                        match.getMap(),
-                        match.getRoundsWon() + " - " + match.getRoundsLost());
-            }
-            System.out.format("+----------+-----------------+-----------+%n%n");
+            handleMatchesOverviewTable(matches);
         }
 
         ArrayList<String> optionsText = new ArrayList<>();
@@ -94,6 +83,21 @@ public class ConsoleInterface {
         commands.put("4", this::displayMainMenu);
 
         handleMenu(optionsText, commands);
+    }
+
+    private void handleMatchesOverviewTable(ArrayList<Match> matches) {
+        String overviewFormat = "| %-8d | %-15s | %-9s |%n";
+
+        System.out.format("+----------+-----------------+-----------+%n");
+        System.out.format("| Match ID | Map             | Score     |%n");
+        System.out.format("+----------+-----------------+-----------+%n");
+        for (Match match : matches) {
+            System.out.format(overviewFormat,
+                    match.getMatchId(),
+                    match.getMap(),
+                    match.getRoundsWon() + " - " + match.getRoundsLost());
+        }
+        System.out.format("+----------+-----------------+-----------+%n%n");
     }
 
     private void displayMatchDetailsMenu() {
