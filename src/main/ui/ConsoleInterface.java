@@ -397,7 +397,7 @@ public class ConsoleInterface {
                         i == 0 ? (roster.getWinRate() + "%") : "",
                         players.get(i).getUsername());
             }
-            System.out.format("+-----------------+---------------+----------------------+%n");
+            System.out.format("+-----------------+---------------+----------------------+%n%n");
         }
     }
 
