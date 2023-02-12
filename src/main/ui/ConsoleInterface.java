@@ -121,15 +121,19 @@ public class ConsoleInterface {
     private void handleMatchDetailsMenu(Match match) {
         handleMatchDetailsTable(match);
 
-        ArrayList<String> optionsText = new ArrayList<>();
+        System.out.println("[1] Edit match details");
+        System.out.println("[2] Back to matches overview \n");
 
-        optionsText.add("[1] Back to matches overview");
+        String input = scanner.nextLine();
 
-        Map<String, Runnable> commands = new HashMap<>();
-
-        commands.put("1", this::displayMatchesOverviewMenu);
-
-        handleMenu(optionsText, commands);
+        if (input.equals("1")) {
+            handleMatchEdit(match);
+        } else if (input.equals("2")) {
+            displayMatchesOverviewMenu();
+        } else {
+            System.out.println("Invalid selection, try again. \n");
+            handleMatchDetailsMenu(match);
+        }
     }
 
     private void handleMatchDetailsTable(Match match) {
