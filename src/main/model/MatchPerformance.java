@@ -29,12 +29,15 @@ public class MatchPerformance {
     public int getTotalKills() {
         return totalKills;
     }
+
     public int getTotalAssists() {
         return totalAssists;
     }
+
     public int getTotalDeaths() {
         return totalDeaths;
     }
+
     public int getMostValuablePlayerAwards() {
         return mostValuablePlayerAwards;
     }
