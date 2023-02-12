@@ -394,7 +394,7 @@ public class ConsoleInterface {
             for (int i = 0; i < players.size(); i++) {
                 System.out.format(overviewFormat,
                         i == 0 ? roster.getId() : "",
-                        i == 0 ? roster.getWinRate() : "",
+                        i == 0 ? (roster.getWinRate() + "%") : "",
                         players.get(i).getUsername());
             }
             System.out.format("+-----------------+---------------+----------------------+%n");

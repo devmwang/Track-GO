@@ -11,7 +11,7 @@ public class Roster {
     private int gamesPlayed;
     private int roundsPlayed;
     private int wins;
-    private int ties;
+    private int losses;
 
     public Roster(String id, ArrayList<Player> players) {
         this.id = id;
@@ -19,6 +19,7 @@ public class Roster {
         this.gamesPlayed = 0;
         this.roundsPlayed = 0;
         this.wins = 0;
+        this.losses = 0;
     }
 
     public void addPlayer(Player player) {
@@ -42,7 +43,7 @@ public class Roster {
     }
 
     public double getWinRate() {
-        return 0.0;
+        return wins / gamesPlayed * 100;
     }
 
     public int getGamesPlayed() {
@@ -57,11 +58,11 @@ public class Roster {
         return wins;
     }
 
-    public int getTies() {
-        return ties;
+    public int getLosses() {
+        return losses;
     }
 
-    public int getLosses() {
-        return gamesPlayed - wins - ties;
+    public int getTies() {
+        return gamesPlayed - wins - losses;
     }
 }
