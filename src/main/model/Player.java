@@ -8,6 +8,8 @@ public class Player {
     private HashMap<Integer, MatchPerformance> matchStats = new HashMap<>();
     private int gamesPlayed;
     private int roundsPlayed;
+    private int wins;
+    private int losses;
     private int totalDamageDealt;
     private int totalPoints;
     private int totalKills;
@@ -23,13 +25,14 @@ public class Player {
         this.matchStats = new HashMap<>();
         this.gamesPlayed = 0;
         this.roundsPlayed = 0;
+        this.wins = 0;
+        this.losses = 0;
         this.totalDamageDealt = 0;
         this.totalPoints = 0;
         this.totalKills = 0;
         this.totalAssists = 0;
         this.totalDeaths = 0;
         this.mostValuablePlayerAwards = 0;
-        this.totalEnemiesFlashed = 0;
     }
 
     // REQUIRES: username is not null
@@ -65,6 +68,22 @@ public class Player {
         return matchStats.get(matchId);
     }
 
+    public void incrementGamesPlayed() {
+        this.gamesPlayed++;
+    }
+
+    public void incrementRoundsPlayed(int rounds) {
+        this.roundsPlayed += rounds;
+    }
+
+    public void incrementWins() {
+        this.wins++;
+    }
+
+    public void incrementLosses() {
+        this.losses++;
+    }
+
     public int getGamesPlayed() {
         return gamesPlayed;
     }
@@ -81,11 +100,19 @@ public class Player {
         return totalPoints;
     }
 
-    public int getMostValuablePlayerAwards() {
-        return mostValuablePlayerAwards;
+    public int getTotalKills() {
+        return totalKills;
     }
 
-    public int getTotalEnemiesFlashed() {
-        return totalEnemiesFlashed;
+    public int getTotalAssists() {
+        return totalAssists;
+    }
+
+    public int getTotalDeaths() {
+        return totalDeaths;
+    }
+
+    public int getMostValuablePlayerAwards() {
+        return mostValuablePlayerAwards;
     }
 }

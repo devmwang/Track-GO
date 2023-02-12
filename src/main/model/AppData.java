@@ -77,12 +77,36 @@ public class AppData {
         rosters.add(new Roster(id, playersArrayList));
     }
 
-    // REQUIRES: roster is in rosters, wonRounds >= 0, lostRounds >= 0
+    // REQUIRES: roster is in rosters, 16 >= wonRounds >= 0, 16 >= lostRounds >= 0
     // MODIFIES: this
     // EFFECTS: Adds provided match to matches
     public void addMatch(Roster roster, int wonRounds, int lostRounds, String map) {
         matches.add(new Match(nextMatchId, roster, wonRounds, lostRounds, map));
         nextMatchId++;
+
+        int totalRounds = wonRounds + lostRounds;
+
+        roster.incrementGamesPlayed();
+        roster.incrementRoundsPlayed(totalRounds);
+
+        for (Player player : roster.getPlayers()) {
+            player.incrementGamesPlayed();
+            player.incrementRoundsPlayed(totalRounds);
+        }
+
+        if (wonRounds > lostRounds) {
+            roster.incrementWins();
+
+            for (Player player : roster.getPlayers()) {
+                player.incrementWins();
+            }
+        } else if (wonRounds < lostRounds) {
+            roster.incrementLosses();
+
+            for (Player player : roster.getPlayers()) {
+                player.incrementLosses();
+            }
+        }
     }
 
     // REQUIRES: roster is in rosters

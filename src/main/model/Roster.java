@@ -30,6 +30,22 @@ public class Roster {
         players.remove(player);
     }
 
+    public void incrementGamesPlayed() {
+        this.gamesPlayed++;
+    }
+
+    public void incrementRoundsPlayed(int rounds) {
+        this.roundsPlayed += rounds;
+    }
+
+    public void incrementWins() {
+        this.wins++;
+    }
+
+    public void incrementLosses() {
+        this.losses++;
+    }
+
     public String getOverview() {
         return "";
     }
@@ -43,7 +59,10 @@ public class Roster {
     }
 
     public double getWinRate() {
-        return wins / gamesPlayed * 100;
+        if (gamesPlayed == 0) {
+            return 0;
+        }
+        return Math.floor((double) wins / (double) gamesPlayed * 1000) / 10;
     }
 
     public int getGamesPlayed() {

@@ -21,12 +21,6 @@ public class Match {
         this.map = map;
     }
 
-//    public void setIndividualPerformance(Player player, int totalDamageDealt, int totalPoints, int totalKills,
-//                                         int totalAssists, int totalDeaths, int mostValuablePlayerAwards) {
-//        playerDetails.replace(player, new IndividualMatchPerformance(totalDamageDealt, totalPoints, totalKills,
-//                totalAssists, totalDeaths, mostValuablePlayerAwards));
-//    }
-
     public int getMatchId() {
         return matchId;
     }
