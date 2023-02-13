@@ -17,6 +17,7 @@ public class ConsoleInterface {
         displayMainMenu();
     }
 
+    // REQUIRES: optionsText and commands are not null, optionsText and commands are the same size
     // EFFECTS: Generalized menu handler, handles user selection and displays appropriate menu
     private void handleMenu(ArrayList<String> optionsText, Map<String, Runnable> commands) {
         for (String option : optionsText) {
@@ -85,6 +86,8 @@ public class ConsoleInterface {
         handleMenu(optionsText, commands);
     }
 
+    // REQUIRES: matches is not null
+    // EFFECTS: Displays match overview table
     private void handleMatchesOverviewTable(ArrayList<Match> matches) {
         String overviewFormat = "| %-8d | %-15s | %-9s |%n";
 
@@ -100,6 +103,7 @@ public class ConsoleInterface {
         System.out.format("+----------+-----------------+-----------+%n%n");
     }
 
+    // EFFECTS: Displays match details selection
     private void displayMatchDetailsMenu() {
         System.out.println("Enter the match id: (Type \"cancel\" to return to matches overview) \n");
         String matchId = scanner.nextLine();
@@ -122,6 +126,8 @@ public class ConsoleInterface {
         }
     }
 
+    // REQUIRES: match is not null
+    // EFFECTS: Displays match details menu
     private void handleMatchDetailsMenu(Match match) {
         handleMatchDetailsTable(match);
 
@@ -140,6 +146,8 @@ public class ConsoleInterface {
         }
     }
 
+    // REQUIRES: match is not null
+    // EFFECTS: Displays match details table
     private void handleMatchDetailsTable(Match match) {
         String overviewFormat = "| %-15s | %-9s | %-20s | %-5s | %-3s | %-4s |%n";
         ArrayList<Player> players = match.getPlayers();
@@ -240,6 +248,7 @@ public class ConsoleInterface {
         }
     }
 
+    // REQUIRES: match is not null
     // EFFECTS: Handles editing player performance for the consumed match
     private void handleMatchEditPlayerSelect(Match match) {
         System.out.println("\nEnter the player username: (Type \"cancel\" to return to matches overview) \n");
@@ -260,6 +269,7 @@ public class ConsoleInterface {
         }
     }
 
+    // REQUIRES: match is not null, player is not null
     // EFFECTS: Handles editing performance data for a player in a match
     private void handleMatchEditPlayerPerformance(Match match, Player player) {
         System.out.println("\nEnter the total damage dealt: \n");
@@ -321,6 +331,7 @@ public class ConsoleInterface {
         handleMenu(optionsText, commands);
     }
 
+    // EFFECTS: Displays player add menu
     private void displayPlayerAddMenu() {
         System.out.println("Enter the player's username: \n");
         String username = scanner.nextLine();
@@ -332,6 +343,7 @@ public class ConsoleInterface {
         displayPlayersOverviewMenu();
     }
 
+    // EFFECTS: Displays player edit menu
     private void displayPlayerEditMenu() {
         System.out.println("Enter the player's username: (Type \"cancel\" to return to players overview) \n");
         String username = scanner.nextLine();
@@ -390,6 +402,7 @@ public class ConsoleInterface {
         handleMenu(optionsText, commands);
     }
 
+    // REQUIRES: rosters is not null
     // EFFECTS: Displays table of rosters with overview stats
     private void displayRostersOverviewTable(ArrayList<Roster> rosters) {
         String overviewFormat = "| %-15s | %-13s | %-20s |%n";
@@ -460,7 +473,7 @@ public class ConsoleInterface {
         }
     }
 
-    // REQUIRES: roster in appData
+    // REQUIRES: roster is not null
     // EFFECTS: Handles second step of editing roster (Selecting edit mode)
     private void handleRosterEditSelect(Roster roster) {
         System.out.println("\nSelect an edit mode.");
@@ -488,7 +501,7 @@ public class ConsoleInterface {
         }
     }
 
-    // REQUIRES: roster in appData
+    // REQUIRES: roster is not null
     // EFFECTS: Handles adding player to provided roster
     private void handleRosterEditAdd(Roster roster) {
         System.out.println("\nEnter the username of the player you want to add: \n");
@@ -504,7 +517,7 @@ public class ConsoleInterface {
         }
     }
 
-    // REQUIRES: roster in appData
+    // REQUIRES: roster is not null
     // EFFECTS: Handles removing player from provided roster
     private void handleRosterEditRemove(Roster roster) {
         System.out.println("\nEnter the username of the player you want to remove: \n");
@@ -520,7 +533,7 @@ public class ConsoleInterface {
         }
     }
 
-    // REQUIRES: roster in appData
+    // REQUIRES: roster is not null
     // EFFECTS: Handles deleting roster
     private void handleRosterEditDelete(Roster roster) {
         System.out.println("\nConfirm deletion - enter roster id: (Type \"cancel\" to return to rosters overview) \n");
@@ -538,6 +551,7 @@ public class ConsoleInterface {
         }
     }
 
+    // EFFECTS: Handles completion of roster edit
     private void handleRosterEditComplete(String prefix) {
         System.out.println("\n" + prefix.trim() + " Returning to main menu. \n");
         displayRostersOverviewMenu();
