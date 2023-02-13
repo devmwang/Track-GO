@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.ArrayList;
 
 // Represents a roster of players to be tracked by the application
