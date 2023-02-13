@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 // Represents a roster of players to be tracked by the application
 public class Roster {
-    private String id;
-    private ArrayList<Player> players;
+    private final String id;
+    private final ArrayList<Player> players;
     private int gamesPlayed;
     private int roundsPlayed;
     private int wins;
