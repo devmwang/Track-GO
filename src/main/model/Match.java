@@ -5,11 +5,11 @@ import java.util.LinkedHashMap;
 
 // Represents a match to be tracked by the application
 public class Match {
-    private int matchId;
-    private ArrayList<Player> players;
-    private int roundsWon;
-    private int roundsLost;
-    private String map;
+    private final int matchId;
+    private final ArrayList<Player> players;
+    private final int roundsWon;
+    private final int roundsLost;
+    private final String map;
 
     // EFFECTS: Constructs a match with the provided roster and data values
     public Match(int matchId, Roster roster, int roundsWon, int roundsLost, String map) {
