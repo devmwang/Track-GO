@@ -98,6 +98,14 @@ public class Player {
         return roundsPlayed;
     }
 
+    public int getWins() {
+        return wins;
+    }
+
+    public int getLosses() {
+        return losses;
+    }
+
     public int getTotalDamageDealt() {
         return totalDamageDealt;
     }
