@@ -44,10 +44,6 @@ public class Roster {
         this.losses++;
     }
 
-    public String getOverview() {
-        return "";
-    }
-
     public String getId() {
         return id;
     }
