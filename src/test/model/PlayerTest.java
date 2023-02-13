@@ -76,7 +76,7 @@ class PlayerTest {
         try {
             p1.getMatchStatsById(10000);
         } catch (MatchNotFoundException e) {
-            return;
+            // expected
         }
     }
 
