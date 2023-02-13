@@ -75,6 +75,8 @@ class PlayerTest {
     void testGetMatchStatsInvalid() {
         try {
             p1.getMatchStatsById(10000);
+
+            fail("MatchNotFoundException should have been thrown");
         } catch (MatchNotFoundException e) {
             // expected
         }
