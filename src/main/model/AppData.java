@@ -8,6 +8,7 @@ public class AppData {
     private ArrayList<Match> matches;
     private int nextMatchId;
 
+    // EFFECTS: Constructs a new AppData object with empty players, rosters, and matches, and nextMatchId = 0
     public AppData() {
         this.players = new ArrayList<>();
         this.rosters = new ArrayList<>();
@@ -28,7 +29,7 @@ public class AppData {
     }
 
     // REQUIRES: Player in players has username
-    // EFFECTS: Returns player with username
+    // EFFECTS: Returns Player with username, throws PlayerNotFoundException if not found
     public Player getPlayerByUsername(String username) throws PlayerNotFoundException {
         for (Player player : players) {
             if (player.getUsername().equals(username)) {
@@ -40,7 +41,7 @@ public class AppData {
     }
 
     // REQUIRES: Roster in rosters has id
-    // EFFECTS: Returns roster with id
+    // EFFECTS: Returns Roster with id, throws RosterNotFoundException if not found
     public Roster getRosterById(String id) throws RosterNotFoundException {
         for (Roster roster : rosters) {
             if (roster.getId().equals(id)) {
@@ -52,7 +53,7 @@ public class AppData {
     }
 
     // REQUIRES: Match in matches has matchId
-    // EFFECTS: Returns match with matchId
+    // EFFECTS: Returns Match with matchId, throws MatchNotFoundException if not found
     public Match getMatchById(int matchId) throws MatchNotFoundException {
         for (Match match : matches) {
             if (match.getMatchId() == matchId) {
@@ -63,23 +64,23 @@ public class AppData {
         throw new MatchNotFoundException();
     }
 
-    // REQUIRES: username
+    // REQUIRES: username is not null or empty
     // MODIFIES: this
-    // EFFECTS: Creates player with provided username adds created player to players
+    // EFFECTS: Creates Player with provided username and adds created Player to players
     public void addPlayer(String username) {
         players.add(new Player(username));
     }
 
-    // REQUIRES: id, playersArrayList
+    // REQUIRES: id is not null or empty, playersArrayList is not null and size >= 1
     // MODIFIES: this
-    // EFFECTS: Creates roster with provided data and adds created roster to rosters
+    // EFFECTS: Creates Roster with provided data and adds created Roster to rosters
     public void addRoster(String id, ArrayList<Player> playersArrayList) {
         rosters.add(new Roster(id, playersArrayList));
     }
 
     // REQUIRES: roster is in rosters, 16 >= wonRounds >= 0, 16 >= lostRounds >= 0
     // MODIFIES: this
-    // EFFECTS: Adds provided match to matches
+    // EFFECTS: Creates Match, adds match to matches, and adjusts player and roster stats accordingly
     public void addMatch(Roster roster, int wonRounds, int lostRounds, String map) {
         matches.add(new Match(nextMatchId, roster, wonRounds, lostRounds, map));
         nextMatchId++;
@@ -111,7 +112,7 @@ public class AppData {
 
     // REQUIRES: roster is in rosters
     // MODIFIES: this
-    // EFFECTS: Deletes roster from rosters
+    // EFFECTS: Deletes Roster from rosters
     public void deleteRoster(Roster roster) {
         rosters.remove(roster);
     }
