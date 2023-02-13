@@ -61,6 +61,8 @@ public class Player {
         return username;
     }
 
+    // REQUIRES: matchId is not null
+    // EFFECTS: Returns the match stats of the player for the matchId, throws MatchNotFoundException if does not exist
     public MatchPerformance getMatchStatsById(int matchId) throws MatchNotFoundException {
         if (!matchStats.containsKey(matchId)) {
             throw new MatchNotFoundException();
@@ -68,18 +70,22 @@ public class Player {
         return matchStats.get(matchId);
     }
 
+    // EFFECTS: Increments number of games played
     public void incrementGamesPlayed() {
         this.gamesPlayed++;
     }
 
+    // EFFECTS: Increments number of rounds played
     public void incrementRoundsPlayed(int rounds) {
         this.roundsPlayed += rounds;
     }
 
+    // EFFECTS: Increments number of match wins player has
     public void incrementWins() {
         this.wins++;
     }
 
+    // EFFECTS: Increments number of match losses player has
     public void incrementLosses() {
         this.losses++;
     }
