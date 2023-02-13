@@ -1,12 +1,12 @@
 package model;
 
 public class MatchPerformance {
-    private int totalDamageDealt;
-    private int totalPoints;
-    private int totalKills;
-    private int totalAssists;
-    private int totalDeaths;
-    private int mostValuablePlayerAwards;
+    private final int totalDamageDealt;
+    private final int totalPoints;
+    private final int totalKills;
+    private final int totalAssists;
+    private final int totalDeaths;
+    private final int mostValuablePlayerAwards;
 
     public MatchPerformance(int totalDamageDealt, int totalPoints, int totalKills, int totalAssists,
                             int totalDeaths, int mostValuablePlayerAwards) {
@@ -42,6 +42,7 @@ public class MatchPerformance {
         return mostValuablePlayerAwards;
     }
 
+    // EFFECTS: Returns the KD ratio in the form of "K/D"
     public String getKD() {
         return totalKills + "/" + totalDeaths;
     }
