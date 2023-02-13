@@ -16,10 +16,9 @@ public class Player {
     private int totalAssists;
     private int totalDeaths;
     private int mostValuablePlayerAwards;
-    private int totalEnemiesFlashed;
 
     // REQUIRES: username is not null
-    // EFFECTS: Constructs a player with the provided username and default (0) values for remaining fields
+    // EFFECTS: Constructs a player with the provided username and default value 0 for remaining fields
     public Player(String username) {
         this.username = username;
         this.matchStats = new HashMap<>();
@@ -62,7 +61,7 @@ public class Player {
     }
 
     // REQUIRES: matchId is not null
-    // EFFECTS: Returns the match stats of the player for the matchId, throws MatchNotFoundException if does not exist
+    // EFFECTS: Returns the match stats of the player for the matchId, throws MatchNotFoundException if non-existent
     public MatchPerformance getMatchStatsById(int matchId) throws MatchNotFoundException {
         if (!matchStats.containsKey(matchId)) {
             throw new MatchNotFoundException();
@@ -70,21 +69,25 @@ public class Player {
         return matchStats.get(matchId);
     }
 
+    // MODIFIES: this
     // EFFECTS: Increments number of games played
     public void incrementGamesPlayed() {
         this.gamesPlayed++;
     }
 
+    // MODIFIES: this
     // EFFECTS: Increments number of rounds played
     public void incrementRoundsPlayed(int rounds) {
         this.roundsPlayed += rounds;
     }
 
+    // MODIFIES: this
     // EFFECTS: Increments number of match wins player has
     public void incrementWins() {
         this.wins++;
     }
 
+    // MODIFIES: this
     // EFFECTS: Increments number of match losses player has
     public void incrementLosses() {
         this.losses++;

@@ -11,6 +11,7 @@ public class Roster {
     private int wins;
     private int losses;
 
+    // EFFECTS: Constructs new Roster with given id and players, and other fields set to default value 0
     public Roster(String id, ArrayList<Player> players) {
         this.id = id;
         this.players = players;
@@ -20,26 +21,41 @@ public class Roster {
         this.losses = 0;
     }
 
+    // REQUIRES: player is not null
+    // MODIFIES: this
+    // EFFECTS: Adds player to roster
     public void addPlayer(Player player) {
         players.add(player);
     }
 
+    // REQUIRES: player is not null
+    // MODIFIES: this
+    // EFFECTS: Removes player from roster
     public void removePlayer(Player player) {
         players.remove(player);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Increments gamesPlayed by 1
     public void incrementGamesPlayed() {
         this.gamesPlayed++;
     }
 
+    // REQUIRES: rounds >= 0
+    // MODIFIES: this
+    // EFFECTS: Increments roundsPlayed by rounds
     public void incrementRoundsPlayed(int rounds) {
         this.roundsPlayed += rounds;
     }
 
+    // MODIFIES: this
+    // EFFECTS: Increments wins by 1
     public void incrementWins() {
         this.wins++;
     }
 
+    // MODIFIES: this
+    // EFFECTS: Increments losses by 1
     public void incrementLosses() {
         this.losses++;
     }
@@ -52,6 +68,7 @@ public class Roster {
         return players;
     }
 
+    // EFFECTS: Returns win rate as a percentage to 1 decimal point
     public double getWinRate() {
         if (gamesPlayed == 0) {
             return 0;

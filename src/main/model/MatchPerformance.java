@@ -1,5 +1,6 @@
 package model;
 
+// Represents a collection of performance stats for a player in a given match
 public class MatchPerformance {
     private final int totalDamageDealt;
     private final int totalPoints;
@@ -8,6 +9,7 @@ public class MatchPerformance {
     private final int totalDeaths;
     private final int mostValuablePlayerAwards;
 
+    // EFFECTS: Constructs new match performance with the provided stats
     public MatchPerformance(int totalDamageDealt, int totalPoints, int totalKills, int totalAssists,
                             int totalDeaths, int mostValuablePlayerAwards) {
         this.totalDamageDealt = totalDamageDealt;
