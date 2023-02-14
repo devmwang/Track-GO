@@ -5,10 +5,4 @@ public class RosterNotFoundException extends Exception {
     public RosterNotFoundException() {
         super();
     }
-
-    // REQUIRES: message is not null
-    // EFFECTS: Constructs a new RosterNotFoundException with a detail message
-    public RosterNotFoundException(String message) {
-        super(message);
-    }
 }

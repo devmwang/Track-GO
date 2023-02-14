@@ -5,10 +5,4 @@ public class PlayerNotFoundException extends Exception {
     public PlayerNotFoundException() {
         super();
     }
-
-    // REQUIRES: message is not null
-    // EFFECTS: Constructs a new PlayerNotFoundException with a detail message
-    public PlayerNotFoundException(String message) {
-        super(message);
-    }
 }
