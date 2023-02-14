@@ -79,6 +79,13 @@ public class AppData {
         rosters.add(new Roster(id, playersArrayList));
     }
 
+    // REQUIRES: roster is in rosters
+    // MODIFIES: this
+    // EFFECTS: Deletes Roster from rosters
+    public void deleteRoster(Roster roster) {
+        rosters.remove(roster);
+    }
+
     // REQUIRES: roster is in rosters, 16 >= wonRounds >= 0, 16 >= lostRounds >= 0
     // MODIFIES: this
     // EFFECTS: Creates Match, adds match to matches, and adjusts player and roster stats accordingly
@@ -109,12 +116,5 @@ public class AppData {
                 player.incrementLosses();
             }
         }
-    }
-
-    // REQUIRES: roster is in rosters
-    // MODIFIES: this
-    // EFFECTS: Deletes Roster from rosters
-    public void deleteRoster(Roster roster) {
-        rosters.remove(roster);
     }
 }
