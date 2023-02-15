@@ -34,9 +34,6 @@ public class RosterTest {
         assertEquals(players1, r1.getPlayers());
         assertEquals(players2, r2.getPlayers());
 
-        assertEquals(1, r1.getPlayers().size());
-        assertEquals(3, r2.getPlayers().size());
-
         assertEquals(0, r1.getGamesPlayed());
         assertEquals(0, r2.getGamesPlayed());
 
@@ -62,8 +59,13 @@ public class RosterTest {
         r2.addPlayer(p2);
         r2.addPlayer(p3);
 
-        assertEquals(2, r1.getPlayers().size());
-        assertEquals(6, r2.getPlayers().size());
+        players1.add(p1);
+        players2.add(p1);
+        players2.add(p2);
+        players2.add(p3);
+
+        assertEquals(players1, r1.getPlayers());
+        assertEquals(players2, r2.getPlayers());
 
         assertEquals(p1, r1.getPlayers().get(1));
 
@@ -86,16 +88,26 @@ public class RosterTest {
         r2.addPlayer(p2);
         r2.addPlayer(p3);
 
+        players2.add(p1);
+        players2.add(p2);
+        players2.add(p3);
+
         r1.removePlayer(p1);
         r1.removePlayer(p2);
         r1.removePlayer(p3);
+
+        assertEquals(players1, r1.getPlayers());
+        assertEquals(players2, r2.getPlayers());
 
         r2.removePlayer(p1);
         r2.removePlayer(p2);
         r2.removePlayer(p3);
 
-        assertEquals(1, r1.getPlayers().size());
-        assertEquals(3, r2.getPlayers().size());
+        players2.remove(p1);
+        players2.remove(p2);
+        players2.remove(p3);
+
+        assertEquals(players2, r2.getPlayers());
     }
 
     @Test
