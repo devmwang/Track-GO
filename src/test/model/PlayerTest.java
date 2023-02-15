@@ -72,6 +72,26 @@ class PlayerTest {
     }
 
     @Test
+    void testSetMatchStatsOverride() {
+        p1.setMatchStats(0, 1000, 21, 10, 1, 5, 1);
+
+        p1.setMatchStats(0, 2000, 41, 20, 2, 7, 3);
+
+        try {
+            MatchPerformance perf = p1.getMatchStatsById(0);
+
+            assertEquals(2000, perf.getTotalDamageDealt());
+            assertEquals(41, perf.getTotalPoints());
+            assertEquals(20, perf.getTotalKills());
+            assertEquals(2, perf.getTotalAssists());
+            assertEquals(7, perf.getTotalDeaths());
+            assertEquals(3, perf.getMostValuablePlayerAwards());
+        } catch (MatchNotFoundException e) {
+            fail("MatchNotFoundException should not have been thrown");
+        }
+    }
+
+    @Test
     void testGetMatchStatsInvalid() {
         try {
             p1.getMatchStatsById(10000);
