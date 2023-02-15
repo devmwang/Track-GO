@@ -57,7 +57,7 @@ public class AppDataTest {
         appData.addPlayer("TestPlayer");
 
         try {
-            Player result = appData.getPlayerByUsername("NonExistentPlayer");
+            appData.getPlayerByUsername("NonExistentPlayer");
 
             fail("PlayerNotFoundException should have been thrown");
         } catch (PlayerNotFoundException e) {
@@ -115,7 +115,7 @@ public class AppDataTest {
         appData.addRoster("TestRoster", players);
 
         try {
-            Roster roster = appData.getRosterById("NonExistentRoster");
+            appData.getRosterById("NonExistentRoster");
 
             fail("RosterNotFoundException should have been thrown");
         } catch (RosterNotFoundException e) {
@@ -245,7 +245,7 @@ public class AppDataTest {
     @Test
     void getMatchByIdFail() {
         try {
-            Match result = appData.getMatchById(1000);
+            appData.getMatchById(1000);
 
             fail("MatchNotFoundException should have been thrown");
         } catch (MatchNotFoundException e) {
