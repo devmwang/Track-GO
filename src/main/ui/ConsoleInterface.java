@@ -4,6 +4,7 @@ import java.util.*;
 
 import model.*;
 
+// Represents the console interface for the application
 public class ConsoleInterface {
     private final Scanner scanner;
     private final AppData appData;
