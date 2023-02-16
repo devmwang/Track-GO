@@ -29,7 +29,7 @@ public class AppData {
         return matches;
     }
 
-    // REQUIRES: Player in players has username
+    // REQUIRES: username is not null
     // EFFECTS: Returns Player with username, throws PlayerNotFoundException if not found
     public Player getPlayerByUsername(String username) throws PlayerNotFoundException {
         for (Player player : players) {
@@ -41,7 +41,7 @@ public class AppData {
         throw new PlayerNotFoundException();
     }
 
-    // REQUIRES: Roster in rosters has id
+    // REQUIRES: id is not null
     // EFFECTS: Returns Roster with id, throws RosterNotFoundException if not found
     public Roster getRosterById(String id) throws RosterNotFoundException {
         for (Roster roster : rosters) {
@@ -53,7 +53,7 @@ public class AppData {
         throw new RosterNotFoundException();
     }
 
-    // REQUIRES: Match in matches has matchId
+    // REQUIRES: matchId is not null
     // EFFECTS: Returns Match with matchId, throws MatchNotFoundException if not found
     public Match getMatchById(int matchId) throws MatchNotFoundException {
         for (Match match : matches) {
@@ -79,7 +79,7 @@ public class AppData {
         rosters.add(new Roster(id, playersArrayList));
     }
 
-    // REQUIRES: roster is in rosters
+    // REQUIRES: roster is not null and is in rosters
     // MODIFIES: this
     // EFFECTS: Deletes Roster from rosters
     public void deleteRoster(Roster roster) {

@@ -29,6 +29,7 @@ public class Match {
         return players;
     }
 
+    // EFFECTS: Returns the total number of rounds played in this match (wonRounds + lostRounds)
     public int getTotalRounds() {
         return roundsWon + roundsLost;
     }

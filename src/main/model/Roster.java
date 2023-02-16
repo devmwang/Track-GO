@@ -68,7 +68,7 @@ public class Roster {
         return players;
     }
 
-    // EFFECTS: Returns win rate as a percentage to 1 decimal point
+    // EFFECTS: Returns win rate percentage value to 1 decimal point
     public double getWinRate() {
         if (gamesPlayed == 0) {
             return 0;

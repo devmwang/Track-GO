@@ -41,7 +41,7 @@ public class Player {
         this.username = username;
     }
 
-    // REQUIRES: matchId, damage, points, kills, assists, deaths, mostValuablePlayerAwards are all not null
+    // REQUIRES: matchId, damage, points, kills, assists, deaths, mostValuablePlayerAwards are not null
     // MODIFIES: this
     // EFFECTS: Sets the match stats of the player for the matchId to the provided values and updates total stats
     public void setMatchStats(int matchId, int damage, int points, int kills, int assists, int deaths,
@@ -75,6 +75,7 @@ public class Player {
         this.gamesPlayed++;
     }
 
+    // REQUIRES: rounds >= 0
     // MODIFIES: this
     // EFFECTS: Increments number of rounds played
     public void incrementRoundsPlayed(int rounds) {
