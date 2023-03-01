@@ -30,4 +30,5 @@ depending on who is playing.
 - As a user, I want to be able to add data from a match to a roster.
 - As a user, I want to be able to add match data to a player for a specific match.
 - As a user, I want to be able to select a roster and view overall stats for that roster.
-
+- As a user, when I select the quit option from the main menu, I want to be given the option to save all the entered data to a file.
+- As a user, when the application is launched, I want to be given the option to load player/roster/match data from a file.
