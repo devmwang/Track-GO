@@ -23,11 +23,12 @@ public class StoreReader {
         this.filePath = filePath;
     }
 
-    // EFFECTS: Reads app data from file and returns it, throws IOException if an error occurs while reading data
-    public AppData read() throws IOException {
+    // EFFECTS: Reads players data from file and applies it to list, throws IOException if error occurs while loading
+    public void loadPlayers(ArrayList<Player> players) throws IOException {
         String jsonData = readFile(filePath);
         JSONObject jsonObject = new JSONObject(jsonData);
-        return parseAppData(jsonObject);
+
+        parsePlayers(players, jsonObject);
     }
 
     // EFFECTS: Reads source file as a string and returns it
@@ -41,24 +42,17 @@ public class StoreReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: Parses app data from JSON object and returns it
-    private AppData parseAppData(JSONObject jsonObject) {
-        AppData appData = new AppData();
-
-        parsePlayers(appData, jsonObject);
-
-        return appData;
-    }
-
     // MODIFIES: appData
     // EFFECTS: Parses players from JSON object and adds them to appData
-    private void parsePlayers(AppData appData, JSONObject jsonObject) {
+    private void parsePlayers(ArrayList<Player> players, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("players");
 
         for (Object json : jsonArray) {
             JSONObject nextPlayer = (JSONObject) json;
 
             Player player = new Player(nextPlayer.getString("username"));
+
+            players.add(player);
         }
     }
 

@@ -48,7 +48,9 @@ public class ConsoleInterface {
         optionsText.add("[2] Add new match");
         optionsText.add("[3] View players");
         optionsText.add("[4] View rosters");
-        optionsText.add("[5] Exit");
+        optionsText.add("[5] Load app data from file");
+        optionsText.add("[6] Save app data to file");
+        optionsText.add("[7] Exit");
 
         Map<String, Runnable> commands = new HashMap<>();
 
@@ -56,9 +58,24 @@ public class ConsoleInterface {
         commands.put("2", this::displayMatchAddMenu);
         commands.put("3", this::displayPlayersOverviewMenu);
         commands.put("4", this::displayRostersOverviewMenu);
-        commands.put("5", this::exit);
+        commands.put("5", this::handleLoadFromFile);
+        commands.put("6", this::displayRostersOverviewMenu);
+        commands.put("7", this::exit);
 
         handleMenu(optionsText, commands);
+    }
+
+    // EFFECTS: Displays data loading status
+    private void handleLoadFromFile() {
+        try {
+            appData.loadFromFile();
+            System.out.println("Data loaded successfully.");
+        } catch (Exception e) {
+            System.out.println("Error loading data.");
+        }
+
+        System.out.println("Returning to main menu. \n");
+        displayMainMenu();
     }
 
     // EFFECTS: Displays matches overview

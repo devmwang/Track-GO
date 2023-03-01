@@ -24,6 +24,13 @@ public class AppData {
         nextMatchId = 0;
     }
 
+    // EFFECTS: Loads data from data store updates active application data
+    public void loadFromFile() {
+        try {
+
+        }
+    }
+
     public ArrayList<Player> getPlayers() {
         return players;
     }
