@@ -3,6 +3,7 @@ package ui;
 import java.util.*;
 
 import model.*;
+import exceptions.*;
 
 // Represents the console interface for the application
 public class ConsoleInterface {

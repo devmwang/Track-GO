@@ -1,4 +1,4 @@
-package model;
+package exceptions;
 
 // Represents an exception that is thrown when a roster is not found
 public class RosterNotFoundException extends Exception {

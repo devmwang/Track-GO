@@ -2,6 +2,8 @@ package model;
 
 import java.util.HashMap;
 
+import exceptions.MatchNotFoundException;
+
 // Represents an individual player to be tracked by the application
 public class Player {
     private String username = "";
