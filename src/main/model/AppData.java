@@ -7,8 +7,6 @@ import exceptions.*;
 
 // Represents the application data to be tracked by the application
 public class AppData {
-    private static final String DATA_STORE_PATH = "./data/app_data.json";
-    private StoreReader storeReader;
     private ArrayList<Player> players;
     private ArrayList<Roster> rosters;
     private ArrayList<Match> matches;
@@ -16,19 +14,10 @@ public class AppData {
 
     // EFFECTS: Constructs a new AppData object with empty players, rosters, and matches, and nextMatchId = 0
     public AppData() {
-        this.storeReader = new StoreReader(DATA_STORE_PATH);
-
         this.players = new ArrayList<>();
         this.rosters = new ArrayList<>();
         this.matches = new ArrayList<>();
         nextMatchId = 0;
-    }
-
-    // EFFECTS: Loads data from data store updates active application data
-    public void loadFromFile() {
-        try {
-
-        }
     }
 
     public ArrayList<Player> getPlayers() {

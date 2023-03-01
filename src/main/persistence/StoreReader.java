@@ -23,12 +23,11 @@ public class StoreReader {
         this.filePath = filePath;
     }
 
-    // EFFECTS: Reads players data from file and applies it to list, throws IOException if error occurs while loading
-    public void loadPlayers(ArrayList<Player> players) throws IOException {
+    // EFFECTS: Reads app data from file and returns it, throws IOException if an error occurs while reading data
+    public AppData read() throws IOException {
         String jsonData = readFile(filePath);
         JSONObject jsonObject = new JSONObject(jsonData);
-
-        parsePlayers(players, jsonObject);
+        return parseAppData(jsonObject);
     }
 
     // EFFECTS: Reads source file as a string and returns it
@@ -36,64 +35,71 @@ public class StoreReader {
         StringBuilder contentBuilder = new StringBuilder();
 
         try (Stream<String> stream = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8)) {
-            stream.forEach(contentBuilder::append);
+            stream.forEach(string -> contentBuilder.append(string));
         }
 
         return contentBuilder.toString();
     }
 
+    // EFFECTS: Parses app data from JSON object and returns it
+    private AppData parseAppData(JSONObject jsonObject) {
+        AppData appData = new AppData();
+
+        parsePlayers(appData, jsonObject);
+
+        return appData;
+    }
+
     // MODIFIES: appData
     // EFFECTS: Parses players from JSON object and adds them to appData
-    private void parsePlayers(ArrayList<Player> players, JSONObject jsonObject) {
+    private void parsePlayers(AppData appData, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("players");
 
         for (Object json : jsonArray) {
             JSONObject nextPlayer = (JSONObject) json;
 
             Player player = new Player(nextPlayer.getString("username"));
-
-            players.add(player);
         }
     }
 
-//    // MODIFIES: appData
-//    // EFFECTS: Parses rosters from JSON object and adds them to appData
-//    private void parseRosters(AppData appData, JSONObject jsonObject) {
-//        JSONArray jsonArray = jsonObject.getJSONArray("rosters");
-//
-//        for (Object json : jsonArray) {
-//            JSONObject nextRoster = (JSONObject) json;
-//
-//            ArrayList<Player> players = getPlayers(appData, nextRoster);
-//
-//            Roster roster = new Roster(nextRoster.getString("id"), players);
-//        }
-//    }
-//
-//    // EFFECTS: Returns a list of players based on consumed roster data in JSON object
-//    private ArrayList<Player> getPlayers(AppData appData, JSONObject jsonObject) {
-//        ArrayList<String> playerUsernames = new ArrayList<>();
-//
-//        for (Object obj : jsonObject.getJSONArray("rosterPlayers")) {
-//            playerUsernames.add((String) obj);
-//        }
-//
-//        ArrayList<Player> players = new ArrayList<>();
-//
-//        for (String username : playerUsernames) {
-//            try {
-//                players.add(appData.getPlayerByUsername(username));
-//            } catch (PlayerNotFoundException e) {
-//                System.out.println("Player not found");
-//            }
-//        }
-//
-//        return players;
-//    }
-//
-//    // MODIFIES: appData
-//    // EFFECTS: Parses matches from JSON object and adds them to appData
-//    private void parseMatches(AppData appData, JSONObject jsonObject) {
-//        JSONArray jsonArray = jsonObject.getJSONArray("matches");
-//    }
+    // MODIFIES: appData
+    // EFFECTS: Parses rosters from JSON object and adds them to appData
+    private void parseRosters(AppData appData, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("rosters");
+
+        for (Object json : jsonArray) {
+            JSONObject nextRoster = (JSONObject) json;
+
+            ArrayList<Player> players = getPlayers(appData, nextRoster);
+
+            Roster roster = new Roster(nextRoster.getString("id"), players);
+        }
+    }
+
+    // EFFECTS: Returns a list of players based on consumed roster data in JSON object
+    private ArrayList<Player> getPlayers(AppData appData, JSONObject jsonObject) {
+        ArrayList<String> playerUsernames = new ArrayList<>();
+
+        for (Object obj : jsonObject.getJSONArray("rosterPlayers")) {
+            playerUsernames.add((String) obj);
+        }
+
+        ArrayList<Player> players = new ArrayList<>();
+
+        for (String username : playerUsernames) {
+            try {
+                players.add(appData.getPlayerByUsername(username));
+            } catch (PlayerNotFoundException e) {
+                System.out.println("Player not found");
+            }
+        }
+
+        return players;
+    }
+
+    // MODIFIES: appData
+    // EFFECTS: Parses matches from JSON object and adds them to appData
+    private void parseMatches(AppData appData, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("matches");
+    }
 }
