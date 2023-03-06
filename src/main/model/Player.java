@@ -1,11 +1,14 @@
 package model;
 
 import java.util.HashMap;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import persistence.Writable;
 import exceptions.MatchNotFoundException;
 
 // Represents an individual player to be tracked by the application
-public class Player {
+public class Player implements Writable {
     private String username = "";
     private HashMap<Integer, MatchPerformance> matchStats = new HashMap<>();
     private int gamesPlayed;
@@ -134,5 +137,32 @@ public class Player {
 
     public int getMostValuablePlayerAwards() {
         return mostValuablePlayerAwards;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+
+        json.put("username", username);
+
+        JSONObject perfJson = new JSONObject();
+        for (int key : matchStats.keySet()) {
+            MatchPerformance perf = matchStats.get(key);
+            perfJson.put(String.valueOf(key), perf.toJson());
+        }
+        json.put("matchStats", perfJson);
+
+        json.put("gamesPlayed", gamesPlayed);
+        json.put("roundsPlayed", roundsPlayed);
+        json.put("wins", wins);
+        json.put("losses", losses);
+        json.put("totalDamageDealt", totalDamageDealt);
+        json.put("totalPoints", totalPoints);
+        json.put("totalKills", totalKills);
+        json.put("totalAssists", totalAssists);
+        json.put("totalDeaths", totalDeaths);
+        json.put("mostValuablePlayerAwards", mostValuablePlayerAwards);
+
+        return json;
     }
 }

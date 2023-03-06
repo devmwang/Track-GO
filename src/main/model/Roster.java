@@ -1,9 +1,13 @@
 package model;
 
 import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import persistence.Writable;
 
 // Represents a roster of players to be tracked by the application
-public class Roster {
+public class Roster implements Writable {
     private final String id;
     private final ArrayList<Player> players;
     private int gamesPlayed;
@@ -94,5 +98,25 @@ public class Roster {
 
     public int getTies() {
         return gamesPlayed - wins - losses;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+
+        json.put("id", id);
+
+        JSONArray jsonArray = new JSONArray();
+        for (Player player : players) {
+            jsonArray.put(player.getUsername());
+        }
+        json.put("players", jsonArray);
+
+        json.put("gamesPlayed", gamesPlayed);
+        json.put("roundsPlayed", roundsPlayed);
+        json.put("wins", wins);
+        json.put("losses", losses);
+
+        return json;
     }
 }

@@ -1,10 +1,13 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import persistence.Writable;
 
 // Represents a match to be tracked by the application
-public class Match {
+public class Match implements Writable {
     private final int matchId;
     private final ArrayList<Player> players;
     private final int roundsWon;
@@ -44,5 +47,24 @@ public class Match {
 
     public String getMap() {
         return map;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+
+        json.put("matchId", matchId);
+
+        JSONArray jsonArray = new JSONArray();
+        for (Player player : players) {
+            jsonArray.put(player.getUsername());
+        }
+        json.put("players", jsonArray);
+
+        json.put("roundsWon", roundsWon);
+        json.put("roundsLost", roundsLost);
+        json.put("map", map);
+
+        return json;
     }
 }

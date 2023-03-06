@@ -5,18 +5,20 @@ import java.io.IOException;
 
 import model.*;
 import exceptions.*;
-import persistence.StoreReader;
+import persistence.*;
 
 // Represents the console interface for the application
 public class ConsoleInterface {
     private static final String DATA_STORE_PATH = "./data/app_data.json";
     private StoreReader storeReader;
+    private StoreWriter storeWriter;
     private final Scanner scanner;
     private final AppData appData;
 
     // EFFECTS: Initializes app, displays welcome message and displays application main menu
     public ConsoleInterface() {
         this.storeReader = new StoreReader(DATA_STORE_PATH);
+        this.storeWriter = new StoreWriter(DATA_STORE_PATH);
 
         this.scanner = new Scanner(System.in);
         this.appData = new AppData();
@@ -65,7 +67,7 @@ public class ConsoleInterface {
         commands.put("3", this::displayPlayersOverviewMenu);
         commands.put("4", this::displayRostersOverviewMenu);
         commands.put("5", this::handleLoadFromFile);
-        commands.put("6", this::displayRostersOverviewMenu);
+        commands.put("6", this::handleSaveToFile);
         commands.put("7", this::exit);
 
         handleMenu(optionsText, commands);
@@ -78,6 +80,21 @@ public class ConsoleInterface {
             System.out.println("Data loaded successfully from " + DATA_STORE_PATH + ".");
         } catch (IOException e) {
             System.out.println("An error occurred while loading data from " + DATA_STORE_PATH + ".");
+        }
+
+        System.out.println("Returning to main menu. \n");
+        displayMainMenu();
+    }
+
+    // EFFECTS: Handles saving data to file from application
+    private void handleSaveToFile() {
+        try {
+            storeWriter.open();
+            storeWriter.write(appData);
+            storeWriter.close();
+            System.out.println("Data saved successfully to " + DATA_STORE_PATH + ".");
+        } catch (IOException e) {
+            System.out.println("An error occurred while saving data to " + DATA_STORE_PATH + ".");
         }
 
         System.out.println("Returning to main menu. \n");

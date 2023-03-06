@@ -1,12 +1,14 @@
 package model;
 
 import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import persistence.*;
+import persistence.Writable;
 import exceptions.*;
 
 // Represents the application data to be tracked by the application
-public class AppData {
+public class AppData implements Writable {
     private ArrayList<Player> players;
     private ArrayList<Roster> rosters;
     private ArrayList<Match> matches;
@@ -119,5 +121,33 @@ public class AppData {
                 player.incrementLosses();
             }
         }
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+
+        // Add players
+        JSONArray jsonArray = new JSONArray();
+        for (Player player : players) {
+            jsonArray.put(player.toJson());
+        }
+        json.put("players", jsonArray);
+
+        // Add rosters
+        jsonArray = new JSONArray();
+        for (Roster roster : rosters) {
+            jsonArray.put(roster.toJson());
+        }
+        json.put("rosters", jsonArray);
+
+        // Add matches
+        jsonArray = new JSONArray();
+        for (Match match : matches) {
+            jsonArray.put(match.toJson());
+        }
+        json.put("matches", jsonArray);
+
+        return json;
     }
 }

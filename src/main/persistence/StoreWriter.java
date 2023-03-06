@@ -3,7 +3,7 @@
 
 package persistence;
 
-import java.io.PrintWriter;
+import java.io.*;
 import org.json.JSONObject;
 
 import model.AppData;
@@ -17,6 +17,13 @@ public class StoreWriter {
     // EFFECTS: Constructs writer to write data to file at filePath
     public StoreWriter(String filePath) {
         this.filePath = filePath;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: opens writer; throws FileNotFoundException if destination file cannot
+    // be opened for writing
+    public void open() throws FileNotFoundException {
+        writer = new PrintWriter(new File(filePath));
     }
 
     // MODIFIES: this
