@@ -259,7 +259,7 @@ public class ConsoleInterface {
     private void handleMatchEdit(Match match) {
         System.out.println("\nSelect an edit mode:");
         System.out.println("[1] Set player performance");
-        System.out.println("[2] Back to matches overview");
+        System.out.println("[2] Back to matches overview\n");
 
         String mode = scanner.nextLine();
 
