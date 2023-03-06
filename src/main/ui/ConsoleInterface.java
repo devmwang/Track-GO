@@ -79,7 +79,7 @@ public class ConsoleInterface {
             storeReader.read();
             System.out.println("Data loaded successfully from " + DATA_STORE_PATH + ".");
         } catch (IOException e) {
-            System.out.println("An error occurred while loading data from " + DATA_STORE_PATH + ".");
+            System.out.println("An error occurred while loading data from " + DATA_STORE_PATH + ": " + e);
         }
 
         System.out.println("Returning to main menu. \n");
@@ -94,7 +94,7 @@ public class ConsoleInterface {
             storeWriter.close();
             System.out.println("Data saved successfully to " + DATA_STORE_PATH + ".");
         } catch (IOException e) {
-            System.out.println("An error occurred while saving data to " + DATA_STORE_PATH + ".");
+            System.out.println("An error occurred while saving data to " + DATA_STORE_PATH + ": " + e);
         }
 
         System.out.println("Returning to main menu. \n");
