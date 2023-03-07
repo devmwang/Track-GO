@@ -215,8 +215,6 @@ public class AppData implements Writable, Readable {
     // MODIFIES: this
     // EFFECTS: Loads match data from JSON object and updates nextMatchId
     private void loadMatches(JSONArray jsonArray) {
-        int highestMatchIdEncountered = 0;
-
         for (Object object : jsonArray) {
             JSONObject matchObject = (JSONObject) object;
 
@@ -236,15 +234,13 @@ public class AppData implements Writable, Readable {
 
             int matchId = matchObject.getInt("matchId");
 
-            if (matchId > highestMatchIdEncountered) {
-                highestMatchIdEncountered = matchId;
+            if (matchId >= this.nextMatchId) {
+                this.nextMatchId = matchId + 1;
             }
 
             Match match = new Match(matchId, playerList, matchObject.getInt("roundsWon"),
                     matchObject.getInt("roundsLost"), matchObject.getString("map"));
             matches.add(match);
         }
-
-        this.nextMatchId = highestMatchIdEncountered + 1;
     }
 }
