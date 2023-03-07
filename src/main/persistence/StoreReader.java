@@ -8,11 +8,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
-import java.util.ArrayList;
 import org.json.*;
 
 import model.*;
-import exceptions.*;
 
 // Represents a reader that reads app data from a JSON file
 public class StoreReader {
