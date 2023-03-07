@@ -67,7 +67,7 @@ public class ConsoleInterface {
         commands.put("3", this::displayPlayersOverviewMenu);
         commands.put("4", this::displayRostersOverviewMenu);
         commands.put("5", this::handleLoadFromFile);
-        commands.put("6", this::handleSaveToFile);
+        commands.put("6", this::displaySaveDetails);
         commands.put("7", this::exit);
 
         handleMenu(optionsText, commands);
