@@ -10,8 +10,8 @@ import persistence.*;
 // Represents the console interface for the application
 public class ConsoleInterface {
     private static final String DATA_STORE_PATH = "./data/app_data.json";
-    private StoreReader storeReader;
-    private StoreWriter storeWriter;
+    private final StoreReader storeReader;
+    private final StoreWriter storeWriter;
     private final Scanner scanner;
     private final AppData appData;
 
