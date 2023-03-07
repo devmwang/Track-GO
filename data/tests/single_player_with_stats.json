@@ -1,0 +1,20 @@
+{
+  "rosters": [],
+  "players": [
+    {
+      "wins": 1,
+      "totalAssists": 2,
+      "totalKills": 3,
+      "mostValuablePlayerAwards": 4,
+      "gamesPlayed": 5,
+      "totalDamageDealt": 6,
+      "totalDeaths": 7,
+      "totalPoints": 8,
+      "roundsPlayed": 9,
+      "losses": 10,
+      "matchStats": {},
+      "username": "SinglePlayer"
+    }
+  ],
+  "matches": []
+}

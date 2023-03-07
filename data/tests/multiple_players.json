@@ -1,0 +1,48 @@
+{
+  "rosters": [],
+  "players": [
+    {
+      "wins": 0,
+      "totalAssists": 0,
+      "totalKills": 0,
+      "mostValuablePlayerAwards": 0,
+      "gamesPlayed": 0,
+      "totalDamageDealt": 0,
+      "totalDeaths": 0,
+      "totalPoints": 0,
+      "roundsPlayed": 0,
+      "losses": 0,
+      "matchStats": {},
+      "username": "Player1"
+    },
+    {
+      "wins": 0,
+      "totalAssists": 0,
+      "totalKills": 0,
+      "mostValuablePlayerAwards": 0,
+      "gamesPlayed": 0,
+      "totalDamageDealt": 0,
+      "totalDeaths": 0,
+      "totalPoints": 0,
+      "roundsPlayed": 0,
+      "losses": 0,
+      "matchStats": {},
+      "username": "Player2"
+    },
+    {
+      "wins": 0,
+      "totalAssists": 0,
+      "totalKills": 0,
+      "mostValuablePlayerAwards": 0,
+      "gamesPlayed": 0,
+      "totalDamageDealt": 0,
+      "totalDeaths": 0,
+      "totalPoints": 0,
+      "roundsPlayed": 0,
+      "losses": 0,
+      "matchStats": {},
+      "username": "Player3"
+    }
+  ],
+  "matches": []
+}
