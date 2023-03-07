@@ -10,7 +10,7 @@ import exceptions.MatchNotFoundException;
 // Represents an individual player to be tracked by the application
 public class Player implements Writable {
     private String username = "";
-    private HashMap<Integer, MatchPerformance> matchStats = new HashMap<>();
+    private HashMap<Integer, MatchPerformance> matchStats;
     private int gamesPlayed;
     private int roundsPlayed;
     private int wins;
