@@ -35,6 +35,10 @@ public class AppData implements Writable, Readable {
         return matches;
     }
 
+    public int getNextMatchId() {
+        return nextMatchId;
+    }
+
     // REQUIRES: username is not null
     // EFFECTS: Returns Player with username, throws PlayerNotFoundException if not found
     public Player getPlayerByUsername(String username) throws PlayerNotFoundException {
