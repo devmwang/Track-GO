@@ -86,6 +86,14 @@ public class ConsoleInterface {
         displayMainMenu();
     }
 
+    // EFFECTS: Displays details for saving app data
+    private void displaySaveDetails() {
+        handleSaveToFile();
+
+        System.out.println("Returning to main menu. \n");
+        displayMainMenu();
+    }
+
     // EFFECTS: Handles saving data to file from application
     private void handleSaveToFile() {
         try {
@@ -96,9 +104,6 @@ public class ConsoleInterface {
         } catch (IOException e) {
             System.out.println("An error occurred while saving data to " + DATA_STORE_PATH + ": " + e);
         }
-
-        System.out.println("Returning to main menu. \n");
-        displayMainMenu();
     }
 
     // EFFECTS: Displays matches overview
@@ -602,6 +607,16 @@ public class ConsoleInterface {
 
     // EFFECTS: Displays exit message and exits program
     private void exit() {
+        System.out.println("Do you want to save app data? (y/n) \n");
+
+        String confirmation = scanner.nextLine();
+        System.out.println();
+
+        if (confirmation.equals("y")) {
+            handleSaveToFile();
+            System.out.println();
+        }
+
         System.out.println("Goodbye!");
         System.exit(0);
     }
