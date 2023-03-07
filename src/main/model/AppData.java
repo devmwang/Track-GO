@@ -5,10 +5,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import persistence.Writable;
+import persistence.Readable;
 import exceptions.*;
 
 // Represents the application data to be tracked by the application
-public class AppData implements Writable {
+public class AppData implements Writable, Readable {
     private ArrayList<Player> players;
     private ArrayList<Roster> rosters;
     private ArrayList<Match> matches;
@@ -123,6 +124,7 @@ public class AppData implements Writable {
         }
     }
 
+    // EFFECTS: Converts app data to JSON object
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -149,5 +151,86 @@ public class AppData implements Writable {
         json.put("matches", jsonArray);
 
         return json;
+    }
+
+    // REQUIRES: jsonObject with valid and correct data
+    // MODIFIES: this
+    // EFFECTS: Handles loading app data from JSON object
+    @Override
+    public void fromJson(JSONObject jsonObject) {
+        players = new ArrayList<>();
+        rosters = new ArrayList<>();
+        matches = new ArrayList<>();
+
+        loadPlayers(jsonObject.getJSONArray("players"));
+        loadRosters(jsonObject.getJSONArray("rosters"));
+        loadMatches(jsonObject.getJSONArray("matches"));
+    }
+
+    // REQUIRES: jsonObject with valid and correct data
+    // MODIFIES: this
+    // EFFECTS: Loads player data from JSON object
+    private void loadPlayers(JSONArray jsonArray) {
+        for (Object object : jsonArray) {
+            JSONObject playerObject = (JSONObject) object;
+
+            Player player = new Player(playerObject.getString("username"));
+            player.fromJson(playerObject);
+            players.add(player);
+        }
+    }
+
+    // REQUIRES: jsonObject with valid and correct data
+    // MODIFIES: this
+    // EFFECTS: Loads roster data from JSON object
+    private void loadRosters(JSONArray jsonArray) {
+        for (Object object : jsonArray) {
+            JSONObject rosterObject = (JSONObject) object;
+
+            ArrayList<String> playerUsernames = new ArrayList<>();
+            for (Object obj : rosterObject.getJSONArray("players")) {
+                playerUsernames.add((String) obj);
+            }
+
+            ArrayList<Player> playerList = new ArrayList<>();
+            for (String username : playerUsernames) {
+                try {
+                    playerList.add(getPlayerByUsername(username));
+                } catch (PlayerNotFoundException e) {
+                    System.out.println("Player not found");
+                }
+            }
+
+            Roster roster = new Roster(rosterObject.getString("id"), playerList);
+            roster.fromJson(rosterObject);
+            rosters.add(roster);
+        }
+    }
+
+    // REQUIRES: jsonObject with valid and correct data
+    // MODIFIES: this
+    // EFFECTS: Loads match data from JSON object
+    private void loadMatches(JSONArray jsonArray) {
+        for (Object object : jsonArray) {
+            JSONObject matchObject = (JSONObject) object;
+
+            ArrayList<String> playerUsernames = new ArrayList<>();
+            for (Object obj : matchObject.getJSONArray("players")) {
+                playerUsernames.add((String) obj);
+            }
+
+            ArrayList<Player> playerList = new ArrayList<>();
+            for (String username : playerUsernames) {
+                try {
+                    playerList.add(getPlayerByUsername(username));
+                } catch (PlayerNotFoundException e) {
+                    System.out.println("Player not found");
+                }
+            }
+
+            Match match = new Match(matchObject.getInt("matchId"), playerList, matchObject.getInt("roundsWon"),
+                    matchObject.getInt("roundsLost"), matchObject.getString("map"));
+            matches.add(match);
+        }
     }
 }

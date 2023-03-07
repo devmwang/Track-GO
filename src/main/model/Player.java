@@ -5,10 +5,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import persistence.Writable;
+import persistence.Readable;
 import exceptions.MatchNotFoundException;
 
 // Represents an individual player to be tracked by the application
-public class Player implements Writable {
+public class Player implements Writable, Readable {
     private String username = "";
     private HashMap<Integer, MatchPerformance> matchStats;
     private int gamesPlayed;
@@ -164,5 +165,28 @@ public class Player implements Writable {
         json.put("mostValuablePlayerAwards", mostValuablePlayerAwards);
 
         return json;
+    }
+
+    @Override
+    public void fromJson(JSONObject jsonObject) {
+        this.gamesPlayed = jsonObject.getInt("gamesPlayed");
+        this.roundsPlayed = jsonObject.getInt("roundsPlayed");
+        this.wins = jsonObject.getInt("wins");
+        this.losses = jsonObject.getInt("losses");
+        this.totalDamageDealt = jsonObject.getInt("totalDamageDealt");
+        this.totalPoints = jsonObject.getInt("totalPoints");
+        this.totalKills = jsonObject.getInt("totalKills");
+        this.totalAssists = jsonObject.getInt("totalAssists");
+        this.totalDeaths = jsonObject.getInt("totalDeaths");
+        this.mostValuablePlayerAwards = jsonObject.getInt("mostValuablePlayerAwards");
+
+        JSONObject perfJson = jsonObject.getJSONObject("matchStats");
+        for (String key : perfJson.keySet()) {
+            JSONObject data = perfJson.getJSONObject(key);
+            MatchPerformance perf = new MatchPerformance(data.getInt("totalDamageDealt"),
+                    data.getInt("totalPoints"), data.getInt("totalKills"), data.getInt("totalAssists"),
+                    data.getInt("totalDeaths"), data.getInt("mostValuablePlayerAwards"));
+            matchStats.put(Integer.parseInt(key), perf);
+        }
     }
 }

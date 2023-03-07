@@ -24,6 +24,15 @@ public class Match implements Writable {
         this.map = map;
     }
 
+    // EFFECTS: Constructs a match with the provided player list and data values
+    public Match(int matchId, ArrayList<Player> players, int roundsWon, int roundsLost, String map) {
+        this.matchId = matchId;
+        this.players = players;
+        this.roundsWon = roundsWon;
+        this.roundsLost = roundsLost;
+        this.map = map;
+    }
+
     public int getMatchId() {
         return matchId;
     }

@@ -5,9 +5,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import persistence.Writable;
+import persistence.Readable;
 
 // Represents a roster of players to be tracked by the application
-public class Roster implements Writable {
+public class Roster implements Writable, Readable {
     private final String id;
     private final ArrayList<Player> players;
     private int gamesPlayed;
@@ -118,5 +119,13 @@ public class Roster implements Writable {
         json.put("losses", losses);
 
         return json;
+    }
+
+    @Override
+    public void fromJson(JSONObject jsonObject) {
+        this.gamesPlayed = jsonObject.getInt("gamesPlayed");
+        this.roundsPlayed = jsonObject.getInt("roundsPlayed");
+        this.wins = jsonObject.getInt("wins");
+        this.losses = jsonObject.getInt("losses");
     }
 }

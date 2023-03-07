@@ -76,7 +76,7 @@ public class ConsoleInterface {
     // EFFECTS: Handles loading data from file into application
     private void handleLoadFromFile() {
         try {
-            storeReader.read();
+            storeReader.read(appData);
             System.out.println("Data loaded successfully from " + DATA_STORE_PATH + ".");
         } catch (IOException e) {
             System.out.println("An error occurred while loading data from " + DATA_STORE_PATH + ": " + e);
