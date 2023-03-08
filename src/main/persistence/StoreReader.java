@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 import org.json.*;
 
 import model.*;
+import exceptions.AppDataInvalidException;
 
 // Represents a reader that reads app data from a JSON file
 public class StoreReader {
@@ -22,7 +23,7 @@ public class StoreReader {
     }
 
     // EFFECTS: Reads app data from file and returns it, throws IOException if an error occurs while reading data
-    public void read(AppData appData) throws IOException {
+    public void read(AppData appData) throws IOException, AppDataInvalidException {
         String jsonData = readFile(filePath);
         JSONObject jsonObject = new JSONObject(jsonData);
 

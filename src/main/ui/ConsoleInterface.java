@@ -97,7 +97,7 @@ public class ConsoleInterface {
         try {
             storeReader.read(appData);
             System.out.println("Data loaded successfully from " + DATA_STORE_PATH + ".");
-        } catch (IOException e) {
+        } catch (IOException | AppDataInvalidException e) {
             System.out.println("An error occurred while loading data from " + DATA_STORE_PATH + ": " + e);
         }
     }

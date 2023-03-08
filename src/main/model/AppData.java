@@ -161,7 +161,7 @@ public class AppData implements Writable, Readable {
     // MODIFIES: this
     // EFFECTS: Handles loading app data from JSON object
     @Override
-    public void fromJson(JSONObject jsonObject) {
+    public void fromJson(JSONObject jsonObject) throws AppDataInvalidException {
         players = new ArrayList<>();
         rosters = new ArrayList<>();
         matches = new ArrayList<>();
@@ -187,7 +187,7 @@ public class AppData implements Writable, Readable {
     // REQUIRES: jsonObject with valid and correct data
     // MODIFIES: this
     // EFFECTS: Loads roster data from JSON object
-    private void loadRosters(JSONArray jsonArray) {
+    private void loadRosters(JSONArray jsonArray) throws AppDataInvalidException {
         for (Object object : jsonArray) {
             JSONObject rosterObject = (JSONObject) object;
 
@@ -201,7 +201,7 @@ public class AppData implements Writable, Readable {
                 try {
                     playerList.add(getPlayerByUsername(username));
                 } catch (PlayerNotFoundException e) {
-                    System.out.println("Player not found");
+                    throw new AppDataInvalidException();
                 }
             }
 
@@ -214,7 +214,7 @@ public class AppData implements Writable, Readable {
     // REQUIRES: jsonObject with valid and correct data
     // MODIFIES: this
     // EFFECTS: Loads match data from JSON object and updates nextMatchId
-    private void loadMatches(JSONArray jsonArray) {
+    private void loadMatches(JSONArray jsonArray) throws AppDataInvalidException {
         for (Object object : jsonArray) {
             JSONObject matchObject = (JSONObject) object;
 
@@ -228,7 +228,7 @@ public class AppData implements Writable, Readable {
                 try {
                     playerList.add(getPlayerByUsername(username));
                 } catch (PlayerNotFoundException e) {
-                    System.out.println("Player not found");
+                    throw new AppDataInvalidException();
                 }
             }
 

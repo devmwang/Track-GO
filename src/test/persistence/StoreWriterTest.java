@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import model.*;
+import exceptions.AppDataInvalidException;
 
 public class StoreWriterTest {
     private static final String TEST_FILES_ROOT_PATH = "./data/tests/";
@@ -44,6 +45,8 @@ public class StoreWriterTest {
             assertEquals(0, appData.getNextMatchId());
         } catch (IOException e) {
             fail("Should not have thrown IOException");
+        } catch (AppDataInvalidException e) {
+            fail("Should not have thrown AppDataInvalidException");
         }
     }
 
@@ -78,6 +81,8 @@ public class StoreWriterTest {
             assertEquals(0, appData.getPlayers().get(0).getMostValuablePlayerAwards());
         } catch (IOException e) {
             fail("Should not have thrown IOException");
+        } catch (AppDataInvalidException e) {
+            fail("Should not have thrown AppDataInvalidException");
         }
     }
 
@@ -106,6 +111,8 @@ public class StoreWriterTest {
             assertEquals("Player3", appData.getPlayers().get(2).getUsername());
         } catch (IOException e) {
             fail("Should not have thrown IOException");
+        } catch (AppDataInvalidException e) {
+            fail("Should not have thrown AppDataInvalidException");
         }
     }
 
@@ -141,6 +148,8 @@ public class StoreWriterTest {
             assertEquals("Player3", appData.getRosters().get(0).getPlayers().get(2).getUsername());
         } catch (IOException e) {
             fail("Should not have thrown IOException");
+        } catch (AppDataInvalidException e) {
+            fail("Should not have thrown AppDataInvalidException");
         }
     }
 
@@ -185,6 +194,8 @@ public class StoreWriterTest {
             assertEquals("Player3", appData.getRosters().get(1).getPlayers().get(2).getUsername());
         } catch (IOException e) {
             fail("Should not have thrown IOException");
+        } catch (AppDataInvalidException e) {
+            fail("Should not have thrown AppDataInvalidException");
         }
     }
 
@@ -220,6 +231,8 @@ public class StoreWriterTest {
             assertEquals("Dust2", appData.getMatches().get(0).getMap());
         } catch (IOException e) {
             fail("Should not have thrown IOException");
+        } catch (AppDataInvalidException e) {
+            fail("Should not have thrown AppDataInvalidException");
         }
     }
 
@@ -271,6 +284,8 @@ public class StoreWriterTest {
             assertEquals("Inferno", appData.getMatches().get(2).getMap());
         } catch (IOException e) {
             fail("Should not have thrown IOException");
+        } catch (AppDataInvalidException e) {
+            fail("Should not have thrown AppDataInvalidException");
         }
     }
 
@@ -310,6 +325,8 @@ public class StoreWriterTest {
             fail("Should not have thrown IOException");
         } catch (MatchNotFoundException e) {
             fail("Should not have thrown MatchNotFoundException");
+        } catch (AppDataInvalidException e) {
+            fail("Should not have thrown AppDataInvalidException");
         }
     }
 }

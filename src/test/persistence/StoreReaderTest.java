@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import model.*;
+import exceptions.AppDataInvalidException;
 
 public class StoreReaderTest {
     private static final String TEST_FILES_ROOT_PATH = "./data/tests/";
@@ -29,6 +30,8 @@ public class StoreReaderTest {
             fail("IOException expected");
         } catch (IOException e) {
             // Expected
+        } catch (AppDataInvalidException e) {
+            fail("Should not have thrown AppDataInvalidException");
         }
     }
 
@@ -44,6 +47,8 @@ public class StoreReaderTest {
             assertEquals(0, appData.getNextMatchId());
         } catch (IOException e) {
             fail("Should not have thrown IOException");
+        } catch (AppDataInvalidException e) {
+            fail("Should not have thrown AppDataInvalidException");
         }
     }
 
@@ -71,6 +76,8 @@ public class StoreReaderTest {
             assertEquals(0, appData.getPlayers().get(0).getMostValuablePlayerAwards());
         } catch (IOException e) {
             fail("Should not have thrown IOException");
+        } catch (AppDataInvalidException e) {
+            fail("Should not have thrown AppDataInvalidException");
         }
     }
 
@@ -90,6 +97,8 @@ public class StoreReaderTest {
             assertEquals("Player3", appData.getPlayers().get(2).getUsername());
         } catch (IOException e) {
             fail("Should not have thrown IOException");
+        } catch (AppDataInvalidException e) {
+            fail("Should not have thrown AppDataInvalidException");
         }
     }
 
@@ -115,6 +124,8 @@ public class StoreReaderTest {
             assertEquals(0, appData.getRosters().get(0).getTies());
         } catch (IOException e) {
             fail("Should not have thrown IOException");
+        } catch (AppDataInvalidException e) {
+            fail("Should not have thrown AppDataInvalidException");
         }
     }
 
@@ -139,6 +150,8 @@ public class StoreReaderTest {
             assertEquals("Player3", appData.getRosters().get(1).getPlayers().get(1).getUsername());
         } catch (IOException e) {
             fail("Should not have thrown IOException");
+        } catch (AppDataInvalidException e) {
+            fail("Should not have thrown AppDataInvalidException");
         }
     }
 
@@ -162,6 +175,8 @@ public class StoreReaderTest {
             assertEquals("Dust2", appData.getMatches().get(0).getMap());
         } catch (IOException e) {
             fail("Should not have thrown IOException");
+        } catch (AppDataInvalidException e) {
+            fail("Should not have thrown AppDataInvalidException");
         }
     }
 
@@ -198,6 +213,8 @@ public class StoreReaderTest {
             assertEquals("Inferno", appData.getMatches().get(2).getMap());
         } catch (IOException e) {
             fail("Should not have thrown IOException");
+        } catch (AppDataInvalidException e) {
+            fail("Should not have thrown AppDataInvalidException");
         }
     }
 
@@ -247,6 +264,8 @@ public class StoreReaderTest {
             fail("Should not have thrown IOException");
         } catch (MatchNotFoundException e) {
             fail("Should not have thrown MatchNotFoundException");
+        } catch (AppDataInvalidException e) {
+            fail("Should not have thrown AppDataInvalidException");
         }
     }
 
@@ -288,6 +307,8 @@ public class StoreReaderTest {
             fail("Should not have thrown IOException");
         } catch (MatchNotFoundException e) {
             fail("Should not have thrown MatchNotFoundException");
+        } catch (AppDataInvalidException e) {
+            fail("Should not have thrown AppDataInvalidException");
         }
     }
 
@@ -325,6 +346,8 @@ public class StoreReaderTest {
             fail("Should not have thrown IOException");
         } catch (MatchNotFoundException e) {
             // Expected
+        } catch (AppDataInvalidException e) {
+            fail("Should not have thrown AppDataInvalidException");
         }
     }
 }
