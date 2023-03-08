@@ -350,4 +350,32 @@ public class StoreReaderTest {
             fail("Should not have thrown AppDataInvalidException");
         }
     }
+
+    @Test
+    void testInvalidPlayerInRoster() {
+        StoreReader storeReader = new StoreReader(TEST_FILES_ROOT_PATH + "invalid_roster.json");
+
+        try {
+            storeReader.read(appData);
+            fail("Should have thrown AppDataInvalidException");
+        } catch (IOException e) {
+            fail("Should not have thrown IOException");
+        } catch (AppDataInvalidException e) {
+            // Expected
+        }
+    }
+
+    @Test
+    void testInvalidPlayerInMatch() {
+        StoreReader storeReader = new StoreReader(TEST_FILES_ROOT_PATH + "invalid_roster.json");
+
+        try {
+            storeReader.read(appData);
+            fail("Should have thrown AppDataInvalidException");
+        } catch (IOException e) {
+            fail("Should not have thrown IOException");
+        } catch (AppDataInvalidException e) {
+            // Expected
+        }
+    }
 }
