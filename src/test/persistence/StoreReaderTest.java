@@ -367,7 +367,7 @@ public class StoreReaderTest {
 
     @Test
     void testInvalidPlayerInMatch() {
-        StoreReader storeReader = new StoreReader(TEST_FILES_ROOT_PATH + "invalid_roster.json");
+        StoreReader storeReader = new StoreReader(TEST_FILES_ROOT_PATH + "invalid_match.json");
 
         try {
             storeReader.read(appData);
