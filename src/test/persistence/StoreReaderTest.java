@@ -11,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import model.*;
 
-
 public class StoreReaderTest {
     private static final String TEST_FILES_ROOT_PATH = "./data/tests/";
     private AppData appData;
@@ -174,8 +173,8 @@ public class StoreReaderTest {
             storeReader.read(appData);
             assertEquals(3, appData.getPlayers().size());
             assertEquals(2, appData.getRosters().size());
-            assertEquals(2, appData.getMatches().size());
-            assertEquals(2, appData.getNextMatchId());
+            assertEquals(3, appData.getMatches().size());
+            assertEquals(3, appData.getNextMatchId());
 
             assertEquals(0, appData.getMatches().get(0).getMatchId());
             assertEquals("Player1", appData.getMatches().get(0).getPlayers().get(0).getUsername());
@@ -186,10 +185,17 @@ public class StoreReaderTest {
 
             assertEquals(1, appData.getMatches().get(1).getMatchId());
             assertEquals("Player1", appData.getMatches().get(1).getPlayers().get(0).getUsername());
-            assertEquals("Player3", appData.getMatches().get(1).getPlayers().get(1).getUsername());
-            assertEquals(10, appData.getMatches().get(1).getRoundsWon());
-            assertEquals(16, appData.getMatches().get(1).getRoundsLost());
-            assertEquals("Inferno", appData.getMatches().get(1).getMap());
+            assertEquals("Player2", appData.getMatches().get(1).getPlayers().get(1).getUsername());
+            assertEquals(16, appData.getMatches().get(1).getRoundsWon());
+            assertEquals(12, appData.getMatches().get(1).getRoundsLost());
+            assertEquals("Mirage", appData.getMatches().get(1).getMap());
+
+            assertEquals(2, appData.getMatches().get(2).getMatchId());
+            assertEquals("Player1", appData.getMatches().get(2).getPlayers().get(0).getUsername());
+            assertEquals("Player3", appData.getMatches().get(2).getPlayers().get(1).getUsername());
+            assertEquals(10, appData.getMatches().get(2).getRoundsWon());
+            assertEquals(16, appData.getMatches().get(2).getRoundsLost());
+            assertEquals("Inferno", appData.getMatches().get(2).getMap());
         } catch (IOException e) {
             fail("Should not have thrown IOException");
         }
