@@ -1,0 +1,116 @@
+{
+    "rosters": [
+        {
+            "wins": 1,
+            "gamesPlayed": 1,
+            "players": [
+                "Player1",
+                "Player2"
+            ],
+            "id": "Roster1",
+            "roundsPlayed": 26,
+            "losses": 0
+        },
+        {
+            "wins": 0,
+            "gamesPlayed": 1,
+            "players": [
+                "Player1",
+                "Player3"
+            ],
+            "id": "Roster2",
+            "roundsPlayed": 26,
+            "losses": 1
+        }
+    ],
+    "players": [
+        {
+            "wins": 1,
+            "totalAssists": 8,
+            "totalKills": 38,
+            "mostValuablePlayerAwards": 5,
+            "gamesPlayed": 2,
+            "totalDamageDealt": 4970,
+            "totalDeaths": 25,
+            "totalPoints": 90,
+            "roundsPlayed": 52,
+            "losses": 1,
+            "matchStats": {
+                "0": {
+                    "totalAssists": 4,
+                    "totalKills": 16,
+                    "mostValuablePlayerAwards": 3,
+                    "totalDamageDealt": 2470,
+                    "totalDeaths": 10,
+                    "totalPoints": 40
+                },
+                "1": {
+                    "totalAssists": 4,
+                    "totalKills": 22,
+                    "mostValuablePlayerAwards": 2,
+                    "totalDamageDealt": 2500,
+                    "totalDeaths": 15,
+                    "totalPoints": 50
+                }
+            },
+            "username": "Player1"
+        },
+        {
+            "wins": 1,
+            "totalAssists": 4,
+            "totalKills": 16,
+            "mostValuablePlayerAwards": 2,
+            "gamesPlayed": 1,
+            "totalDamageDealt": 2000,
+            "totalDeaths": 14,
+            "totalPoints": 38,
+            "roundsPlayed": 26,
+            "losses": 0,
+            "matchStats": {"0": {
+                "totalAssists": 4,
+                "totalKills": 16,
+                "mostValuablePlayerAwards": 2,
+                "totalDamageDealt": 2000,
+                "totalDeaths": 14,
+                "totalPoints": 38
+            }},
+            "username": "Player2"
+        },
+        {
+            "wins": 0,
+            "totalAssists": 0,
+            "totalKills": 0,
+            "mostValuablePlayerAwards": 0,
+            "gamesPlayed": 1,
+            "totalDamageDealt": 0,
+            "totalDeaths": 0,
+            "totalPoints": 0,
+            "roundsPlayed": 26,
+            "losses": 1,
+            "matchStats": {},
+            "username": "Player3"
+        }
+    ],
+    "matches": [
+        {
+            "roundsWon": 16,
+            "players": [
+                "Player1",
+                "Player2"
+            ],
+            "roundsLost": 10,
+            "map": "Dust2",
+            "matchId": 0
+        },
+        {
+            "roundsWon": 10,
+            "players": [
+                "Player1",
+                "Player3"
+            ],
+            "roundsLost": 16,
+            "map": "Inferno",
+            "matchId": 1
+        }
+    ]
+}

@@ -1,53 +1,53 @@
 {
   "rosters": [
     {
-      "wins": 0,
-      "gamesPlayed": 0,
+      "wins": 1,
+      "gamesPlayed": 1,
       "players": [
         "Player1",
         "Player2"
       ],
       "id": "Roster1",
-      "roundsPlayed": 0,
+      "roundsPlayed": 26,
       "losses": 0
     },
     {
       "wins": 0,
-      "gamesPlayed": 0,
+      "gamesPlayed": 1,
       "players": [
         "Player1",
         "Player3"
       ],
       "id": "Roster2",
-      "roundsPlayed": 0,
-      "losses": 0
+      "roundsPlayed": 26,
+      "losses": 1
     }
   ],
   "players": [
     {
-      "wins": 0,
+      "wins": 1,
       "totalAssists": 0,
       "totalKills": 0,
       "mostValuablePlayerAwards": 0,
-      "gamesPlayed": 0,
+      "gamesPlayed": 2,
       "totalDamageDealt": 0,
       "totalDeaths": 0,
       "totalPoints": 0,
-      "roundsPlayed": 0,
-      "losses": 0,
+      "roundsPlayed": 52,
+      "losses": 1,
       "matchStats": {},
       "username": "Player1"
     },
     {
-      "wins": 0,
+      "wins": 1,
       "totalAssists": 0,
       "totalKills": 0,
       "mostValuablePlayerAwards": 0,
-      "gamesPlayed": 0,
+      "gamesPlayed": 1,
       "totalDamageDealt": 0,
       "totalDeaths": 0,
       "totalPoints": 0,
-      "roundsPlayed": 0,
+      "roundsPlayed": 26,
       "losses": 0,
       "matchStats": {},
       "username": "Player2"
@@ -57,12 +57,12 @@
       "totalAssists": 0,
       "totalKills": 0,
       "mostValuablePlayerAwards": 0,
-      "gamesPlayed": 0,
+      "gamesPlayed": 1,
       "totalDamageDealt": 0,
       "totalDeaths": 0,
       "totalPoints": 0,
-      "roundsPlayed": 0,
-      "losses": 0,
+      "roundsPlayed": 26,
+      "losses": 1,
       "matchStats": {},
       "username": "Player3"
     }

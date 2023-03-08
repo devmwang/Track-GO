@@ -4,6 +4,7 @@
 package persistence;
 import java.io.IOException;
 
+import exceptions.MatchNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -69,33 +70,6 @@ public class StoreReaderTest {
             assertEquals(0, appData.getPlayers().get(0).getTotalAssists());
             assertEquals(0, appData.getPlayers().get(0).getTotalDeaths());
             assertEquals(0, appData.getPlayers().get(0).getMostValuablePlayerAwards());
-        } catch (IOException e) {
-            fail("Should not have thrown IOException");
-        }
-    }
-
-    @Test
-    void testSinglePlayerWithStats() {
-        StoreReader storeReader = new StoreReader(TEST_FILES_ROOT_PATH + "single_player_with_stats.json");
-
-        try {
-            storeReader.read(appData);
-            assertEquals(1, appData.getPlayers().size());
-            assertEquals(0, appData.getRosters().size());
-            assertEquals(0, appData.getMatches().size());
-            assertEquals(0, appData.getNextMatchId());
-
-            assertEquals("SinglePlayer", appData.getPlayers().get(0).getUsername());
-            assertEquals(5, appData.getPlayers().get(0).getGamesPlayed());
-            assertEquals(9, appData.getPlayers().get(0).getRoundsPlayed());
-            assertEquals(1, appData.getPlayers().get(0).getWins());
-            assertEquals(10, appData.getPlayers().get(0).getLosses());
-            assertEquals(6, appData.getPlayers().get(0).getTotalDamageDealt());
-            assertEquals(8, appData.getPlayers().get(0).getTotalPoints());
-            assertEquals(3, appData.getPlayers().get(0).getTotalKills());
-            assertEquals(2, appData.getPlayers().get(0).getTotalAssists());
-            assertEquals(7, appData.getPlayers().get(0).getTotalDeaths());
-            assertEquals(4, appData.getPlayers().get(0).getMostValuablePlayerAwards());
         } catch (IOException e) {
             fail("Should not have thrown IOException");
         }
@@ -218,6 +192,133 @@ public class StoreReaderTest {
             assertEquals("Inferno", appData.getMatches().get(1).getMap());
         } catch (IOException e) {
             fail("Should not have thrown IOException");
+        }
+    }
+
+    @Test
+    void testAllStatsPlayer1() {
+        StoreReader storeReader = new StoreReader(TEST_FILES_ROOT_PATH + "all_stats.json");
+
+        try {
+            storeReader.read(appData);
+            assertEquals(3, appData.getPlayers().size());
+            assertEquals(2, appData.getRosters().size());
+            assertEquals(2, appData.getMatches().size());
+            assertEquals(2, appData.getNextMatchId());
+
+            Player player1 = appData.getPlayers().get(0);
+
+            // Player1 has match data for both matches
+            assertEquals("Player1", player1.getUsername());
+            assertEquals(2, player1.getGamesPlayed());
+            assertEquals(52, player1.getRoundsPlayed());
+            assertEquals(1, player1.getWins());
+            assertEquals(1, player1.getLosses());
+            assertEquals(4970, player1.getTotalDamageDealt());
+            assertEquals(90, player1.getTotalPoints());
+            assertEquals(38, player1.getTotalKills());
+            assertEquals(8, player1.getTotalAssists());
+            assertEquals(25, player1.getTotalDeaths());
+            assertEquals(5, player1.getMostValuablePlayerAwards());
+
+            // Player1 is in and has match data for matches with id 0 and 1
+            MatchPerformance m0 = player1.getMatchStatsById(0);
+            assertEquals(2470, m0.getTotalDamageDealt());
+            assertEquals(40, m0.getTotalPoints());
+            assertEquals(16, m0.getTotalKills());
+            assertEquals(4, m0.getTotalAssists());
+            assertEquals(10, m0.getTotalDeaths());
+            assertEquals(3, m0.getMostValuablePlayerAwards());
+
+            MatchPerformance m1 = player1.getMatchStatsById(1);
+            assertEquals(2500, m1.getTotalDamageDealt());
+            assertEquals(50, m1.getTotalPoints());
+            assertEquals(22, m1.getTotalKills());
+            assertEquals(4, m1.getTotalAssists());
+            assertEquals(15, m1.getTotalDeaths());
+            assertEquals(2, m1.getMostValuablePlayerAwards());
+        } catch (IOException e) {
+            fail("Should not have thrown IOException");
+        } catch (MatchNotFoundException e) {
+            fail("Should not have thrown MatchNotFoundException");
+        }
+    }
+
+    @Test
+    void testAllStatsPlayer2() {
+        StoreReader storeReader = new StoreReader(TEST_FILES_ROOT_PATH + "all_stats.json");
+
+        try {
+            storeReader.read(appData);
+            assertEquals(3, appData.getPlayers().size());
+            assertEquals(2, appData.getRosters().size());
+            assertEquals(2, appData.getMatches().size());
+            assertEquals(2, appData.getNextMatchId());
+
+            Player player2 = appData.getPlayers().get(1);
+
+            // Player2 has match data for 1 match
+            assertEquals("Player2", player2.getUsername());
+            assertEquals(1, player2.getGamesPlayed());
+            assertEquals(26, player2.getRoundsPlayed());
+            assertEquals(1, player2.getWins());
+            assertEquals(0, player2.getLosses());
+            assertEquals(2000, player2.getTotalDamageDealt());
+            assertEquals(38, player2.getTotalPoints());
+            assertEquals(16, player2.getTotalKills());
+            assertEquals(4, player2.getTotalAssists());
+            assertEquals(14, player2.getTotalDeaths());
+            assertEquals(2, player2.getMostValuablePlayerAwards());
+
+            // Player2 is in and has match data for match with id 0
+            MatchPerformance m0 = player2.getMatchStatsById(0);
+            assertEquals(2000, m0.getTotalDamageDealt());
+            assertEquals(38, m0.getTotalPoints());
+            assertEquals(16, m0.getTotalKills());
+            assertEquals(4, m0.getTotalAssists());
+            assertEquals(14, m0.getTotalDeaths());
+            assertEquals(2, m0.getMostValuablePlayerAwards());
+        } catch (IOException e) {
+            fail("Should not have thrown IOException");
+        } catch (MatchNotFoundException e) {
+            fail("Should not have thrown MatchNotFoundException");
+        }
+    }
+
+    @Test
+    void testAllStatsPlayer3() {
+        StoreReader storeReader = new StoreReader(TEST_FILES_ROOT_PATH + "all_stats.json");
+
+        try {
+            storeReader.read(appData);
+            assertEquals(3, appData.getPlayers().size());
+            assertEquals(2, appData.getRosters().size());
+            assertEquals(2, appData.getMatches().size());
+            assertEquals(2, appData.getNextMatchId());
+
+            Player player3 = appData.getPlayers().get(2);
+
+            // Player3 has no match performance data, does have general data
+            assertEquals("Player3", player3.getUsername());
+            assertEquals(1, player3.getGamesPlayed());
+            assertEquals(26, player3.getRoundsPlayed());
+            assertEquals(0, player3.getWins());
+            assertEquals(1, player3.getLosses());
+            assertEquals(0, player3.getTotalDamageDealt());
+            assertEquals(0, player3.getTotalPoints());
+            assertEquals(0, player3.getTotalKills());
+            assertEquals(0, player3.getTotalAssists());
+            assertEquals(0, player3.getTotalDeaths());
+            assertEquals(0, player3.getMostValuablePlayerAwards());
+
+            // Player is in match with id 1 but has no performance data
+            player3.getMatchStatsById(1);
+
+            fail("Should have thrown MatchNotFoundException");
+        } catch (IOException e) {
+            fail("Should not have thrown IOException");
+        } catch (MatchNotFoundException e) {
+            // Expected
         }
     }
 }
