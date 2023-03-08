@@ -169,6 +169,8 @@ public class AppData implements Writable, Readable {
         loadPlayers(jsonObject.getJSONArray("players"));
         loadRosters(jsonObject.getJSONArray("rosters"));
         loadMatches(jsonObject.getJSONArray("matches"));
+
+        nextMatchId = matches.size();
     }
 
     // REQUIRES: jsonObject with valid and correct data
@@ -232,13 +234,7 @@ public class AppData implements Writable, Readable {
                 }
             }
 
-            int matchId = matchObject.getInt("matchId");
-
-            if (matchId >= this.nextMatchId) {
-                this.nextMatchId = matchId + 1;
-            }
-
-            Match match = new Match(matchId, playerList, matchObject.getInt("roundsWon"),
+            Match match = new Match(matchObject.getInt("matchId"), playerList, matchObject.getInt("roundsWon"),
                     matchObject.getInt("roundsLost"), matchObject.getString("map"));
             matches.add(match);
         }
