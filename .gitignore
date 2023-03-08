@@ -1,3 +1,4 @@
 *.class
 workspace.xml
 data/app_data.json
+data/tests/writer_test_file.json

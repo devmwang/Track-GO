@@ -79,6 +79,16 @@
       "matchId": 0
     },
     {
+      "roundsWon": 16,
+      "players": [
+        "Player1",
+        "Player2"
+      ],
+      "roundsLost": 12,
+      "map": "Mirage",
+      "matchId": 1
+    },
+    {
       "roundsWon": 10,
       "players": [
         "Player1",
@@ -86,7 +96,7 @@
       ],
       "roundsLost": 16,
       "map": "Inferno",
-      "matchId": 1
+      "matchId": 2
     }
   ]
 }
