@@ -24,6 +24,17 @@ public class ConsoleInterface {
         this.appData = new AppData();
 
         System.out.println("Welcome to Track:GO!\n");
+
+        System.out.println("Do you want to load app data? (y/n) \n");
+
+        String confirmation = scanner.nextLine();
+        System.out.println();
+
+        if (confirmation.equals("y")) {
+            handleLoadFromFile();
+            System.out.println();
+        }
+
         displayMainMenu();
     }
 
@@ -66,11 +77,19 @@ public class ConsoleInterface {
         commands.put("2", this::displayMatchAddMenu);
         commands.put("3", this::displayPlayersOverviewMenu);
         commands.put("4", this::displayRostersOverviewMenu);
-        commands.put("5", this::handleLoadFromFile);
+        commands.put("5", this::displayLoadDetails);
         commands.put("6", this::displaySaveDetails);
         commands.put("7", this::exit);
 
         handleMenu(optionsText, commands);
+    }
+
+    // EFFECTS: Displays details for saving app data
+    private void displayLoadDetails() {
+        handleLoadFromFile();
+
+        System.out.println("Returning to main menu. \n");
+        displayMainMenu();
     }
 
     // EFFECTS: Handles loading data from file into application
@@ -81,9 +100,6 @@ public class ConsoleInterface {
         } catch (IOException e) {
             System.out.println("An error occurred while loading data from " + DATA_STORE_PATH + ": " + e);
         }
-
-        System.out.println("Returning to main menu. \n");
-        displayMainMenu();
     }
 
     // EFFECTS: Displays details for saving app data
