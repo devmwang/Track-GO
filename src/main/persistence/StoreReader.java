@@ -22,6 +22,8 @@ public class StoreReader {
         this.filePath = filePath;
     }
 
+    // REQUIRES: appData is not null
+    // MODIFIES: appData
     // EFFECTS: Reads app data from file and returns it, throws IOException if an error occurs while reading data
     public void read(AppData appData) throws IOException, AppDataInvalidException {
         String jsonData = readFile(filePath);
@@ -30,6 +32,7 @@ public class StoreReader {
         appData.fromJson(jsonObject);
     }
 
+    // REQUIRES: filePath is not null
     // EFFECTS: Reads source file as a string and returns it
     private String readFile(String filePath) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();

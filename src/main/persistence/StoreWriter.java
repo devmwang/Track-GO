@@ -12,7 +12,7 @@ import model.AppData;
 public class StoreWriter {
     private static final int INDENT = 4;
     private PrintWriter writer;
-    private String filePath;
+    private final String filePath;
 
     // EFFECTS: Constructs writer to write data to file at filePath
     public StoreWriter(String filePath) {
@@ -23,9 +23,10 @@ public class StoreWriter {
     // EFFECTS: opens writer; throws FileNotFoundException if destination file cannot
     // be opened for writing
     public void open() throws FileNotFoundException {
-        writer = new PrintWriter(new File(filePath));
+        writer = new PrintWriter(filePath);
     }
 
+    // REQUIRES: appData is not null
     // MODIFIES: this
     // EFFECTS: Writes JSON representation of appData to file
     public void write(AppData appData) {
@@ -39,6 +40,7 @@ public class StoreWriter {
         writer.close();
     }
 
+    // REQUIRES: data is not null
     // MODIFIES: this
     // EFFECTS: Writes data string to file
     private void saveToFile(String data) {
