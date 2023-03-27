@@ -170,16 +170,15 @@ public class GraphicalInterface extends JFrame implements ActionListener {
     private void setupPlayersOverviewMenu() {
         String[] columnTitles = {"Player", "Games Played", "Games Won", "Games Lost", "Games Tied", "MVPs"};
 
-        Object[][] tableData = {};
-
         ArrayList<Player> playerList = appData.getPlayers();
+        Object[][] tableData = new Object[playerList.size()][6];
 
-        for (Player player : playerList) {
+        for (int i = 0; i < playerList.size(); i++) {
+            Player player = playerList.get(i);
             Object[] playerData = {player.getUsername(), player.getGamesPlayed(), player.getWins(),
                     player.getLosses(), (player.getGamesPlayed() - player.getWins() - player.getLosses()),
                     player.getMostValuablePlayerAwards()};
-            tableData = Arrays.copyOf(tableData, tableData.length + 1);
-            tableData[tableData.length - 1] = playerData;
+            tableData[i] = playerData;
         }
 
         JTable playersTable = new JTable(tableData, columnTitles);
