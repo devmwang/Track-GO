@@ -1,13 +1,14 @@
 package ui;
 
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-import model.AppData;
+import model.*;
 import persistence.StoreReader;
 import persistence.StoreWriter;
 import exceptions.AppDataInvalidException;
@@ -22,6 +23,8 @@ public class GraphicalInterface extends JFrame implements ActionListener {
     JPanel navbar;
     JPanel contentContainer;
     JPanel mainMenu;
+    JPanel playersOverviewMenu;
+    JPanel rostersOverviewMenu;
     JPanel loadDataMenu;
     JPanel saveDataMenu;
 
@@ -40,11 +43,13 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         add(navbar, BorderLayout.NORTH);
         add(contentContainer);
         contentContainer.add(mainMenu, "mainMenu");
+        contentContainer.add(playersOverviewMenu, "playersOverviewMenu");
+        contentContainer.add(rostersOverviewMenu, "rostersOverviewMenu");
         contentContainer.add(loadDataMenu, "loadDataMenu");
         contentContainer.add(saveDataMenu, "saveDataMenu");
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(new Dimension(800, 600));
+        setSize(new Dimension(1280, 860));
         setResizable(true);
         setVisible(true);
     }
@@ -55,13 +60,13 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         this.contentContainer = new JPanel(new CardLayout());
         this.navbar =  new JPanel(new GridBagLayout());
         this.mainMenu = new JPanel(new GridBagLayout());
+        this.playersOverviewMenu = new JPanel(new GridBagLayout());
+        this.rostersOverviewMenu = new JPanel(new GridBagLayout());
         this.loadDataMenu = new JPanel(new GridBagLayout());
         this.saveDataMenu = new JPanel(new GridBagLayout());
 
         setupNavbar();
         setupMainMenu();
-        setupLoadConfirmation();
-        setupSaveConfirmation();
     }
 
     // REQUIRES: e is not null
@@ -72,10 +77,20 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         CardLayout cl = (CardLayout)(contentContainer.getLayout());
 
         switch (actionCommand) {
+            case "playersOverview":
+                setupPlayersOverviewMenu();
+                cl.show(contentContainer, "playersOverviewMenu");
+                break;
+            case "rostersOverview":
+                setupRostersOverviewMenu();
+                cl.show(contentContainer, "rostersOverviewMenu");
+                break;
             case "loadAppData":
+                setupLoadConfirmation();
                 cl.show(contentContainer, "loadDataMenu");
                 break;
             case "saveAppData":
+                setupSaveConfirmation();
                 cl.show(contentContainer, "saveDataMenu");
                 break;
             case "exit":
@@ -86,36 +101,50 @@ public class GraphicalInterface extends JFrame implements ActionListener {
     // MODIFIES: this
     // EFFECTS: Configures navbar elements
     private void setupNavbar() {
+        // Instantiate buttons
+        ArrayList<JButton> buttons = new ArrayList<>();
+        JButton playersOverviewBtn = new JButton("View Players");
+        JButton rostersOverviewBtn = new JButton("View Rosters");
+        JButton loadAppDataBtn = new JButton("Load App Data");
+        JButton saveAppDataBtn = new JButton("Save App Data");
+        JButton exitBtn = new JButton("Exit");
+
+        buttons.add(playersOverviewBtn);
+        buttons.add(rostersOverviewBtn);
+        buttons.add(loadAppDataBtn);
+        buttons.add(saveAppDataBtn);
+        buttons.add(exitBtn);
+
+        // Set action commands
+        playersOverviewBtn.setActionCommand("playersOverview");
+        rostersOverviewBtn.setActionCommand("rostersOverview");
+        loadAppDataBtn.setActionCommand("loadAppData");
+        saveAppDataBtn.setActionCommand("saveAppData");
+        exitBtn.setActionCommand("exit");
+
+        // Final configuration for all buttons on navbar
+        allNavbarBtnConfig(buttons);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Configures all buttons on navbar
+    private void allNavbarBtnConfig(ArrayList<JButton> buttons) {
         GridBagConstraints gbConstraints = new GridBagConstraints();
 
         gbConstraints.fill = GridBagConstraints.HORIZONTAL;
         gbConstraints.weightx = 0.5;
         gbConstraints.insets = new Insets(10, 10, 10, 10);
 
-        // Instantiate buttons
-        JButton loadAppDataBtn = new JButton("Load App Data");
-        JButton saveAppDataBtn = new JButton("Save App Data");
-        JButton exitBtn = new JButton("Exit");
+        int gridIndex = 0;
 
-        // Set action commands
-        loadAppDataBtn.setActionCommand("loadAppData");
-        saveAppDataBtn.setActionCommand("saveAppData");
-        exitBtn.setActionCommand("exit");
+        for (JButton button : buttons) {
+            button.addActionListener(this);
 
-        // Add action listeners
-        loadAppDataBtn.addActionListener(this);
-        saveAppDataBtn.addActionListener(this);
-        exitBtn.addActionListener(this);
+            gbConstraints.gridx = gridIndex;
+            navbar.add(button, gbConstraints);
 
-        // Add buttons to navbar
-        gbConstraints.gridx = 0;
-        navbar.add(loadAppDataBtn, gbConstraints);
-
-        gbConstraints.gridx = 1;
-        navbar.add(saveAppDataBtn, gbConstraints);
-
-        gbConstraints.gridx = 2;
-        navbar.add(exitBtn, gbConstraints);
+            gridIndex++;
+        }
     }
 
     // MODIFIES: this
@@ -134,6 +163,56 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         gbConstraints.gridy = 1;
         gbConstraints.insets = new Insets(15, 0, 0, 0);
         mainMenu.add(centerText2, gbConstraints);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Configures players overview menu
+    private void setupPlayersOverviewMenu() {
+        String[] columnTitles = {"Player", "Games Played", "Games Won", "Games Lost", "Games Tied", "MVPs"};
+
+        Object[][] tableData = {};
+
+        ArrayList<Player> playerList = appData.getPlayers();
+
+        for (Player player : playerList) {
+            Object[] playerData = {player.getUsername(), player.getGamesPlayed(), player.getWins(),
+                    player.getLosses(), (player.getGamesPlayed() - player.getWins() - player.getLosses()),
+                    player.getMostValuablePlayerAwards()};
+            tableData = Arrays.copyOf(tableData, tableData.length + 1);
+            tableData[tableData.length - 1] = playerData;
+        }
+
+        JTable playersTable = new JTable(tableData, columnTitles);
+
+        playersOverviewMenu.add(new JScrollPane(playersTable));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Configures rosters overview menu
+    private void setupRostersOverviewMenu() {
+        String[] columnTitles = {"Roster ID", "Win Rate", "Players"};
+
+        Object[][] tableData = {};
+
+        ArrayList<Roster> rostersList = appData.getRosters();
+
+        for (Roster roster : rostersList) {
+            String[] playersList = new String[roster.getPlayers().size()];
+            for (int i = 0; i < roster.getPlayers().size(); i++) {
+                playersList[i] = roster.getPlayers().get(i).getUsername();
+            }
+
+            Object[] playerData = {roster.getId(), roster.getWinRate(), playersList};
+            tableData = Arrays.copyOf(tableData, tableData.length + 1);
+            tableData[tableData.length - 1] = playerData;
+        }
+
+        JTable rostersTable = new JTable(tableData, columnTitles);
+        PlayerListCellRenderer renderer = new PlayerListCellRenderer();
+        rostersTable.getColumnModel().getColumn(2).setCellRenderer(renderer);
+        rostersTable.setRowHeight(100);
+
+        rostersOverviewMenu.add(new JScrollPane(rostersTable));
     }
 
     // MODIFIES: this
