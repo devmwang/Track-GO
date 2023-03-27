@@ -190,16 +190,26 @@ public class GraphicalInterface extends JFrame implements ActionListener {
     // MODIFIES: this
     // EFFECTS: Configures rosters overview menu
     private void setupRostersOverviewMenu() {
-        String[] columnTitles = {"Roster ID", "Win Rate", "Players"};
+        GridBagConstraints gbConstraints = new GridBagConstraints();
+        gbConstraints.fill = GridBagConstraints.VERTICAL;
 
-        Object[][] tableData = {};
+        // Add buttons for roster actions on top
+        JPanel rostersOverviewMenuButtonPanel = new JPanel(new GridBagLayout());
+        setupRostersOverviewMenuButtons(rostersOverviewMenuButtonPanel);
+        gbConstraints.gridy = 0;
+        rostersOverviewMenu.add(rostersOverviewMenuButtonPanel, gbConstraints);
+
+        // Add rosters overview table
+        String[] columnTitles = {"Roster ID", "Win Rate", "Players"};
 
         ArrayList<Roster> rostersList = appData.getRosters();
 
-        for (Roster roster : rostersList) {
+        Object[][] tableData = new Object[rostersList.size()][3];
+
+        for (int i = 0; i < rostersList.size(); i++) {
+            Roster roster = rostersList.get(i);
             Object[] playerData = {roster.getId(), roster.getWinRate(), roster.getPlayers()};
-            tableData = Arrays.copyOf(tableData, tableData.length + 1);
-            tableData[tableData.length - 1] = playerData;
+            tableData[i] = playerData;
         }
 
         JTable rostersTable = new JTable(tableData, columnTitles);
@@ -207,7 +217,25 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         rostersTable.getColumnModel().getColumn(2).setCellRenderer(renderer);
         rostersTable.setRowHeight(100);
 
-        rostersOverviewMenu.add(new JScrollPane(rostersTable));
+        gbConstraints.gridy = 1;
+        gbConstraints.insets = new Insets(20, 0, 0, 0);
+        rostersOverviewMenu.add(new JScrollPane(rostersTable), gbConstraints);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Configures rosters overview menu buttons
+    private void setupRostersOverviewMenuButtons(JPanel rostersOverviewMenuButtonPanel) {
+        GridBagConstraints gbConstraints = new GridBagConstraints();
+        gbConstraints.fill = GridBagConstraints.HORIZONTAL;
+
+        JButton playersOverviewBtn = new JButton("Add Player to Roster");
+
+        playersOverviewBtn.addActionListener(this);
+
+        playersOverviewBtn.setActionCommand("addPlayerToRoster");
+
+        gbConstraints.gridx = 0;
+        rostersOverviewMenuButtonPanel.add(playersOverviewBtn, gbConstraints);
     }
 
     // MODIFIES: this
