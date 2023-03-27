@@ -197,12 +197,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         ArrayList<Roster> rostersList = appData.getRosters();
 
         for (Roster roster : rostersList) {
-            String[] playersList = new String[roster.getPlayers().size()];
-            for (int i = 0; i < roster.getPlayers().size(); i++) {
-                playersList[i] = roster.getPlayers().get(i).getUsername();
-            }
-
-            Object[] playerData = {roster.getId(), roster.getWinRate(), playersList};
+            Object[] playerData = {roster.getId(), roster.getWinRate(), roster.getPlayers()};
             tableData = Arrays.copyOf(tableData, tableData.length + 1);
             tableData[tableData.length - 1] = playerData;
         }
