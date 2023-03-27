@@ -168,6 +168,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
     // MODIFIES: this
     // EFFECTS: Configures players overview menu
     private void setupPlayersOverviewMenu() {
+        playersOverviewMenu.removeAll();
         String[] columnTitles = {"Player", "Games Played", "Games Won", "Games Lost", "Games Tied", "MVPs"};
 
         ArrayList<Player> playerList = appData.getPlayers();
@@ -189,6 +190,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
     // MODIFIES: this
     // EFFECTS: Configures rosters overview menu
     private void setupRostersOverviewMenu() {
+        rostersOverviewMenu.removeAll();
         GridBagConstraints gbConstraints = new GridBagConstraints();
         gbConstraints.fill = GridBagConstraints.VERTICAL;
 
@@ -240,6 +242,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
     // MODIFIES: this
     // EFFECTS: Configures app data load confirmation
     private void setupLoadConfirmation() {
+        loadDataMenu.removeAll();
         JLabel centerText1 = new JLabel("Are you sure you want to load app data?");
         JLabel centerText2 = new JLabel("This will overwrite any unsaved data.");
         centerText2.setForeground(Color.RED);
@@ -263,6 +266,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
     // MODIFIES: this
     // EFFECTS: Configures app data save confirmation
     private void setupSaveConfirmation() {
+        saveDataMenu.removeAll();
         JLabel centerText1 = new JLabel("Are you sure you want to save the active app data?");
         JLabel centerText2 = new JLabel("This will overwrite your currently saved app data.");
         centerText2.setForeground(Color.RED);
