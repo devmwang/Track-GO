@@ -1,10 +1,10 @@
 package ui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.IOException;
 
 import exceptions.PlayerNotFoundException;
@@ -21,11 +21,14 @@ public class GraphicalInterface extends JFrame implements ActionListener {
     private final StoreWriter storeWriter;
     private AppData appData;
 
+    HashMap<String, Object> rostersOverviewFilters;
+
     JPanel navbar;
     JPanel contentContainer;
     JPanel mainMenu;
     JPanel playersOverviewMenu;
     JPanel rostersMenu;
+    JPanel rostersOverviewTable;
     JPanel loadDataMenu;
     JPanel saveDataMenu;
 
@@ -37,6 +40,8 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         this.storeWriter = new StoreWriter(DATA_STORE_PATH);
 
         appData = new AppData();
+
+        this.rostersOverviewFilters = new HashMap<>();
 
         setLayout(new BorderLayout());
         instantiatePanels();
@@ -59,10 +64,11 @@ public class GraphicalInterface extends JFrame implements ActionListener {
     // EFFECTS: Instantiates JPanels and runs setup methods
     public void instantiatePanels() {
         this.contentContainer = new JPanel(new CardLayout());
-        this.navbar =  new JPanel(new GridBagLayout());
+        this.navbar = new JPanel(new GridBagLayout());
         this.mainMenu = new JPanel(new GridBagLayout());
         this.playersOverviewMenu = new JPanel(new FlowLayout(FlowLayout.CENTER));
         this.rostersMenu = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 0));
+        this.rostersOverviewTable = new JPanel(new GridBagLayout());
         this.loadDataMenu = new JPanel(new GridBagLayout());
         this.saveDataMenu = new JPanel(new GridBagLayout());
 
@@ -75,7 +81,8 @@ public class GraphicalInterface extends JFrame implements ActionListener {
     // EFFECTS: Handles events
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
-        CardLayout cl = (CardLayout)(contentContainer.getLayout());
+        CardLayout cl = (CardLayout) (contentContainer.getLayout());
+        rostersOverviewFilters.clear();
 
         switch (actionCommand) {
             case "playersOverview":
@@ -193,22 +200,67 @@ public class GraphicalInterface extends JFrame implements ActionListener {
     private void setupRostersMenu() {
         rostersMenu.removeAll();
 
+        // Add Player to Roster Panel
         JPanel addPlayerToRosterMenu = new JPanel(new GridBagLayout());
         setupAddPlayerToRosterMenu(addPlayerToRosterMenu);
         rostersMenu.add(addPlayerToRosterMenu);
 
+        // Add Roster Overview Panel
         JPanel rostersOverviewMenu = new JPanel(new GridBagLayout());
-        setupRostersOverviewMenu(rostersOverviewMenu);
+
+        GridBagConstraints gbConstraints = new GridBagConstraints();
+        gbConstraints.fill = GridBagConstraints.VERTICAL;
+
+        JPanel rostersOverviewControlPanel = new JPanel(new GridBagLayout());
+        setupRostersOverviewControlPanel(rostersOverviewControlPanel);
+
+        gbConstraints.gridy = 0;
+        rostersOverviewMenu.add(rostersOverviewControlPanel, gbConstraints);
+
+        setupRostersOverviewTable();
+
+        gbConstraints.gridy = 1;
+        rostersOverviewMenu.add(rostersOverviewTable, gbConstraints);
+
         rostersMenu.add(rostersOverviewMenu);
     }
 
     // MODIFIES: this
-    // EFFECTS: Configures rosters overview menu
-    private void setupRostersOverviewMenu(JPanel rostersOverviewMenu) {
+    // EFFECTS: Reloads rosters overview table
+    private void reloadRostersOverviewTable() {
+        setupRostersOverviewTable();
+        ((CardLayout) (contentContainer.getLayout())).show(contentContainer, "loadDataMenu");
+        ((CardLayout) (contentContainer.getLayout())).show(contentContainer, "rostersMenu");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Configures rosters overview table
+    private void setupRostersOverviewTable() {
+        rostersOverviewTable.removeAll();
+        GridBagConstraints gbConstraints = new GridBagConstraints();
+
         // Add rosters overview table
         String[] columnTitles = {"Roster ID", "Win Rate", "Players"};
+        Object[][] tableData = populateRostersOverviewTableData(rostersOverviewFilters);
 
-        ArrayList<Roster> rostersList = appData.getRosters();
+        JTable rostersTable = new JTable(tableData, columnTitles);
+        PlayerListCellRenderer renderer = new PlayerListCellRenderer();
+        rostersTable.getColumnModel().getColumn(2).setCellRenderer(renderer);
+        rostersTable.setRowHeight(100);
+
+        gbConstraints.insets = new Insets(15, 0, 0, 0);
+        gbConstraints.gridy = 1;
+        rostersOverviewTable.add(new JScrollPane(rostersTable), gbConstraints);
+    }
+
+    // EFFECTS: Gets and puts roster data that fulfills any active filters into tableData 2D array
+    private Object[][] populateRostersOverviewTableData(HashMap<String, Object> rostersOverviewFilters) {
+        ArrayList<Roster> rostersList = (ArrayList<Roster>) appData.getRosters().clone();
+
+        // Filter rostersList for required player
+        if (rostersOverviewFilters.get("requiredPlayer") != null) {
+            rostersList.removeIf(r -> !r.getPlayers().contains((Player) rostersOverviewFilters.get("requiredPlayer")));
+        }
 
         Object[][] tableData = new Object[rostersList.size()][3];
 
@@ -218,12 +270,44 @@ public class GraphicalInterface extends JFrame implements ActionListener {
             tableData[i] = playerData;
         }
 
-        JTable rostersTable = new JTable(tableData, columnTitles);
-        PlayerListCellRenderer renderer = new PlayerListCellRenderer();
-        rostersTable.getColumnModel().getColumn(2).setCellRenderer(renderer);
-        rostersTable.setRowHeight(100);
+        return tableData;
+    }
 
-        rostersOverviewMenu.add(new JScrollPane(rostersTable));
+    // REQUIRES: rostersOverviewControlPanel, rostersOverviewTable is not null
+    // MODIFIES: this
+    // EFFECTS: Configures rosters overview control panel and returns a list of filters/control parameters
+    private void setupRostersOverviewControlPanel(JPanel rostersOverviewControlPanel) {
+        GridBagConstraints gbConstraints = new GridBagConstraints();
+        gbConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gbConstraints.insets = new Insets(10, 10, 0, 0);
+
+        JComboBox requiredPlayerSelect = new JComboBox();
+        requiredPlayerSelect.addItem("N/A");
+
+        for (Player player : appData.getPlayers()) {
+            requiredPlayerSelect.addItem(player.getUsername());
+        }
+
+        gbConstraints.gridx = 0;
+        JButton confirmBtn = new JButton("Confirm Filters");
+        confirmBtn.addActionListener(event -> rostersFilterEventListener(requiredPlayerSelect));
+        rostersOverviewControlPanel.add(requiredPlayerSelect, gbConstraints);
+
+        gbConstraints.gridx = 1;
+        rostersOverviewControlPanel.add(confirmBtn, gbConstraints);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Defines an event listener for the overview filter confirmation button
+    private void rostersFilterEventListener(JComboBox requiredPlayerSelect) {
+        try {
+            rostersOverviewFilters.put("requiredPlayer",
+                    appData.getPlayerByUsername((String) requiredPlayerSelect.getSelectedItem()));
+        } catch (PlayerNotFoundException e) {
+            rostersOverviewFilters.remove("requiredPlayer");
+        }
+
+        reloadRostersOverviewTable();
     }
 
     // MODIFIES: this
@@ -291,7 +375,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
 
         selectedRoster.addPlayer(selectedPlayer);
 
-        rostersMenu.repaint();
+        reloadRostersOverviewTable();
     }
 
     // MODIFIES: this
