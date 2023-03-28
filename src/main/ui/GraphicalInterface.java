@@ -273,16 +273,28 @@ public class GraphicalInterface extends JFrame implements ActionListener {
     private void setupRostersMenu() {
         rostersMenu.removeAll();
 
+        GridBagConstraints gbConstraints = new GridBagConstraints();
+        gbConstraints.fill = GridBagConstraints.VERTICAL;
+        gbConstraints.insets = new Insets(20, 0, 20, 0);
+
+        // Roster Edit System
+        JPanel rosterEditMenu = new JPanel(new GridBagLayout());
+
         // Add Player to Roster Panel
         JPanel addPlayerToRosterMenu = new JPanel(new GridBagLayout());
         setupAddPlayerToRosterMenu(addPlayerToRosterMenu);
-        rostersMenu.add(addPlayerToRosterMenu);
+        gbConstraints.gridy = 0;
+        rosterEditMenu.add(addPlayerToRosterMenu, gbConstraints);
+
+        JPanel removePlayerFromRosterMenu = new JPanel(new GridBagLayout());
+        setupRemovePlayerFromRosterMenu(removePlayerFromRosterMenu);
+        gbConstraints.gridy = 1;
+        rosterEditMenu.add(removePlayerFromRosterMenu, gbConstraints);
+
+        rostersMenu.add(rosterEditMenu);
 
         // Add Roster Overview Panel
         JPanel rostersOverviewMenu = new JPanel(new GridBagLayout());
-
-        GridBagConstraints gbConstraints = new GridBagConstraints();
-        gbConstraints.fill = GridBagConstraints.VERTICAL;
 
         JPanel rostersOverviewControlPanel = new JPanel(new GridBagLayout());
         setupRostersOverviewControlPanel(rostersOverviewControlPanel);
@@ -353,7 +365,6 @@ public class GraphicalInterface extends JFrame implements ActionListener {
     private void setupRostersOverviewControlPanel(JPanel rostersOverviewControlPanel) {
         GridBagConstraints gbConstraints = new GridBagConstraints();
         gbConstraints.fill = GridBagConstraints.HORIZONTAL;
-        gbConstraints.insets = new Insets(10, 10, 0, 0);
 
         JComboBox requiredPlayerSelect = new JComboBox();
         requiredPlayerSelect.addItem("N/A");
@@ -452,6 +463,55 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         }
 
         selectedRoster.addPlayer(selectedPlayer);
+
+        reloadRostersOverviewTable();
+    }
+
+    // REQUIRES: addPlayerToRosterMenu is not null
+    // MODIFIES: this
+    // EFFECTS: Configures menu for removing a player from a roster
+    private void setupRemovePlayerFromRosterMenu(JPanel removePlayerFromRosterMenu) {
+        removePlayerFromRosterMenu.setBorder(BorderFactory.createTitledBorder("Remove Player from Roster"));
+        JComboBox playerSelect = new JComboBox();
+
+        for (Player player : appData.getPlayers()) {
+            playerSelect.addItem(player.getUsername());
+        }
+
+        JComboBox rosterSelect = new JComboBox();
+
+        for (Roster roster : appData.getRosters()) {
+            rosterSelect.addItem(roster.getId());
+        }
+
+        JButton confirmAndAddBtn = new JButton("Confirm Selections");
+
+        setupAddPlayerToRosterMenuElements(removePlayerFromRosterMenu, playerSelect, rosterSelect, confirmAndAddBtn);
+
+        confirmAndAddBtn.addActionListener(event -> removePlayerFromRosterEventListener(playerSelect, rosterSelect));
+    }
+
+    // REQUIRES: playerSelect, rosterSelect are not null
+    // MODIFIES: this
+    // EFFECTS: Defines an event listener for the confirmation button to remove a player from a roster
+    private void removePlayerFromRosterEventListener(JComboBox playerSelect, JComboBox rosterSelect) {
+        Player selectedPlayer;
+        Roster selectedRoster;
+
+        try {
+            selectedPlayer = appData.getPlayerByUsername((String) playerSelect.getSelectedItem());
+            selectedRoster = appData.getRosterById((String) rosterSelect.getSelectedItem());
+        } catch (PlayerNotFoundException | RosterNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (!selectedRoster.getPlayers().contains(selectedPlayer)) {
+            JOptionPane.showMessageDialog(contentContainer, selectedPlayer.getUsername() + " is not in "
+                    + selectedRoster.getId() + ".", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        selectedRoster.removePlayer(selectedPlayer);
 
         reloadRostersOverviewTable();
     }
