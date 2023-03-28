@@ -26,7 +26,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
     JPanel navbar;
     JPanel contentContainer;
     JPanel mainMenu;
-    JPanel playersOverviewMenu;
+    JPanel playersMenu;
     JPanel rostersMenu;
     JPanel rostersOverviewTable;
     JPanel loadDataMenu;
@@ -49,7 +49,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         add(navbar, BorderLayout.NORTH);
         add(contentContainer);
         contentContainer.add(mainMenu, "mainMenu");
-        contentContainer.add(playersOverviewMenu, "playersOverviewMenu");
+        contentContainer.add(playersMenu, "playersMenu");
         contentContainer.add(rostersMenu, "rostersMenu");
         contentContainer.add(loadDataMenu, "loadDataMenu");
         contentContainer.add(saveDataMenu, "saveDataMenu");
@@ -66,7 +66,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         this.contentContainer = new JPanel(new CardLayout());
         this.navbar = new JPanel(new GridBagLayout());
         this.mainMenu = new JPanel(new GridBagLayout());
-        this.playersOverviewMenu = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        this.playersMenu = new JPanel(new FlowLayout(FlowLayout.CENTER));
         this.rostersMenu = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 0));
         this.rostersOverviewTable = new JPanel(new GridBagLayout());
         this.loadDataMenu = new JPanel(new GridBagLayout());
@@ -86,8 +86,8 @@ public class GraphicalInterface extends JFrame implements ActionListener {
 
         switch (actionCommand) {
             case "playersOverview":
-                setupPlayersOverviewMenu();
-                cl.show(contentContainer, "playersOverviewMenu");
+                setupPlayersMenu();
+                cl.show(contentContainer, "playersMenu");
                 break;
             case "rostersOverview":
                 setupRostersMenu();
@@ -183,8 +183,22 @@ public class GraphicalInterface extends JFrame implements ActionListener {
     }
 
     // MODIFIES: this
+    // EFFECTS: Configures players menu
+    private void setupPlayersMenu() {
+        playersMenu.removeAll();
+
+        JPanel addPlayerMenu = new JPanel(new GridBagLayout());
+        setupAddPlayerMenu(addPlayerMenu);
+        playersMenu.add(addPlayerMenu);
+
+        JPanel playersOverviewMenu = new JPanel(new GridBagLayout());
+        setupPlayersOverviewMenu(playersOverviewMenu);
+        playersMenu.add(playersOverviewMenu);
+    }
+
+    // MODIFIES: this
     // EFFECTS: Configures players overview menu
-    private void setupPlayersOverviewMenu() {
+    private void setupPlayersOverviewMenu(JPanel playersOverviewMenu) {
         playersOverviewMenu.removeAll();
         String[] columnTitles = {"Player", "Games Played", "Games Won", "Games Lost", "Games Tied", "MVPs"};
 
@@ -202,6 +216,55 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         JTable playersTable = new JTable(tableData, columnTitles);
 
         playersOverviewMenu.add(new JScrollPane(playersTable));
+    }
+
+    // REQUIRES: addPlayerToRosterMenu is not null
+    // MODIFIES: this
+    // EFFECTS: Configures menu for adding player to roster
+    private void setupAddPlayerMenu(JPanel addPlayerMenu) {
+        addPlayerMenu.setBorder(BorderFactory.createTitledBorder("Add Player to Roster"));
+        JTextField specifiedUsername = new JTextField(15);
+
+        JButton confirmAndAddBtn = new JButton("Create Player");
+
+        setupAddPlayerMenuElements(addPlayerMenu, specifiedUsername, confirmAndAddBtn);
+
+        confirmAndAddBtn.addActionListener(event -> addPlayerEventListener(specifiedUsername));
+    }
+
+    // REQUIRES: addPlayerToRosterMenu, playerSelect, rosterSelect, confirmAndAddBtn are not null
+    // MODIFIES: this
+    // EFFECTS: Creates menu UI elements for adding player to roster
+    private void setupAddPlayerMenuElements(JPanel addPlayerMenu, JTextField specifiedUsername,
+                                            JButton confirmAndAddBtn) {
+        GridBagConstraints gbConstraints = new GridBagConstraints();
+        gbConstraints.fill = GridBagConstraints.VERTICAL;
+        gbConstraints.insets = new Insets(10, 10, 10, 10);
+
+        gbConstraints.gridy = 0;
+        addPlayerMenu.add(new JLabel("Player Username: "), gbConstraints);
+        addPlayerMenu.add(specifiedUsername, gbConstraints);
+
+        gbConstraints.gridy = 1;
+        gbConstraints.gridwidth = 2;
+        addPlayerMenu.add(confirmAndAddBtn, gbConstraints);
+    }
+
+    // REQUIRES: playerSelect, rosterSelect are not null
+    // MODIFIES: this
+    // EFFECTS: Defines an event listener for the confirmation button to add a player to a roster
+    private void addPlayerEventListener(JTextField specifiedUsername) {
+        if (specifiedUsername.getText().equals("")) {
+            JOptionPane.showMessageDialog(contentContainer, "Please enter a valid username.", "Error",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        appData.addPlayer(specifiedUsername.getText());
+
+        setupPlayersMenu();
+        ((CardLayout) (contentContainer.getLayout())).show(contentContainer, "loadDataMenu");
+        ((CardLayout) (contentContainer.getLayout())).show(contentContainer, "playersMenu");
     }
 
     // MODIFIES: this
