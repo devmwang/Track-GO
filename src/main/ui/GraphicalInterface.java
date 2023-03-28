@@ -196,6 +196,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         playersMenu.add(playersOverviewMenu);
     }
 
+    // REQUIRES: playersOverviewMenu is not null
     // MODIFIES: this
     // EFFECTS: Configures players overview menu
     private void setupPlayersOverviewMenu(JPanel playersOverviewMenu) {
@@ -218,7 +219,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         playersOverviewMenu.add(new JScrollPane(playersTable));
     }
 
-    // REQUIRES: addPlayerToRosterMenu is not null
+    // REQUIRES: addPlayerMenu is not null
     // MODIFIES: this
     // EFFECTS: Configures menu for adding player to roster
     private void setupAddPlayerMenu(JPanel addPlayerMenu) {
@@ -232,7 +233,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         confirmAndAddBtn.addActionListener(event -> addPlayerEventListener(specifiedUsername));
     }
 
-    // REQUIRES: addPlayerToRosterMenu, playerSelect, rosterSelect, confirmAndAddBtn are not null
+    // REQUIRES: addPlayerMenu, specifiedUsername, confirmAndAddBtn are not null
     // MODIFIES: this
     // EFFECTS: Creates menu UI elements for adding player to roster
     private void setupAddPlayerMenuElements(JPanel addPlayerMenu, JTextField specifiedUsername,
@@ -250,7 +251,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         addPlayerMenu.add(confirmAndAddBtn, gbConstraints);
     }
 
-    // REQUIRES: playerSelect, rosterSelect are not null
+    // REQUIRES: specifiedUsername is not null
     // MODIFIES: this
     // EFFECTS: Defines an event listener for the confirmation button to add a player to a roster
     private void addPlayerEventListener(JTextField specifiedUsername) {
