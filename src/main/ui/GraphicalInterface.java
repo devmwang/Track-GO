@@ -27,8 +27,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
     JPanel contentContainer;
     JPanel mainMenu;
     JPanel playersOverviewMenu;
-    JPanel rostersOverviewMenu;
-    JPanel addPlayerToRosterMenu;
+    JPanel rostersMenu;
     JPanel loadDataMenu;
     JPanel saveDataMenu;
 
@@ -48,8 +47,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         add(contentContainer);
         contentContainer.add(mainMenu, "mainMenu");
         contentContainer.add(playersOverviewMenu, "playersOverviewMenu");
-        contentContainer.add(rostersOverviewMenu, "rostersOverviewMenu");
-        contentContainer.add(addPlayerToRosterMenu, "addPlayerToRosterMenu");
+        contentContainer.add(rostersMenu, "rostersMenu");
         contentContainer.add(loadDataMenu, "loadDataMenu");
         contentContainer.add(saveDataMenu, "saveDataMenu");
 
@@ -66,8 +64,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         this.navbar =  new JPanel(new GridBagLayout());
         this.mainMenu = new JPanel(new GridBagLayout());
         this.playersOverviewMenu = new JPanel(new GridBagLayout());
-        this.rostersOverviewMenu = new JPanel(new GridBagLayout());
-        this.addPlayerToRosterMenu = new JPanel(new GridBagLayout());
+        this.rostersMenu = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 0));
         this.loadDataMenu = new JPanel(new GridBagLayout());
         this.saveDataMenu = new JPanel(new GridBagLayout());
 
@@ -88,8 +85,8 @@ public class GraphicalInterface extends JFrame implements ActionListener {
                 cl.show(contentContainer, "playersOverviewMenu");
                 break;
             case "rostersOverview":
-                setupRostersOverviewMenu();
-                cl.show(contentContainer, "rostersOverviewMenu");
+                setupRostersMenu();
+                cl.show(contentContainer, "rostersMenu");
                 break;
             case "loadAppData":
                 setupLoadConfirmation();
@@ -194,18 +191,22 @@ public class GraphicalInterface extends JFrame implements ActionListener {
     }
 
     // MODIFIES: this
+    // EFFECTS: Configures rosters menu
+    private void setupRostersMenu() {
+        rostersMenu.removeAll();
+
+        JPanel addPlayerToRosterMenu = new JPanel(new GridBagLayout());
+        setupAddPlayerToRosterMenu(addPlayerToRosterMenu);
+        rostersMenu.add(addPlayerToRosterMenu);
+
+        JPanel rostersOverviewMenu = new JPanel(new GridBagLayout());
+        setupRostersOverviewMenu(rostersOverviewMenu);
+        rostersMenu.add(rostersOverviewMenu);
+    }
+
+    // MODIFIES: this
     // EFFECTS: Configures rosters overview menu
-    private void setupRostersOverviewMenu() {
-        rostersOverviewMenu.removeAll();
-        GridBagConstraints gbConstraints = new GridBagConstraints();
-        gbConstraints.fill = GridBagConstraints.VERTICAL;
-
-        // Add buttons for roster actions on top
-        JPanel rostersOverviewMenuButtonPanel = new JPanel(new GridBagLayout());
-        setupRostersOverviewMenuButtons(rostersOverviewMenuButtonPanel);
-        gbConstraints.gridy = 0;
-        rostersOverviewMenu.add(rostersOverviewMenuButtonPanel, gbConstraints);
-
+    private void setupRostersOverviewMenu(JPanel rostersOverviewMenu) {
         // Add rosters overview table
         String[] columnTitles = {"Roster ID", "Win Rate", "Players"};
 
@@ -224,33 +225,13 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         rostersTable.getColumnModel().getColumn(2).setCellRenderer(renderer);
         rostersTable.setRowHeight(100);
 
-        gbConstraints.gridy = 1;
-        gbConstraints.insets = new Insets(20, 0, 0, 0);
-        rostersOverviewMenu.add(new JScrollPane(rostersTable), gbConstraints);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: Configures rosters overview menu buttons
-    private void setupRostersOverviewMenuButtons(JPanel rostersOverviewMenuButtonPanel) {
-        GridBagConstraints gbConstraints = new GridBagConstraints();
-        gbConstraints.fill = GridBagConstraints.HORIZONTAL;
-
-        JButton playersOverviewBtn = new JButton("Add Player to Roster");
-
-        playersOverviewBtn.addActionListener(e -> {
-            setupAddPlayerToRosterMenu();
-            ((CardLayout)(contentContainer.getLayout())).show(contentContainer, "addPlayerToRosterMenu");
-        });
-
-        playersOverviewBtn.setActionCommand("addPlayerToRoster");
-
-        gbConstraints.gridx = 0;
-        rostersOverviewMenuButtonPanel.add(playersOverviewBtn, gbConstraints);
+        rostersOverviewMenu.add(new JScrollPane(rostersTable));
     }
 
     // MODIFIES: this
     // EFFECTS: Configures menu for adding player to roster
-    private void setupAddPlayerToRosterMenu() {
+    private void setupAddPlayerToRosterMenu(JPanel addPlayerToRosterMenu) {
+        addPlayerToRosterMenu.setBorder(BorderFactory.createTitledBorder("Add Player to Roster"));
         JComboBox playerSelect = new JComboBox();
 
         for (Player player : appData.getPlayers()) {
@@ -265,7 +246,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
 
         JButton confirmAndAddBtn = new JButton("Confirm Selections");
 
-        setupAddPlayerToRosterMenuElements(playerSelect, rosterSelect, confirmAndAddBtn);
+        setupAddPlayerToRosterMenuElements(addPlayerToRosterMenu, playerSelect, rosterSelect, confirmAndAddBtn);
 
         confirmAndAddBtn.addActionListener(event -> {
             Player selectedPlayer;
@@ -280,29 +261,29 @@ public class GraphicalInterface extends JFrame implements ActionListener {
 
             selectedRoster.addPlayer(selectedPlayer);
 
-            setupRostersOverviewMenu();
-            ((CardLayout)(contentContainer.getLayout())).show(contentContainer, "rostersOverviewMenu");
+            rostersMenu.repaint();
         });
     }
 
     // MODIFIES: this
     // EFFECTS: Creates menu UI elements for adding player to roster
-    private void setupAddPlayerToRosterMenuElements(JComboBox playerSel, JComboBox rosterSel, JButton confirmBtn) {
+    private void setupAddPlayerToRosterMenuElements(JPanel addPlayerToRosterMenu, JComboBox playerSelect,
+                                                    JComboBox rosterSelect, JButton confirmAndAddBtn) {
         GridBagConstraints gbConstraints = new GridBagConstraints();
         gbConstraints.fill = GridBagConstraints.VERTICAL;
         gbConstraints.insets = new Insets(10, 10, 10, 10);
 
         gbConstraints.gridy = 0;
         addPlayerToRosterMenu.add(new JLabel("Select Player: "), gbConstraints);
-        addPlayerToRosterMenu.add(playerSel, gbConstraints);
+        addPlayerToRosterMenu.add(playerSelect, gbConstraints);
 
         gbConstraints.gridy = 1;
         addPlayerToRosterMenu.add(new JLabel("Select Roster: "), gbConstraints);
-        addPlayerToRosterMenu.add(rosterSel, gbConstraints);
-
+        addPlayerToRosterMenu.add(rosterSelect, gbConstraints);
 
         gbConstraints.gridy = 2;
-        addPlayerToRosterMenu.add(confirmBtn, gbConstraints);
+        gbConstraints.gridwidth = 2;
+        addPlayerToRosterMenu.add(confirmAndAddBtn, gbConstraints);
     }
 
     // MODIFIES: this
