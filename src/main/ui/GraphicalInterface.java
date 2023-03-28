@@ -333,7 +333,6 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         rostersTable.getColumnModel().getColumn(2).setCellRenderer(renderer);
         rostersTable.setRowHeight(100);
 
-        gbConstraints.insets = new Insets(15, 0, 0, 0);
         gbConstraints.gridy = 1;
         rostersOverviewTable.add(new JScrollPane(rostersTable), gbConstraints);
     }
