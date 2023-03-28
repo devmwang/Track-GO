@@ -134,6 +134,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         allNavbarBtnConfig(buttons);
     }
 
+    // REQUIRES: buttons is not null
     // MODIFIES: this
     // EFFECTS: Configures all buttons on navbar
     private void allNavbarBtnConfig(ArrayList<JButton> buttons) {
@@ -253,6 +254,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         rostersOverviewTable.add(new JScrollPane(rostersTable), gbConstraints);
     }
 
+    // REQUIRES: rostersOverviewFilters is not null
     // EFFECTS: Gets and puts roster data that fulfills any active filters into tableData 2D array
     private Object[][] populateRostersOverviewTableData(HashMap<String, Object> rostersOverviewFilters) {
         ArrayList<Roster> rostersList = (ArrayList<Roster>) appData.getRosters().clone();
@@ -273,7 +275,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         return tableData;
     }
 
-    // REQUIRES: rostersOverviewControlPanel, rostersOverviewTable is not null
+    // REQUIRES: rostersOverviewControlPanel is not null
     // MODIFIES: this
     // EFFECTS: Configures rosters overview control panel and returns a list of filters/control parameters
     private void setupRostersOverviewControlPanel(JPanel rostersOverviewControlPanel) {
@@ -297,6 +299,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         rostersOverviewControlPanel.add(confirmBtn, gbConstraints);
     }
 
+    // REQUIRES: requiredPlayerSelect is not null
     // MODIFIES: this
     // EFFECTS: Defines an event listener for the overview filter confirmation button
     private void rostersFilterEventListener(JComboBox requiredPlayerSelect) {
@@ -310,6 +313,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         reloadRostersOverviewTable();
     }
 
+    // REQUIRES: addPlayerToRosterMenu is not null
     // MODIFIES: this
     // EFFECTS: Configures menu for adding player to roster
     private void setupAddPlayerToRosterMenu(JPanel addPlayerToRosterMenu) {
@@ -333,6 +337,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         confirmAndAddBtn.addActionListener(event -> addPlayerToRosterEventListener(playerSelect, rosterSelect));
     }
 
+    // REQUIRES: addPlayerToRosterMenu, playerSelect, rosterSelect, confirmAndAddBtn are not null
     // MODIFIES: this
     // EFFECTS: Creates menu UI elements for adding player to roster
     private void setupAddPlayerToRosterMenuElements(JPanel addPlayerToRosterMenu, JComboBox playerSelect,
@@ -354,6 +359,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         addPlayerToRosterMenu.add(confirmAndAddBtn, gbConstraints);
     }
 
+    // REQUIRES: playerSelect, rosterSelect are not null
     // MODIFIES: this
     // EFFECTS: Defines an event listener for the confirmation button to add a player to a roster
     private void addPlayerToRosterEventListener(JComboBox playerSelect, JComboBox rosterSelect) {
