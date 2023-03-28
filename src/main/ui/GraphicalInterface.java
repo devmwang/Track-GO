@@ -86,26 +86,20 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         CardLayout cl = (CardLayout) (contentContainer.getLayout());
         rostersOverviewFilters.clear();
 
-        switch (actionCommand) {
-            case "mainMenu":
-                cl.show(contentContainer, "mainMenu");
-                break;
-            case "playersOverview":
-                setupPlayersMenu();
-                cl.show(contentContainer, "playersMenu");
-                break;
-            case "rostersOverview":
-                setupRostersMenu();
-                cl.show(contentContainer, "rostersMenu");
-                break;
-            case "loadAppData":
-                cl.show(contentContainer, "loadDataMenu");
-                break;
-            case "saveAppData":
-                cl.show(contentContainer, "saveDataMenu");
-                break;
-            case "exit":
-                System.exit(0);
+        if (actionCommand.equals("mainMenu")) {
+            cl.show(contentContainer, "mainMenu");
+        } else if (actionCommand.equals("playersOverview")) {
+            setupPlayersMenu();
+            cl.show(contentContainer, "playersMenu");
+        } else if (actionCommand.equals("rostersOverview")) {
+            setupRostersMenu();
+            cl.show(contentContainer, "rostersMenu");
+        } else if (actionCommand.equals("loadAppData")) {
+            cl.show(contentContainer, "loadDataMenu");
+        } else if (actionCommand.equals("saveAppData")) {
+            cl.show(contentContainer, "saveDataMenu");
+        } else if (actionCommand.equals("exit")) {
+            System.exit(0);
         }
     }
 
