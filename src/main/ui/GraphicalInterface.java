@@ -74,6 +74,8 @@ public class GraphicalInterface extends JFrame implements ActionListener {
 
         setupNavbar();
         setupMainMenu();
+        setupLoadConfirmation();
+        setupSaveConfirmation();
     }
 
     // REQUIRES: e is not null
@@ -85,6 +87,9 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         rostersOverviewFilters.clear();
 
         switch (actionCommand) {
+            case "mainMenu":
+                cl.show(contentContainer, "mainMenu");
+                break;
             case "playersOverview":
                 setupPlayersMenu();
                 cl.show(contentContainer, "playersMenu");
@@ -94,11 +99,9 @@ public class GraphicalInterface extends JFrame implements ActionListener {
                 cl.show(contentContainer, "rostersMenu");
                 break;
             case "loadAppData":
-                setupLoadConfirmation();
                 cl.show(contentContainer, "loadDataMenu");
                 break;
             case "saveAppData":
-                setupSaveConfirmation();
                 cl.show(contentContainer, "saveDataMenu");
                 break;
             case "exit":
@@ -111,12 +114,14 @@ public class GraphicalInterface extends JFrame implements ActionListener {
     private void setupNavbar() {
         // Instantiate buttons
         ArrayList<JButton> buttons = new ArrayList<>();
+        JButton mainMenuBtn = new JButton("Main Menu");
         JButton playersOverviewBtn = new JButton("View Players");
         JButton rostersOverviewBtn = new JButton("View Rosters");
         JButton loadAppDataBtn = new JButton("Load App Data");
         JButton saveAppDataBtn = new JButton("Save App Data");
         JButton exitBtn = new JButton("Exit");
 
+        buttons.add(mainMenuBtn);
         buttons.add(playersOverviewBtn);
         buttons.add(rostersOverviewBtn);
         buttons.add(loadAppDataBtn);
@@ -124,6 +129,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         buttons.add(exitBtn);
 
         // Set action commands
+        mainMenuBtn.setActionCommand("mainMenu");
         playersOverviewBtn.setActionCommand("playersOverview");
         rostersOverviewBtn.setActionCommand("rostersOverview");
         loadAppDataBtn.setActionCommand("loadAppData");
