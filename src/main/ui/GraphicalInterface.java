@@ -159,18 +159,26 @@ public class GraphicalInterface extends JFrame implements ActionListener {
     // MODIFIES: this
     // EFFECTS: Configures main menu
     private void setupMainMenu() {
+        ImageIcon icon = new ImageIcon("./assets/TrackGO.png");
+        Image scaledIcon = icon.getImage().getScaledInstance(-1, 200, Image.SCALE_DEFAULT);
+        JLabel appIcon = new JLabel(new ImageIcon(scaledIcon));
         JLabel centerText1 = new JLabel("Welcome to Track:GO!");
+        centerText1.setFont(new Font(centerText1.getFont().getName(), Font.PLAIN, 24));
         JLabel centerText2 = new JLabel("Select an option from the navbar to get started.");
+        centerText2.setFont(new Font(centerText2.getFont().getName(), Font.PLAIN, 20));
 
         GridBagConstraints gbConstraints = new GridBagConstraints();
 
         gbConstraints.fill = GridBagConstraints.VERTICAL;
 
         gbConstraints.gridy = 0;
+        mainMenu.add(appIcon, gbConstraints);
+
+        gbConstraints.insets = new Insets(15, 0, 0, 0);
+        gbConstraints.gridy = 1;
         mainMenu.add(centerText1, gbConstraints);
 
-        gbConstraints.gridy = 1;
-        gbConstraints.insets = new Insets(15, 0, 0, 0);
+        gbConstraints.gridy = 2;
         mainMenu.add(centerText2, gbConstraints);
     }
 
