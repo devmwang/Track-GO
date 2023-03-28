@@ -1,5 +1,6 @@
 package ui;
 
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.*;
@@ -8,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import exceptions.PlayerNotFoundException;
+import exceptions.RosterNotFoundException;
 import model.*;
 import persistence.StoreReader;
 import persistence.StoreWriter;
@@ -25,6 +28,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
     JPanel mainMenu;
     JPanel playersOverviewMenu;
     JPanel rostersOverviewMenu;
+    JPanel addPlayerToRosterMenu;
     JPanel loadDataMenu;
     JPanel saveDataMenu;
 
@@ -45,6 +49,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         contentContainer.add(mainMenu, "mainMenu");
         contentContainer.add(playersOverviewMenu, "playersOverviewMenu");
         contentContainer.add(rostersOverviewMenu, "rostersOverviewMenu");
+        contentContainer.add(addPlayerToRosterMenu, "addPlayerToRosterMenu");
         contentContainer.add(loadDataMenu, "loadDataMenu");
         contentContainer.add(saveDataMenu, "saveDataMenu");
 
@@ -62,6 +67,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         this.mainMenu = new JPanel(new GridBagLayout());
         this.playersOverviewMenu = new JPanel(new GridBagLayout());
         this.rostersOverviewMenu = new JPanel(new GridBagLayout());
+        this.addPlayerToRosterMenu = new JPanel(new GridBagLayout());
         this.loadDataMenu = new JPanel(new GridBagLayout());
         this.saveDataMenu = new JPanel(new GridBagLayout());
 
@@ -231,12 +237,72 @@ public class GraphicalInterface extends JFrame implements ActionListener {
 
         JButton playersOverviewBtn = new JButton("Add Player to Roster");
 
-        playersOverviewBtn.addActionListener(this);
+        playersOverviewBtn.addActionListener(e -> {
+            setupAddPlayerToRosterMenu();
+            ((CardLayout)(contentContainer.getLayout())).show(contentContainer, "addPlayerToRosterMenu");
+        });
 
         playersOverviewBtn.setActionCommand("addPlayerToRoster");
 
         gbConstraints.gridx = 0;
         rostersOverviewMenuButtonPanel.add(playersOverviewBtn, gbConstraints);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Configures menu for adding player to roster
+    private void setupAddPlayerToRosterMenu() {
+        JComboBox playerSelect = new JComboBox();
+
+        for (Player player : appData.getPlayers()) {
+            playerSelect.addItem(player.getUsername());
+        }
+
+        JComboBox rosterSelect = new JComboBox();
+
+        for (Roster roster : appData.getRosters()) {
+            rosterSelect.addItem(roster.getId());
+        }
+
+        JButton confirmAndAddBtn = new JButton("Confirm Selections");
+
+        setupAddPlayerToRosterMenuElements(playerSelect, rosterSelect, confirmAndAddBtn);
+
+        confirmAndAddBtn.addActionListener(event -> {
+            Player selectedPlayer;
+            Roster selectedRoster;
+
+            try {
+                selectedPlayer = appData.getPlayerByUsername((String) playerSelect.getSelectedItem());
+                selectedRoster = appData.getRosterById((String) rosterSelect.getSelectedItem());
+            } catch (PlayerNotFoundException | RosterNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
+            selectedRoster.addPlayer(selectedPlayer);
+
+            setupRostersOverviewMenu();
+            ((CardLayout)(contentContainer.getLayout())).show(contentContainer, "rostersOverviewMenu");
+        });
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Creates menu UI elements for adding player to roster
+    private void setupAddPlayerToRosterMenuElements(JComboBox playerSel, JComboBox rosterSel, JButton confirmBtn) {
+        GridBagConstraints gbConstraints = new GridBagConstraints();
+        gbConstraints.fill = GridBagConstraints.VERTICAL;
+        gbConstraints.insets = new Insets(10, 10, 10, 10);
+
+        gbConstraints.gridy = 0;
+        addPlayerToRosterMenu.add(new JLabel("Select Player: "), gbConstraints);
+        addPlayerToRosterMenu.add(playerSel, gbConstraints);
+
+        gbConstraints.gridy = 1;
+        addPlayerToRosterMenu.add(new JLabel("Select Roster: "), gbConstraints);
+        addPlayerToRosterMenu.add(rosterSel, gbConstraints);
+
+
+        gbConstraints.gridy = 2;
+        addPlayerToRosterMenu.add(confirmBtn, gbConstraints);
     }
 
     // MODIFIES: this
