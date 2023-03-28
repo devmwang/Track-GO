@@ -1,8 +1,6 @@
 package ui;
 
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -63,7 +61,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         this.contentContainer = new JPanel(new CardLayout());
         this.navbar =  new JPanel(new GridBagLayout());
         this.mainMenu = new JPanel(new GridBagLayout());
-        this.playersOverviewMenu = new JPanel(new GridBagLayout());
+        this.playersOverviewMenu = new JPanel(new FlowLayout(FlowLayout.CENTER));
         this.rostersMenu = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 0));
         this.loadDataMenu = new JPanel(new GridBagLayout());
         this.saveDataMenu = new JPanel(new GridBagLayout());
@@ -136,7 +134,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
 
         gbConstraints.fill = GridBagConstraints.HORIZONTAL;
         gbConstraints.weightx = 0.5;
-        gbConstraints.insets = new Insets(10, 10, 10, 10);
+        gbConstraints.insets = new Insets(10, 10, 50, 10);
 
         int gridIndex = 0;
 
@@ -248,21 +246,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
 
         setupAddPlayerToRosterMenuElements(addPlayerToRosterMenu, playerSelect, rosterSelect, confirmAndAddBtn);
 
-        confirmAndAddBtn.addActionListener(event -> {
-            Player selectedPlayer;
-            Roster selectedRoster;
-
-            try {
-                selectedPlayer = appData.getPlayerByUsername((String) playerSelect.getSelectedItem());
-                selectedRoster = appData.getRosterById((String) rosterSelect.getSelectedItem());
-            } catch (PlayerNotFoundException | RosterNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-
-            selectedRoster.addPlayer(selectedPlayer);
-
-            rostersMenu.repaint();
-        });
+        confirmAndAddBtn.addActionListener(event -> addPlayerToRosterEventListener(playerSelect, rosterSelect));
     }
 
     // MODIFIES: this
@@ -284,6 +268,30 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         gbConstraints.gridy = 2;
         gbConstraints.gridwidth = 2;
         addPlayerToRosterMenu.add(confirmAndAddBtn, gbConstraints);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Defines an event listener for the confirmation button to add a player to a roster
+    private void addPlayerToRosterEventListener(JComboBox playerSelect, JComboBox rosterSelect) {
+        Player selectedPlayer;
+        Roster selectedRoster;
+
+        try {
+            selectedPlayer = appData.getPlayerByUsername((String) playerSelect.getSelectedItem());
+            selectedRoster = appData.getRosterById((String) rosterSelect.getSelectedItem());
+        } catch (PlayerNotFoundException | RosterNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (selectedRoster.getPlayers().contains(selectedPlayer)) {
+            JOptionPane.showMessageDialog(contentContainer, selectedPlayer.getUsername() + " is already in "
+                    + selectedRoster.getId() + ".", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        selectedRoster.addPlayer(selectedPlayer);
+
+        rostersMenu.repaint();
     }
 
     // MODIFIES: this
