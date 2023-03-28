@@ -522,7 +522,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         JLabel centerText1 = new JLabel("Are you sure you want to load app data?");
         JLabel centerText2 = new JLabel("This will overwrite any unsaved data.");
         centerText2.setForeground(Color.RED);
-        JButton loadAppDataBtn = new JButton("Load App Data");
+        JButton loadAppDataBtn = new JButton("Confirm and Load App Data");
 
         GridBagConstraints gbConstraints = new GridBagConstraints();
         gbConstraints.fill = GridBagConstraints.VERTICAL;
@@ -546,7 +546,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         JLabel centerText1 = new JLabel("Are you sure you want to save the active app data?");
         JLabel centerText2 = new JLabel("This will overwrite your currently saved app data.");
         centerText2.setForeground(Color.RED);
-        JButton saveAppDataBtn = new JButton("Save App Data");
+        JButton saveAppDataBtn = new JButton("Confirm and Save App Data");
 
         GridBagConstraints gbConstraints = new GridBagConstraints();
         gbConstraints.fill = GridBagConstraints.VERTICAL;

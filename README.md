@@ -33,5 +33,13 @@ depending on who is playing.
 - As a user, when I select the quit option from the main menu, I want to be given the option to save all the entered data to a file.
 - As a user, when the application is launched, I want to be given the option to load player/roster/match data from a file.
 
+## Instructions for Grader (Phase 3)
+
+- You can generate the first required action: adding a player to a roster by navigating to the Rosters page (`View Rosters` button in the navbar), then selecting a player and a roster with the selection boxes in the `Add Player to Roster` panel, then confirm the add with the `Confirm Selections` button.
+- You can generate the second required action: filtering the displayed rosters to only ones with a certain player by navigating to the Rosters page (`View Rosters` button in the navbar), then selecting a required player (only show rosters with the required player), then confirm the filter with the `Confirm Filters` button.
+- You can locate my visual component in the main menu, shown by default (or accessible through the navbar with the `Main Menu` button.
+- You can save app data by selecting `Save App Data` in the navbar, then confirm the load with the `Confirm and Save App Data` button.
+- You can load app data by selecting `Load App Data` in the navbar, then confirm the load with the `Confirm and Load App Data` button.
+
 ### Additional Info
 Code pertaining to persistence system adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
