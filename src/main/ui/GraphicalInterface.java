@@ -558,18 +558,25 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         gbConstraints.insets = new Insets(15, 0, 0, 0);
         saveDataMenu.add(centerText2, gbConstraints);
 
-        saveAppDataBtn.addActionListener(e -> handleLoadFromFile());
+        saveAppDataBtn.addActionListener(e -> handleSaveToFile());
         gbConstraints.gridy = 2;
         saveDataMenu.add(saveAppDataBtn, gbConstraints);
     }
 
+    // MODIFIES: this
     // EFFECTS: Handles loading data from file into application
     private void handleLoadFromFile() {
         try {
             storeReader.read(appData);
-            System.out.println("Data loaded successfully from " + DATA_STORE_PATH + ".");
+            JOptionPane.showMessageDialog(contentContainer,
+                    "Data loaded successfully from " + DATA_STORE_PATH + ".",
+                    "Load Successful",
+                    JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException | AppDataInvalidException e) {
-            System.out.println("An error occurred while loading data from " + DATA_STORE_PATH + ": " + e);
+            JOptionPane.showMessageDialog(contentContainer,
+                    "An error occurred while loading data from " + DATA_STORE_PATH + ": " + e,
+                    "Load Failed",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -579,9 +586,15 @@ public class GraphicalInterface extends JFrame implements ActionListener {
             storeWriter.open();
             storeWriter.write(appData);
             storeWriter.close();
-            System.out.println("Data saved successfully to " + DATA_STORE_PATH + ".");
+            JOptionPane.showMessageDialog(contentContainer,
+                    "Data saved successfully to " + DATA_STORE_PATH + ".",
+                    "Save Successful",
+                    JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
-            System.out.println("An error occurred while saving data to " + DATA_STORE_PATH + ": " + e);
+            JOptionPane.showMessageDialog(contentContainer,
+                    "An error occurred while saving data to " + DATA_STORE_PATH + ": " + e,
+                    "Save Failed",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 }
