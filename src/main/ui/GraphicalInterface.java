@@ -572,6 +572,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
                     "Data loaded successfully from " + DATA_STORE_PATH + ".",
                     "Load Successful",
                     JOptionPane.INFORMATION_MESSAGE);
+            ((CardLayout) (contentContainer.getLayout())).show(contentContainer, "mainMenu");
         } catch (IOException | AppDataInvalidException e) {
             JOptionPane.showMessageDialog(contentContainer,
                     "An error occurred while loading data from " + DATA_STORE_PATH + ": " + e,
@@ -590,6 +591,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
                     "Data saved successfully to " + DATA_STORE_PATH + ".",
                     "Save Successful",
                     JOptionPane.INFORMATION_MESSAGE);
+            ((CardLayout) (contentContainer.getLayout())).show(contentContainer, "mainMenu");
         } catch (IOException e) {
             JOptionPane.showMessageDialog(contentContainer,
                     "An error occurred while saving data to " + DATA_STORE_PATH + ": " + e,
