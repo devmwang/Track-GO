@@ -41,5 +41,26 @@ depending on who is playing.
 - You can save app data by selecting `Save App Data` in the navbar, then confirm the load with the `Confirm and Save App Data` button.
 - You can load app data by selecting `Load App Data` in the navbar, then confirm the load with the `Confirm and Load App Data` button.
 
+## Phase 4: Task 2
+
+Sample of logged events printed on exit:
+
+Mon Apr 03 15:56:01 PDT 2023  
+App data loaded from file at "./data/app_data.json"
+
+Mon Apr 03 15:56:08 PDT 2023  
+Player created with username "Player4"
+
+Mon Apr 03 15:56:11 PDT 2023  
+Player with username "Player4" added to roster with id "Roster1"
+
+Mon Apr 03 15:56:15 PDT 2023  
+Player with username "Player2" removed from roster with id "Roster1"
+
+Mon Apr 03 15:56:17 PDT 2023  
+App data saved to file at "./data/app_data.json"
+
 ### Additional Info
 Code pertaining to persistence system adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+Code pertaining to EventLog system adapted from https://github.students.cs.ubc.ca/CPSC210/AlarmSystem

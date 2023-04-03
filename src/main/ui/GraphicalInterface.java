@@ -10,6 +10,7 @@ import java.io.IOException;
 import exceptions.PlayerNotFoundException;
 import exceptions.RosterNotFoundException;
 import model.*;
+import model.Event;
 import persistence.StoreReader;
 import persistence.StoreWriter;
 import exceptions.AppDataInvalidException;
@@ -43,6 +44,8 @@ public class GraphicalInterface extends JFrame implements ActionListener {
 
         this.rostersOverviewFilters = new HashMap<>();
 
+        setupWindowListeners();
+
         setLayout(new BorderLayout());
         instantiatePanels();
 
@@ -58,6 +61,25 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         setSize(new Dimension(1280, 860));
         setResizable(true);
         setVisible(true);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Sets up window listeners (e.g. override default window close behaviour)
+    private void setupWindowListeners() {
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent event) {
+                printEventLog();
+
+                System.exit(0);
+            }
+        });
+    }
+
+    // EFFECTS: Prints events logged in EventLog to console
+    private void printEventLog() {
+        for (Event event : EventLog.getInstance()) {
+            System.out.println(event);
+        }
     }
 
     // MODIFIES: this
@@ -99,6 +121,7 @@ public class GraphicalInterface extends JFrame implements ActionListener {
         } else if (actionCommand.equals("saveAppData")) {
             cl.show(contentContainer, "saveDataMenu");
         } else if (actionCommand.equals("exit")) {
+            printEventLog();
             System.exit(0);
         }
     }

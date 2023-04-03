@@ -4,6 +4,9 @@
 package persistence;
 
 import java.io.*;
+
+import model.Event;
+import model.EventLog;
 import org.json.JSONObject;
 
 import model.AppData;
@@ -32,6 +35,8 @@ public class StoreWriter {
     public void write(AppData appData) {
         JSONObject json = appData.toJson();
         saveToFile(json.toString(INDENT));
+
+        EventLog.getInstance().logEvent(new Event("App data saved to file at \"" + filePath + "\""));
     }
 
     // MODIFIES: this

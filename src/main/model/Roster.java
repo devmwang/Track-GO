@@ -31,6 +31,9 @@ public class Roster implements Writable, Readable {
     // EFFECTS: Adds player to roster
     public void addPlayer(Player player) {
         players.add(player);
+
+        EventLog.getInstance().logEvent(new Event("Player with username \"" + player.getUsername()
+                + "\" added to roster with id \"" + id + "\""));
     }
 
     // REQUIRES: player is not null
@@ -38,6 +41,9 @@ public class Roster implements Writable, Readable {
     // EFFECTS: Removes player from roster
     public void removePlayer(Player player) {
         players.remove(player);
+
+        EventLog.getInstance().logEvent(new Event("Player with username \"" + player.getUsername()
+                + "\" removed from roster with id \"" + id + "\""));
     }
 
     // MODIFIES: this
