@@ -43,6 +43,7 @@ public class Event {
         return description;
     }
 
+    // EFFECTS: Returns true if the consumed object is an Event with the same date and description as this event
     @Override
     public boolean equals(Object other) {
         if (other == null) {
@@ -58,11 +59,13 @@ public class Event {
         return (this.dateLogged.equals(otherEvent.dateLogged) && this.description.equals(otherEvent.description));
     }
 
+    // EFFECTS: Returns a hash code for this event
     @Override
     public int hashCode() {
         return (HASH_CONSTANT * dateLogged.hashCode() + description.hashCode());
     }
 
+    // EFFECTS: Returns a string representation of this event with the date and description
     @Override
     public String toString() {
         return dateLogged.toString() + "\n" + description;
