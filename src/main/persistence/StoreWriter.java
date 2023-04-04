@@ -35,8 +35,6 @@ public class StoreWriter {
     public void write(AppData appData) {
         JSONObject json = appData.toJson();
         saveToFile(json.toString(INDENT));
-
-        EventLog.getInstance().logEvent(new Event("App data saved to file at \"" + filePath + "\""));
     }
 
     // MODIFIES: this

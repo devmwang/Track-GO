@@ -30,8 +30,6 @@ public class StoreReader {
         JSONObject jsonObject = new JSONObject(jsonData);
 
         appData.fromJson(jsonObject);
-
-        EventLog.getInstance().logEvent(new Event("App data loaded from file at \"" + filePath + "\""));
     }
 
     // REQUIRES: filePath is not null
