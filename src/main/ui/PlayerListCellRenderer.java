@@ -8,6 +8,8 @@ import javax.swing.table.TableCellRenderer;
 import model.*;
 
 public class PlayerListCellRenderer extends JList<String> implements TableCellRenderer {
+    // REQUIRES: table, list, isSelected, hasFocus, row, column are not null
+    // EFFECTS: Returns a cell renderer to render the list of players in a roster
     @Override
     public Component getTableCellRendererComponent(JTable table, Object list, boolean isSelected,
                                                    boolean hasFocus, int row, int column) {
