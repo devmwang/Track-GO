@@ -7,6 +7,7 @@ import javax.swing.table.TableCellRenderer;
 
 import model.*;
 
+// Represents a custom cell renderer that renders a list of players vertically
 public class PlayerListCellRenderer extends JList<String> implements TableCellRenderer {
     // REQUIRES: table, list, isSelected, hasFocus, row, column are not null
     // EFFECTS: Returns a cell renderer to render the list of players in a roster
