@@ -4,6 +4,9 @@
 package persistence;
 
 import java.io.*;
+
+import model.Event;
+import model.EventLog;
 import org.json.JSONObject;
 
 import model.AppData;

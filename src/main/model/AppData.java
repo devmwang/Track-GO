@@ -80,6 +80,8 @@ public class AppData implements Writable, Readable {
     // EFFECTS: Creates Player with provided username and adds created Player to players
     public void addPlayer(String username) {
         players.add(new Player(username));
+
+        EventLog.getInstance().logEvent(new Event("Player created with username \"" + username + "\""));
     }
 
     // REQUIRES: id is not null or empty, playersArrayList is not null and size >= 1
