@@ -201,7 +201,7 @@ m1=0..*</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>120</x>
-      <y>860</y>
+      <y>840</y>
       <w>160</w>
       <h>40</h>
     </coordinates>
@@ -212,7 +212,7 @@ m1=0..*</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>300</x>
-      <y>920</y>
+      <y>900</y>
       <w>160</w>
       <h>40</h>
     </coordinates>
@@ -223,24 +223,13 @@ m1=0..*</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>190</x>
-      <y>890</y>
+      <y>870</y>
       <w>130</w>
       <h>80</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=0..*</panel_attributes>
     <additional_attributes>110.0;50.0;10.0;50.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>120</x>
-      <y>80</y>
-      <w>160</w>
-      <h>40</h>
-    </coordinates>
-    <panel_attributes>Main</panel_attributes>
-    <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
@@ -360,11 +349,22 @@ Readable
     <id>UMLClass</id>
     <coordinates>
       <x>120</x>
-      <y>780</y>
+      <y>770</y>
       <w>160</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>PlayerListCellRenderer</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>120</x>
+      <y>80</y>
+      <w>160</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Main</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
