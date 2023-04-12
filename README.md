@@ -36,7 +36,8 @@ depending on who is playing.
 ## Instructions for Grader (Phase 3)
 
 -   You can generate the first required action: adding a player to a roster by navigating to the Rosters page (`View Rosters` button in the navbar), then selecting a player and a roster with the selection boxes in the `Add Player to Roster` panel, then confirm the add with the `Confirm Selections` button.
--   You can generate the second required action: filtering the displayed rosters to only ones with a certain player by navigating to the Rosters page (`View Rosters` button in the navbar), then selecting a required player (only show rosters with the required player), then confirm the filter with the `Confirm Filters` button.
+-   You can generate the second required action: remove a player from a roster by navigating to the Rosters page (`View Rosters` button in the navbar), then selecting a player and a roster with the selection boxes in the `Remove Player from Roster` panel, then confirm the removal with the `Confirm Selections` button.
+-   You can generate a third action: filtering the displayed rosters to only ones with a certain player by navigating to the Rosters page (`View Rosters` button in the navbar), then selecting a required player (only show rosters with the required player), then confirm the filter with the `Confirm Filters` button.
 -   You can locate my visual component in the main menu, shown by default (or accessible through the navbar with the `Main Menu` button).
 -   You can save app data by selecting `Save App Data` in the navbar, then confirm the load with the `Confirm and Save App Data` button.
 -   You can load app data by selecting `Load App Data` in the navbar, then confirm the load with the `Confirm and Load App Data` button.
@@ -45,14 +46,29 @@ depending on who is playing.
 
 Sample of logged events printed on exit:
 
-Mon Apr 03 15:56:08 PDT 2023  
+Wed Apr 12 14:08:11 PDT 2023  
 Player created with username "Player4"
 
-Mon Apr 03 15:56:11 PDT 2023  
+Wed Apr 12 14:08:16 PDT 2023  
+Player created with username "Player5"
+
+Wed Apr 12 14:08:31 PDT 2023  
+Player with username "Player3" added to roster with id "Roster1"
+
+Wed Apr 12 14:08:32 PDT 2023  
 Player with username "Player4" added to roster with id "Roster1"
 
-Mon Apr 03 15:56:15 PDT 2023  
-Player with username "Player2" removed from roster with id "Roster1"
+Wed Apr 12 14:08:35 PDT 2023  
+Player with username "Player4" added to roster with id "Roster2"
+
+Wed Apr 12 14:08:39 PDT 2023  
+Player with username "Player5" added to roster with id "Roster2"
+
+Wed Apr 12 14:08:46 PDT 2023  
+Player with username "Player1" removed from roster with id "Roster1"
+
+Wed Apr 12 14:08:49 PDT 2023  
+Player with username "Player3" removed from roster with id "Roster2"
 
 ## Phase 4: Task 3
 
