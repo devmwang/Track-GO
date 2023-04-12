@@ -76,7 +76,7 @@ One of the main issues I would tackle with a refactor is the current unnecessari
 
 There are a few other minor changes that could clean up the code. AppData could be turned into a singleton, since only one should ever be instantiated (though in the current implementation, only one is instantiated anyways). Another change would be to make the GUI much more modular. Currently, the GUI is extremely janky and somewhat cobbled-together mostly due to inexperience with Swing and what design pattern would work well with it. If I were to overhaul it, I'd abstract common functionality (like repainting or reloading a page) and potentially use a specific design pattern like MVC.
 
-### Additional Info
+## Additional Info
 
 Code pertaining to persistence system adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 
