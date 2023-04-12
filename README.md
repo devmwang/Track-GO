@@ -42,6 +42,8 @@ depending on who is playing.
 -   You can save app data by selecting `Save App Data` in the navbar, then confirm the load with the `Confirm and Save App Data` button.
 -   You can load app data by selecting `Load App Data` in the navbar, then confirm the load with the `Confirm and Load App Data` button.
 
+Note: A valid app data file with existing rosters is required. A backup file is located in the `data` folder and can be used by renaming it from `app_data.backup.json` to `app_data.json`.
+
 ## Phase 4: Task 2
 
 Sample of logged events printed on exit:
