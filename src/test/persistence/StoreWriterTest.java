@@ -1,6 +1,3 @@
-// Tests adapted from CPSC 210 JSON Serialization Demo at
-// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo/blob/master/src/test/persistence/JsonWriterTest.java
-
 package persistence;
 import java.io.IOException;
 import java.util.ArrayList;

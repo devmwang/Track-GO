@@ -1,6 +1,3 @@
-// Code adapted from CPSC 210 JSON Serialization Demo at
-// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo/blob/master/src/main/persistence/JsonWriter.java
-
 package persistence;
 
 import java.io.*;

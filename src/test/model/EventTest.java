@@ -1,6 +1,3 @@
-// Code adapted from CPSC 210 AlarmSystem application at
-// https://github.students.cs.ubc.ca/CPSC210/AlarmSystem/blob/main/src/test/ca/ubc/cpsc210/alarm/test/EventTest.java
-
 package model;
 
 import org.junit.jupiter.api.BeforeEach;
